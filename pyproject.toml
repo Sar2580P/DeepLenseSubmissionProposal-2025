@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "deeplensesubmissionproposal-2025"
+version = "0.1.0"
+description = "The repo for submissionProposal for gsoc-2025 under cern"
+authors = ["Sar2580P <sporwal1818@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+omegaconf = "^2.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
