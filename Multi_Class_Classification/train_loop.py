@@ -9,21 +9,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Classifier(pl.LightningModule):
-  def __init__(self, model_obj:nn.Module, train_config:Dict):
+  def __init__(self, model_obj:nn.Module, config:Dict):
     super().__init__()
     self.model_obj = model_obj
     self.layer_lr = model_obj.layer_lr
-    self.config = train_config
+    self.tr_config = config['train_config']  
+    self.lr_scheduler_config = config['lr_scheduler_params']
 
-    self.tr_kappa = torchmetrics.CohenKappa(task = 'multiclass' , num_classes = self.config['num_classes'], weights = 'quadratic')
-    self.val_kappa = torchmetrics.CohenKappa(task = 'multiclass' , num_classes = self.config['num_classes'], weights = 'quadratic')
-    self.tst_kappa = torchmetrics.CohenKappa(task = 'multiclass' , num_classes = self.config['num_classes'], weights = 'quadratic')
+    self.tr_kappa = torchmetrics.CohenKappa(task = 'multiclass' , num_classes =self.tr_config['num_classes'], weights = 'quadratic')
+    self.val_kappa = torchmetrics.CohenKappa(task = 'multiclass' , num_classes =self.tr_config['num_classes'], weights = 'quadratic')
+    self.tst_kappa = torchmetrics.CohenKappa(task = 'multiclass' , num_classes =self.tr_config['num_classes'], weights = 'quadratic')
 
-    self.tr_accuracy = torchmetrics.Accuracy(task = 'multiclass' , num_classes = self.config['num_classes'])
-    self.val_accuracy = torchmetrics.Accuracy(task = 'multiclass' , num_classes = self.config['num_classes'])
-    self.tst_accuracy = torchmetrics.Accuracy(task = 'multiclass' , num_classes = self.config['num_classes'])
+    self.tr_accuracy = torchmetrics.Accuracy(task = 'multiclass' , num_classes =self.tr_config['num_classes'])
+    self.val_accuracy = torchmetrics.Accuracy(task = 'multiclass' , num_classes =self.tr_config['num_classes'])
+    self.tst_accuracy = torchmetrics.Accuracy(task = 'multiclass' , num_classes =self.tr_config['num_classes'])
 
-    self.val_conf_mat = MulticlassConfusionMatrix(num_classes = self.config['num_classes'])
+    self.val_conf_mat = MulticlassConfusionMatrix(num_classes =self.tr_config['num_classes'])
 
     self.criterion = torch.nn.CrossEntropyLoss()
     self.tst_y_hat , self.tst_y_true = [], []
@@ -85,21 +86,21 @@ class Classifier(pl.LightningModule):
     self.log("test_kappa", self.tst_kappa,on_step = True,  on_epoch=True, prog_bar=True, logger=True)
     self.log("test_acc", self.tst_accuracy, on_step = True ,on_epoch=True,prog_bar=True, logger=True)
     
-    self.tst_y_hat.append(y_hat.detach().cpu().to_numpy())
-    self.tst_y_true.append(y.detach().cpu().to_numpy())
+    self.tst_y_hat.append(y_hat.detach().cpu().numpy())
+    self.tst_y_true.append(y.detach().cpu().numpy())
     return ce_loss
 
   def configure_optimizers(self):
-    optim =  torch.optim.Adam(self.layer_lr, lr = self.config['lr'], weight_decay = self.config['weight_decay'])   # https://pytorch.org/docs/stable/optim.html
-    scheduler_params = self.config[f"{self.config['scheduler_name']}_params"]
+    optim =  torch.optim.Adam(self.layer_lr, lr =self.tr_config['lr'], weight_decay =self.tr_config['weight_decay'])   # https://pytorch.org/docs/stable/optim.html
+    scheduler_params =self.lr_scheduler_config[f"{self.lr_scheduler_config['lr_scheduler_name']}_params"]
 
 
-    if self.config['scheduler_name'] == 'exponential_decay_lr_scheduler':
+    if self.lr_scheduler_config['lr_scheduler_name'] == 'exponential_decay_lr_scheduler':
         lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(optim, **scheduler_params)
 
-    elif self.config['scheduler_name'] == 'cosine_decay_lr_scheduler':
+    elif self.lr_scheduler_config['lr_scheduler_name'] == 'cosine_decay_lr_scheduler':
         lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optim, **scheduler_params)
     else : 
-        raise ValueError(f"Unknown scheduler name: {self.config['scheduler_name']}, please choose from ['exponential_decay_lr_scheduler', 'cosine_decay_lr_scheduler']")
+        raise ValueError(f"Unknown scheduler name: {self.lr_scheduler_config['lr_scheduler_name']}, please choose from ['exponential_decay_lr_scheduler', 'cosine_decay_lr_scheduler']")
 
-    return [optim], [{'scheduler': lr_scheduler, 'interval': 'epoch', 'monitor': 'train_loss', 'name': self.config['scheduler_name']}]
+    return [optim], [{'scheduler': lr_scheduler, 'interval': 'epoch', 'monitor': 'train_ce_loss', 'name':self.lr_scheduler_config['lr_scheduler_name']}]

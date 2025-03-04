@@ -27,18 +27,16 @@ class Imagenet_3Channel_Dataset(Dataset):
         label = self.data_df.iloc[idx]['label']
 
         # Load .npy image and convert to float32
-        image = np.load(image_path).astype(np.float32)
-
-        # Ensure image shape is (3, H, W)
-        if image.shape[0] == 1:
-            image = np.repeat(image, 3, axis=0)  # Stack the same image across 3 channels
-        elif image.shape[0] != 3:
+        image = np.load(image_path).astype(np.float32).T
+        # Ensure image shape is (H, W, 3)
+        if image.shape[-1] == 1:
+            image = np.repeat(image, 3, axis=-1)  # Stack the same image across 3 channels
+        elif image.shape[-1] != 3:
             raise ValueError(f"Expected 1 or 3 channels, got {image.shape[0]} channels in {image_path}")
 
         # Apply transforms
         if self.transform:
             image = self.transform(image)
-
         return image, torch.tensor(label, dtype=torch.long)
 
 def split_data(data_dir: str , split_ratio: float = 0.2) -> None:
@@ -86,7 +84,7 @@ def get_dataloaders(data_config:Dict)->Tuple[DataLoader, DataLoader, DataLoader]
                                                 )
     else:
         raise ValueError(f"Unknown dataset type: {dataset_type}, please choose from ['imagenet_3channel']")
-    
+
     tr_loader, val_loader, test_loader = (
         DataLoader(tr_dataset, **data_config['dataloader_params'], shuffle=True),
         DataLoader(val_dataset, **data_config['dataloader_params'], shuffle=False),
