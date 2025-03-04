@@ -1,0 +1,23 @@
+method : 'bayes'
+name : 'RepresentationLearning_sweep'
+metric :
+  goal : 'minimize'
+  name : 'val_ce_loss'
+
+parameters :
+    BATCH_SIZE :
+      values : [32, 64, 128]
+    lr : 
+      distribution : 'normal'
+      mu : 1e-4
+      sigma : 1e-2
+    weight_decay :
+      distribution : 'normal'
+      mu : 1e-4
+      sigma : 1e-2
+    accumulate_grad_batches : 
+      values : [1,2,4,8]
+    ImagenetModels_submodel : 
+      values : ['resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152']
+    should_finetune_model :
+      values : [True, False]

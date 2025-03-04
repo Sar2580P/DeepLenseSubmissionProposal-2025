@@ -32,7 +32,7 @@ filename = f"submodel={config[tr_config['model_name']+ '_params']['model_name']}
 checkpoint_callback.dirpath = os.path.join(RESULT_DIR, 'ckpts')
 checkpoint_callback.filename = filename +'--'+ tr_config['ckpt_file_name']
 
-run_name = RUN_NAME + f"--lr={tr_config['lr']}--bs={tr_config['BATCH_SIZE']}--decay={tr_config['weight_decay']}"
+run_name = RUN_NAME + f"--submodel={filename}"
 wandb_logger = WandbLogger(project= "DeepLenseClassificationTask", name = run_name)
 csv_logger = CSVLogger(RESULT_DIR+'/logs/'+ filename)
 #___________________________________________________________________________________________________________________

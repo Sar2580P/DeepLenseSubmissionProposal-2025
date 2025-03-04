@@ -1,0 +1,42 @@
+train_config:
+  model_name: "ImagenetModels"
+  ImagenetModels_submodel : "resnet18"
+  should_finetune_model : False
+  BATCH_SIZE: 64
+  weight_decay : 0.0001
+  lr : 0.1
+  ckpt_file_name : '{epoch} | {val_ce_loss:.3f} | {val_kappa:.3f} | {val_acc:.3f}'
+  dir : "results/Classification"
+  accumulate_grad_batches : 2
+  accelerator : gpu
+  MAX_EPOCHS : 100
+  num_workers: 8
+  num_classes : 3
+
+
+data_config:
+  dataset_type: "imagenet_3channel"
+  train_df_path : "data/dataset/train_df.csv"
+  val_df_path : "data/dataset/val_df.csv"
+  test_df_path : "data/dataset/test_df.csv"
+  dataloader_params : 
+  batch_size : ${train_config.BATCH_SIZE}
+  num_workers : ${train_config.num_workers}
+
+  
+callbacks_config:
+  ModelCheckpoint:
+    monitor: 'val_ce_loss'
+    mode: 'min'
+    save_top_k: 1
+    save_last: True
+  EarlyStopping:
+    monitor: 'val_HuberLoss'
+    mode: 'min'
+    min_delta : 0.00005
+    patience : 8
+
+ImagenetModels_params : 
+  model_name : ${train_config.ImagenetModels_submodel}
+  should_finetune : ${train_config.should_finetune_model}
+  num_classes : ${train_config.num_classes}
