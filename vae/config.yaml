@@ -1,0 +1,59 @@
+BetaVAE_params:
+  in_channels: 1
+  latent_dim: 20
+  hidden_dims: [32, 64, 128, 256, 512]
+  beta:  4
+  gamma : 1000
+  max_capacity: 25
+  Capacity_max_iter: 1e5
+  loss_type: 'B'
+
+VanillaVAE_params:
+  in_channels: 1
+  latent_dim: 20
+  hidden_dims: [32, 64, 128, 256, 512]
+  
+train_config:
+  model_name: "VanillaVAE"
+  dataset_objective : "classification"
+  BATCH_SIZE: 4
+  weight_decay : 0.0001
+  lr : 0.1
+  ckpt_file_name : '{epoch} | {val_VAE_loss:.3f}'
+  dir : "results/VAE"
+  accumulate_grad_batches : 5
+  accelerator : cpu
+  MAX_EPOCHS : 1
+  num_workers: 8
+  log_images_every_n_epochs : 5
+
+data_config:
+  tr_path: "data/Samples"
+  val_path : "data/Samples"
+  tst_path : "data/Samples"
+  batch_size : ${train_config.BATCH_SIZE}
+  num_workers : ${train_config.num_workers}
+
+scheduler_params:
+  scheduler_name: 'cosine_decay_lr_scheduler'
+
+  cosine_decay_lr_scheduler_params:
+  T_max: 250
+  eta_min: 1.0e-07
+
+  exponential_decay_lr_scheduler_params:
+    gamma: 0.99
+
+callbacks_config:
+  ModelCheckpoint:
+    monitor: 'val_VAE_loss'
+    mode: 'min'
+    save_top_k: 1
+    save_last: True
+    verbose : True
+  EarlyStopping:
+    monitor: 'val_VAE_Loss'
+    mode: 'min'
+    min_delta : 0.00005
+    patience : 8
+    verbose : True
