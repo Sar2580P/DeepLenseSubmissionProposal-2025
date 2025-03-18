@@ -13,12 +13,9 @@ train_config:
 
 data_config:
   dataset_type: "imagenet_3channel"
-  train_df_path : "data/dataset/train_df.csv"
-  val_df_path : "data/dataset/val_df.csv"
-  test_df_path : "data/dataset/test_df.csv"
-  dataloader_params : 
-    num_workers : ${train_config.num_workers}
-    batch_size : ${train_config.BATCH_SIZE}
+  train_path : "data/dataframes/common_classification_dataset/train_df.csv"
+  val_path : "data/dataframes/common_classification_dataset/val_df.csv"
+  test_path : "data/dataframes/common_classification_dataset/test_df.csv"
   batch_size : ${train_config.BATCH_SIZE}
   num_workers : ${train_config.num_workers}
   

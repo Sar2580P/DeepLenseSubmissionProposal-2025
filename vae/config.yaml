@@ -15,7 +15,7 @@ VanillaVAE_params:
   
 train_config:
   model_name: "VanillaVAE"
-  dataset_objective : "classification"
+  dataset_objective : "common_classification"
   BATCH_SIZE: 4
   weight_decay : 0.0001
   lr : 0.1
@@ -28,9 +28,9 @@ train_config:
   log_images_every_n_epochs : 5
 
 data_config:
-  tr_path: "data/Samples"
-  val_path : "data/Samples"
-  tst_path : "data/Samples"
+  tr_path: "data/dataframes/common_classification_dataset/train_df.csv"
+  val_path : "data/dataframes/common_classification_dataset/val_df.csv"
+  tst_path : "data/dataframes/common_classification_dataset/test_df.csv"
   batch_size : ${train_config.BATCH_SIZE}
   num_workers : ${train_config.num_workers}
 

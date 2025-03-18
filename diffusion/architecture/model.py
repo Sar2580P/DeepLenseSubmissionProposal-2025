@@ -381,3 +381,68 @@ class GaussianDiffusion(nn.Module):
 
         img = self.normalize(img)
         return self.p_losses(img, t, *args, **kwargs)
+    
+    
+class CustomGaussianDiffusion(GaussianDiffusion):
+    def __init__(self, model,**kwargs):
+        super().__init__(model, **kwargs)
+    
+    def p_losses(self, x_start, t, log_generation_results:bool , noise = None, offset_noise_strength = None):
+        b, c, h, w = x_start.shape
+
+        noise = default(noise, lambda: torch.randn_like(x_start))
+
+        # offset noise - https://www.crosslabs.org/blog/diffusion-with-offset-noise
+
+        offset_noise_strength = default(offset_noise_strength, self.offset_noise_strength)
+
+        if offset_noise_strength > 0.:
+            offset_noise = torch.randn(x_start.shape[:2], device = self.device)
+            noise += offset_noise_strength * rearrange(offset_noise, 'b c -> b c 1 1')
+
+        # noise sample
+
+        x = self.q_sample(x_start = x_start, t = t, noise = noise)
+
+        # if doing self-conditioning, 50% of the time, predict x_start from current set of times
+        # and condition with unet with that
+        # this technique will slow down training by 25%, but seems to lower FID significantly
+
+        x_self_cond = None
+        if self.self_condition and random() < 0.5:
+            with torch.no_grad():
+                x_self_cond = self.model_predictions(x, t).pred_x_start
+                x_self_cond.detach_()
+
+        # predict and take gradient step
+
+        model_out = self.model(x, t, x_self_cond)
+
+        if self.objective == 'pred_noise':
+            target = noise
+        elif self.objective == 'pred_x0':
+            target = x_start
+        elif self.objective == 'pred_v':
+            v = self.predict_v(x_start, t, noise)
+            target = v
+        else:
+            raise ValueError(f'unknown objective {self.objective}')
+
+        loss = F.mse_loss(model_out, target, reduction = 'none')
+        loss = reduce(loss, 'b ... -> b', 'mean')
+
+        loss = loss * extract(self.loss_weight, t, loss.shape).mean()
+        if log_generation_results:
+            return loss, x_start, x, model_out
+        return loss, None, None , None
+    
+    def forward(self, img, log_generation_results:bool=False , *args, **kwargs):
+        b, c, h, w, device, img_size, = *img.shape, img.device, self.image_size
+        assert h == img_size[0] and w == img_size[1], f'height and width of image must be {img_size}'
+        t = torch.randint(0, self.num_timesteps, (b,), device=device).long()
+
+        img = self.normalize(img)
+        return self.p_losses(img, t,log_generation_results , *args, **kwargs)
+        
+        
+        

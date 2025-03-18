@@ -12,9 +12,9 @@ train_config:
   log_images_every_n_epochs : 5
 
 data_config:
-  data_dir : "data/Samples"
-  total_samples : 10000
-  split_ratio : 0.75
+  train_path: 'data/dataframes/diffusion_dataset/train_df.csv'
+  val_path: 'data/dataframes/diffusion_dataset/val_df.csv'
+  test_path: 'data/dataframes/diffusion_dataset/test_df.csv'
   batch_size : ${train_config.BATCH_SIZE}
   num_workers : ${train_config.num_workers}
 

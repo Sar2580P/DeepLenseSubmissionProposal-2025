@@ -15,6 +15,9 @@ pytorch-lightning = "^2.5.0.post0"
 wandb = "^0.19.7"
 scikit-learn = "^1.6.1"
 rich = "^13.9.4"
+pytorch-fid = "^0.3.0"
+einops = "^0.8.1"
+ema-pytorch = "^0.7.7"
 
 
 [tool.poetry.group.dev.dependencies]

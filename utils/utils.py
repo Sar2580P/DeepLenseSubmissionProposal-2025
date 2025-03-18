@@ -14,5 +14,5 @@ def unzip_file(zip_path: str, extract_dir: str) -> None:
 
 if __name__ == '__main__':
     # unzip_file('data/dataset.zip', 'data/')
-    # unzip_file('data/Samples.zip', 'data/')
+    unzip_file('data/Dataset.zip', 'data/')
     pass
