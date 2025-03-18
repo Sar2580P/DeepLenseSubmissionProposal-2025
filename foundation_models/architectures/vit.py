@@ -60,6 +60,7 @@ class Attention(nn.Module):
 class FFN(nn.Module):
     def __init__(self, dim, hidden_dim, dropout = 0.):
         super().__init__()
+        hidden_dim = (int)(hidden_dim)+1
         self.net = nn.Sequential(
             # norm -> linear -> activation -> dropout -> linear -> dropout
             # we first norm with a layer norm
@@ -136,6 +137,7 @@ class ViT(nn.Module):
         patch_height, patch_width = pair(patch_size)
 
         # Ensure that the image dimensions are divisible by the patch size
+        print(image_height, patch_height , image_width , patch_width)
         assert image_height % patch_height == 0 and image_width % patch_width == 0, 'Image dimensions must be divisible by the patch size.'
 
         # Calculate the number of patches and the dimension of each patch

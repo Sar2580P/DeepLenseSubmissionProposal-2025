@@ -14,7 +14,9 @@ class MAE(nn.Module):
         masking_ratio=0.75,
         decoder_depth=1,
         decoder_heads=8,
-        decoder_dim_head=64
+        decoder_dim_head=64, 
+        mlp_dim_ratio=4,
+        dropout=0.0
     ):
         super().__init__()
         # Ensure the masking ratio is valid
@@ -52,7 +54,8 @@ class MAE(nn.Module):
             depth=decoder_depth,
             heads=decoder_heads,
             dim_head=decoder_dim_head,
-            mlp_dim_ratio=4
+            mlp_dim_ratio=mlp_dim_ratio, 
+            dropout=dropout
         )
         # Positional embeddings for the decoder tokens
         self.decoder_pos_emb = nn.Embedding(num_patches, decoder_dim)

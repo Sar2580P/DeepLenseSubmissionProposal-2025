@@ -3,9 +3,17 @@ import os
 import numpy as np
 from functools import partial
 import pandas as pd
+import torchvision.transforms as T
+
+transform = T.Compose([
+    T.ToPILImage(),          # Convert numpy array (150x150) to PIL Image.
+    T.Pad(padding=1),        # Pad 1 pixel on all sides to get 152x152.
+    T.ToTensor()             # Convert back to tensor.
+])
+
 
 class DiffusionDataset(Dataset):
-    def __init__(self, data_csv_path:str, transform=None):
+    def __init__(self, data_csv_path:str, transform=transform):
         """
         Custom PyTorch Dataset
         
@@ -21,8 +29,7 @@ class DiffusionDataset(Dataset):
     
     def __getitem__(self, idx):
         img_path = self.df.iloc[idx]['img_path']
-        img = np.load(img_path)
-        
+        img = np.load(img_path).transpose(1, 2, 0)
         if self.transform:
             img = self.transform(img)
         

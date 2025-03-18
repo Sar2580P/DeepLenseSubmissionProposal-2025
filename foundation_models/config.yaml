@@ -1,37 +1,38 @@
 ViT_params:
-  image_size: 150
-  patch_size: 16
+  image_size: 64
+  patch_size: 4
   num_classes: 3 
-  dim: 64
+  dim: 96
   depth: 3
   heads: 4
   mlp_dim_ratio: 1.2
   pool: 'cls' 
   channels: 1
-  dim_head: 64
-  dropout: 0.
+  dim_head: 24
+  dropout: 0.15
 
 MAE_params:
-  decoder_dim : 64
+  decoder_dim : 96
   masking_ratio: 0.75
   decoder_depth: 1
-  decoder_heads: 8
-  decoder_dim_head: 64
+  decoder_heads: 4
+  decoder_dim_head: 24
+  mlp_dim_ratio: 2
+  dropout: 0.1
 
 
 train_config:
   model_name: "MAE_ViT"
   dataset_objective : "pretraining"
-  BATCH_SIZE: 4
+  BATCH_SIZE: 64
   weight_decay : 0.0001
-  lr : 0.1
+  lr : 3.0e-4
   ckpt_file_name : '{epoch} | {val_MAE_loss:.3f}'
   dir : "results/MAE"
-  accumulate_grad_batches : 5
+  accumulate_grad_batches : 8
   accelerator : cpu
   MAX_EPOCHS : 1
   num_workers: 8
-  log_images_every_n_epochs : 5
 
 data_config:
   tr_path: "data/dataframes/foundation_models_pretraining_dataset/train_df.csv"

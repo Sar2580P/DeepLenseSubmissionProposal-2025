@@ -15,7 +15,7 @@ if tr_config['model_name'].lower()=='MAE_ViT'.lower():
     from foundation_models.architectures.mae import MAE
     from foundation_models.architectures.vit import ViT
     encoder = ViT(**config['ViT_params'])
-    mae_model = MAE(encoder, **config['MAE_params'])
+    mae_model = MAE(encoder=encoder, **config['MAE_params'])
 else:
     raise ValueError(f"Unknown model name: {tr_config['model_name']}, please choose from ['MAE_ViT']")
 
@@ -41,5 +41,5 @@ trainer = Trainer(callbacks=[early_stop_callback, checkpoint_callback, rich_prog
                 accelerator = tr_config['accelerator'] ,accumulate_grad_batches=tr_config['accumulate_grad_batches'] , 
                 max_epochs=tr_config['MAX_EPOCHS'], logger=[wandb_logger, csv_logger])
 
-trainer.fit(model_obj, tr_loader, val_loader)
+# trainer.fit(model_obj, tr_loader, val_loader)
 trainer.test(model_obj, tst_loader)

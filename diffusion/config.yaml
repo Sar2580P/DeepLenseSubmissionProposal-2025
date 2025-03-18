@@ -1,11 +1,11 @@
 train_config:
   model_name: "Vanilla_Gaussian_Diffusion"
-  BATCH_SIZE: 4
+  BATCH_SIZE: 16
   weight_decay : 0.0001
-  lr : 0.1
+  lr : 2e-4
   ckpt_file_name : '{epoch} | {val_MSE_loss:.3f}'
   dir : "results/Diffusion"
-  accumulate_grad_batches : 5
+  accumulate_grad_batches : 8
   accelerator : cpu
   MAX_EPOCHS : 1
   num_workers: 8
@@ -16,7 +16,7 @@ data_config:
   train_path: 'data/dataframes/diffusion_dataset/train_df.csv'
   val_path: 'data/dataframes/diffusion_dataset/val_df.csv'
   test_path: 'data/dataframes/diffusion_dataset/test_df.csv'
-  batch_size : ${train_config.BATCH_SIZE}
+  BATCH_SIZE : ${train_config.BATCH_SIZE}
   num_workers : ${train_config.num_workers}
 
 scheduler_params:
@@ -39,32 +39,32 @@ noise_scheduler_params:
     clamp_min : 1e-5
 
 GaussianDiffusion_params:
-  image_size: 150
+  image_size: 152
   timesteps: 100
   sampling_timesteps: null
   objective: 'pred_v'
   beta_schedule : 'sigmoid'
   schedule_fn_kwargs : ${noise_scheduler_params.${GaussianDiffusion_params.beta_schedule}}
-  ddim_sampling_eta : 0.0
+  ddim_sampling_eta : 0.4
   auto_normalize : True
   offset_noise_strength : 0.  
-  min_snr_loss_weight : False
-  min_snr_gamma : 5
+  min_snr_loss_weight : True
+  min_snr_gamma : 3
   immiscible : False
 
 UNet_params:
-  dim : 64
-  init_dim : null
-  out_dim : 32
-  dim_mults : [1, 2, 4, 8]
-  channels : 3
-  self_condition : False
+  dim : 128
+  init_dim : 32
+  out_dim : 1
+  dim_mults : [1, 2, 3, 4]
+  channels : 1
+  self_condition : False    # In self-conditioning, network uses its own previous prediction as an additional input in subsequent denoising steps.
   learned_variance : False
   learned_sinusoidal_cond : False
   random_fourier_features : False
-  learned_sinusoidal_dim : 16
-  sinusoidal_pos_emb_theta : 10000
-  dropout : 0.
+  learned_sinusoidal_dim : 32
+  sinusoidal_pos_emb_theta : 10000 
+  dropout : 0.15
   attn_dim_head : 32
   attn_heads : 4
   full_attn : null    # defaults to full attention only for inner most layer

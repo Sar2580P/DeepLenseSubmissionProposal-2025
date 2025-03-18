@@ -13,8 +13,8 @@ class VAEDataset(Dataset):
     
     def __getitem__(self, idx):
         img_path = self.data_csv.iloc[idx]['image_path']
-        img = np.load(img_path)
-        
+        img = np.load(img_path).astype(np.float32)
+
         if self.transform:
             img = self.transform(img)
         
@@ -51,5 +51,4 @@ def get_dataloaders(data_config:dict):
                     shuffle=False, 
                     num_workers=data_config['num_workers'],
                 )
-    
     return train_loader, val_loader, test_loader

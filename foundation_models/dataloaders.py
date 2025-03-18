@@ -12,8 +12,10 @@ class MAEDataset(Dataset):
         return self.data_csv.shape[0]
     
     def __getitem__(self, idx):
-        img_path = self.data_csv.iloc[idx]['image_path']
-        img = np.load(img_path)
+        img_path = self.data_csv.iloc[idx]['img_path']
+        
+        img = np.load(img_path).astype(np.float32)
+        img = np.expand_dims(img, axis=0)
         
         if self.transform:
             img = self.transform(img)

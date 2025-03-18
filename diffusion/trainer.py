@@ -13,7 +13,7 @@ config = read_yaml('diffusion/config.yaml')
 tr_config = config['train_config']
 data_config = config['data_config']
 
-unet = Unet(**config['Unet_params'])
+unet = Unet(**config['UNet_params'])
 if tr_config['model_name'].lower()=='Vanilla_Gaussian_Diffusion'.lower():
     model = CustomGaussianDiffusion(unet, **config['GaussianDiffusion_params'])
 else:
@@ -41,5 +41,5 @@ trainer = Trainer(callbacks=[early_stop_callback, checkpoint_callback, rich_prog
                 accelerator = tr_config['accelerator'] ,accumulate_grad_batches=tr_config['accumulate_grad_batches'] , 
                 max_epochs=tr_config['MAX_EPOCHS'], logger=[wandb_logger, csv_logger])
 
-trainer.fit(model_obj, tr_loader, val_loader)
+# trainer.fit(model_obj, tr_loader, val_loader)
 trainer.test(model_obj, tst_loader)
