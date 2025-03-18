@@ -1,0 +1,88 @@
+sweep_config:
+  BATCH_SIZE: 4
+  weight_decay : 0.0001
+  lr : 0.1
+  scheduler_name: 'cosine_decay_lr_scheduler'
+
+  patch_size: 16
+  num_classes: 3 
+  dim: 64
+  depth: 3
+  heads: 4
+  mlp_dim_ratio: 1.2
+  pool: 'cls' 
+  channels: 1
+  dim_head: 64
+  dropout: 0.
+
+  decoder_dim : 64
+  masking_ratio: 0.75
+  decoder_depth: 1
+  decoder_heads: 8
+  decoder_dim_head: 64
+
+
+ViT_params:
+  image_size: 150
+  patch_size: ${sweep_config.patch_size}
+  num_classes: ${sweep_config.num_classes}
+  dim: ${sweep_config.dim}
+  depth: ${sweep_config.depth}
+  heads: ${sweep_config.heads}
+  mlp_dim_ratio: ${sweep_config.mlp_dim_ratio}
+  pool: ${sweep_config.pool}
+  channels: ${sweep_config.channels}
+  dim_head: ${sweep_config.dim_head}
+  dropout: ${sweep_config.dropout}
+
+MAE_params:
+  decoder_dim : ${sweep_config.decoder_dim}
+  masking_ratio: ${sweep_config.masking_ratio}
+  decoder_depth: ${sweep_config.decoder_depth}
+  decoder_heads: ${sweep_config.decoder_heads}
+  decoder_dim_head: ${sweep_config.decoder_dim_head}
+
+
+train_config:
+  model_name: "MAE_ViT"
+  dataset_objective : "pretraining"
+  BATCH_SIZE: ${sweep_config.BATCH_SIZE}
+  weight_decay : ${sweep_config.weight_decay}
+  lr : ${sweep_config.lr}
+  ckpt_file_name : '{epoch} | {val_MAE_loss:.3f}'
+  dir : "results/MAE"
+  accumulate_grad_batches : 5
+  accelerator : cpu
+  MAX_EPOCHS : 1
+  num_workers: 8
+
+data_config:
+  tr_path: "data/dataframes/foundation_models_pretraining_dataset/train_df.csv"
+  val_path : "data/dataframes/foundation_models_pretraining_dataset/val_df.csv"
+  tst_path : "data/dataframes/foundation_models_pretraining_dataset/test_df.csv"
+  batch_size : ${train_config.BATCH_SIZE}
+  num_workers : ${train_config.num_workers}
+
+scheduler_params:
+  scheduler_name: ${sweep_config.scheduler_name}
+
+  cosine_decay_lr_scheduler_params:
+  T_max: 250
+  eta_min: 1.0e-07
+
+  exponential_decay_lr_scheduler_params:
+    gamma: 0.99
+
+callbacks_config:
+  ModelCheckpoint:
+    monitor: 'val_MAE_loss'
+    mode: 'min'
+    save_top_k: 1
+    save_last: True
+    verbose : True
+  EarlyStopping:
+    monitor: 'val_MAE_Loss'
+    mode: 'min'
+    min_delta : 0.00005
+    patience : 8
+    verbose : True

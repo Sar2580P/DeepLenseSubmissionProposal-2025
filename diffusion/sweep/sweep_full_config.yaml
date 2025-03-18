@@ -1,0 +1,113 @@
+sweep_config:
+  BATCH_SIZE : 2
+  weight_decay : 0.0001
+  lr : 0.1
+  scheduler_name : 'cosine_decay_lr_scheduler'
+
+  # gaussian diffusion specific parameters
+  timesteps : 100
+  objective : 'pred_v'
+  beta_schedule : 'sigmoid'
+  min_snr_gamma : 5
+
+  # Unet specific parameters
+  dim : 64
+  init_dim : null
+  out_dim : 32
+  dim_mults : [1, 2, 4, 8]
+  learned_variance : False
+  learned_sinusoidal_cond : False
+  random_fourier_features : False
+  learned_sinusoidal_dim : 16
+  sinusoidal_pos_emb_theta : 10000
+  dropout : 0.
+  attn_dim_head : 32
+  attn_heads : 4
+  flash_attn : False
+
+
+train_config:
+  model_name: "Vanilla_Gaussian_Diffusion"
+  BATCH_SIZE: ${sweep_config.BATCH_SIZE}
+  weight_decay : ${sweep_config.weight_decay}
+  lr : ${sweep_config.lr}
+  ckpt_file_name : '{epoch} | {val_MSE_loss:.3f}'
+  dir : "results/Diffusion"
+  accumulate_grad_batches : 5
+  accelerator : cpu
+  MAX_EPOCHS : 1
+  num_workers: 8
+  should_log_images : !!bool False
+  log_images_every_n_epochs : 5
+
+data_config:
+  train_path: 'data/dataframes/diffusion_dataset/train_df.csv'
+  val_path: 'data/dataframes/diffusion_dataset/val_df.csv'
+  test_path: 'data/dataframes/diffusion_dataset/test_df.csv'
+  batch_size : ${train_config.BATCH_SIZE}
+  num_workers : ${train_config.num_workers}
+
+scheduler_params:
+  scheduler_name: ${sweep_config.scheduler_name}
+
+  cosine_decay_lr_scheduler_params:
+  T_max: 250
+  eta_min: 1.0e-07
+
+  exponential_decay_lr_scheduler_params:
+    gamma: 0.99
+
+noise_scheduler_params:
+  cosine:
+    s : 0.008
+  sigmoid:
+    start : -3
+    end : 3
+    tau : 1
+    clamp_min : 1e-5
+
+GaussianDiffusion_params:
+  image_size: 150
+  timesteps: ${sweep_config.timesteps}
+  sampling_timesteps: null
+  objective: ${sweep_config.objective}
+  beta_schedule : ${sweep_config.beta_schedule}
+  schedule_fn_kwargs : ${noise_scheduler_params.${sweep_config.beta_schedule}}
+  ddim_sampling_eta : 0.0
+  auto_normalize : True
+  offset_noise_strength : 0.  
+  min_snr_loss_weight : False
+  min_snr_gamma : ${sweep_config.min_snr_gamma}
+  immiscible : False
+
+UNet_params:
+  dim : ${sweep_config.dim}
+  init_dim : ${sweep_config.init_dim}
+  out_dim : ${sweep_config.out_dim}
+  dim_mults : ${sweep_config.dim_mults}
+  channels : 3
+  self_condition : False
+  learned_variance : ${sweep_config.learned_variance}
+  learned_sinusoidal_cond : ${sweep_config.learned_sinusoidal_cond}
+  random_fourier_features : ${sweep_config.random_fourier_features}
+  learned_sinusoidal_dim : ${sweep_config.learned_sinusoidal_dim}
+  sinusoidal_pos_emb_theta : ${sweep_config.sinusoidal_pos_emb_theta}
+  dropout : ${sweep_config.dropout}
+  attn_dim_head : ${sweep_config.attn_dim_head}
+  attn_heads : ${sweep_config.attn_heads}
+  full_attn : null    # defaults to full attention only for inner most layer
+  flash_attn : ${sweep_config.flash_attn}
+
+callbacks_config:
+  ModelCheckpoint:
+    monitor: 'val_MSE_loss'
+    mode: 'min'
+    save_top_k: 1
+    save_last: True
+    verbose : True
+  EarlyStopping:
+    monitor: 'val_MSE_Loss'
+    mode: 'min'
+    min_delta : 0.00005
+    patience : 8
+    verbose : True

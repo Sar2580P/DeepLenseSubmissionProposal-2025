@@ -19,7 +19,9 @@ class DiffusionTrainLoop(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         x0_samples = batch
-        if batch_idx==0 and self.current_epoch % self.config['train_config']['log_images_every_n_epochs'] == 0:
+        if self.config['train_config']['should_log_images'] and batch_idx==0 and  \
+            self.current_epoch % self.config['train_config']['log_images_every_n_epochs'] == 0:
+                
             loss , x_start, x , model_output = self.model.forward(x0_samples, log_generation_results=True)
             # log the generated samples
             max_samples_to_log = min(5, x_start.shape[0])

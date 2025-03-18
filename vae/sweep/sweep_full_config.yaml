@@ -1,4 +1,8 @@
-BetaVAE_params:
+sweep_config:
+  BATCH_SIZE: 4
+  weight_decay : 0.0001
+  lr : 0.1
+  scheduler_name: 'cosine_decay_lr_scheduler'
   in_channels: 1
   latent_dim: 20
   hidden_dims: [32, 64, 128, 256, 512]
@@ -8,17 +12,27 @@ BetaVAE_params:
   Capacity_max_iter: 1e5
   loss_type: 'B'
 
+BetaVAE_params:
+  in_channels: ${sweep_config.in_channels}
+  latent_dim: ${sweep_config.latent_dim}
+  hidden_dims: ${sweep_config.hidden_dims}
+  beta:  ${sweep_config.beta}
+  gamma : ${sweep_config.gamma}
+  max_capacity: ${sweep_config.max_capacity}
+  Capacity_max_iter: ${sweep_config.Capacity_max_iter}
+  loss_type: ${sweep_config.loss_type}
+
 VanillaVAE_params:
-  in_channels: 1
-  latent_dim: 20
-  hidden_dims: [32, 64, 128, 256, 512]
+  in_channels: ${sweep_config.in_channels}
+  latent_dim: ${sweep_config.latent_dim}
+  hidden_dims : ${sweep_config.hidden_dims}
   
 train_config:
   model_name: "VanillaVAE"
   dataset_objective : "common_classification"
-  BATCH_SIZE: 4
-  weight_decay : 0.0001
-  lr : 0.1
+  BATCH_SIZE: ${sweep_config.BATCH_SIZE}
+  weight_decay : ${sweep_config.weight_decay}
+  lr : ${sweep_config.lr}
   ckpt_file_name : '{epoch} | {val_VAE_loss:.3f}'
   dir : "results/VAE"
   accumulate_grad_batches : 5
@@ -34,7 +48,7 @@ data_config:
   num_workers : ${train_config.num_workers}
 
 scheduler_params:
-  scheduler_name: 'cosine_decay_lr_scheduler'
+  scheduler_name: ${sweep_config.scheduler_name}
 
   cosine_decay_lr_scheduler_params:
   T_max: 250

@@ -1,0 +1,47 @@
+method : 'bayes'
+name : 'FoundationModel_MAE_sweep'
+metric :
+  goal : 'minimize'
+  name : 'val_MAE_loss'
+
+parameters :
+  BATCH_SIZE: 
+    value: 4
+  weight_decay : 
+    value : 0.0001
+  lr : 
+    value : 0.1
+  scheduler_name: 
+    value : 'cosine_decay_lr_scheduler'
+
+  patch_size: 
+    value: 16
+  num_classes: 
+    value: 3 
+  dim: 
+    value: 64
+  depth: 
+    value: 3
+  heads: 
+    value: 4
+  mlp_dim_ratio: 
+    value: 1.2
+  pool: 
+    value: 'cls'
+  channels: 
+    value: 1
+  dim_head: 
+    value: 64
+  dropout: 
+    value: 0.
+
+  decoder_dim : 
+    value: 64
+  masking_ratio: 
+    value: 0.75
+  decoder_depth: 
+    value: 1
+  decoder_heads: 
+    value: 8
+  decoder_dim_head: 
+    value: 64

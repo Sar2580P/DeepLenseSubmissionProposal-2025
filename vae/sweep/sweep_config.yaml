@@ -1,0 +1,31 @@
+method : 'bayes'
+name : 'VAE_Common_Classification_sweep'
+metric :
+  goal : 'minimize'
+  name : 'val_MSE_loss'
+
+parameters :
+  BATCH_SIZE: 
+    value : 32
+  weight_decay :
+    value :  0.0001
+  lr : 
+    value : 0.1
+  scheduler_name: 
+    value : 'cosine_decay_lr_scheduler'
+  in_channels: 
+    value : 1
+  latent_dim: 
+    value : 20
+  hidden_dims: 
+    value : [32, 64, 128, 256, 512]
+  beta:  
+    value : 4
+  gamma : 
+    value : 1000
+  max_capacity: 
+    value : 25
+  Capacity_max_iter: 
+    value : 1e5
+  loss_type: 
+    value : 'B'

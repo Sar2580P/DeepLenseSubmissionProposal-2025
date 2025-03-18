@@ -9,6 +9,7 @@ train_config:
   accelerator : cpu
   MAX_EPOCHS : 1
   num_workers: 8
+  should_log_images : !!bool False
   log_images_every_n_epochs : 5
 
 data_config:
@@ -28,12 +29,22 @@ scheduler_params:
   exponential_decay_lr_scheduler_params:
     gamma: 0.99
 
+noise_scheduler_params:
+  cosine:
+    s : 0.008
+  sigmoid:
+    start : -3
+    end : 3
+    tau : 1
+    clamp_min : 1e-5
+
 GaussianDiffusion_params:
   image_size: 150
   timesteps: 100
   sampling_timesteps: null
   objective: 'pred_v'
   beta_schedule : 'sigmoid'
+  schedule_fn_kwargs : ${noise_scheduler_params.${GaussianDiffusion_params.beta_schedule}}
   ddim_sampling_eta : 0.0
   auto_normalize : True
   offset_noise_strength : 0.  
@@ -59,14 +70,7 @@ UNet_params:
   full_attn : null    # defaults to full attention only for inner most layer
   flash_attn : False
 
-scheduler_params:
-  cosine:
-    s : 0.008
-  sigmoid:
-    start : -3
-    end : 3
-    tau : 1
-    clamp_min : 1e-5
+
 
 callbacks_config:
   ModelCheckpoint:

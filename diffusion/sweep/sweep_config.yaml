@@ -1,0 +1,53 @@
+method : 'bayes'
+name : 'DiffusionModel_sweep'
+metric :
+  goal : 'minimize'
+  name : 'val_MSE_loss'
+
+parameters :
+  BATCH_SIZE : 
+    value : 32
+  weight_decay :
+    value :  0.0001
+  lr :
+    value : 0.1
+  scheduler_name : 
+    value : 'cosine_decay_lr_scheduler'
+
+  # gaussian diffusion specific parameters
+  timesteps : 
+    value : 100
+  objective : 
+    value : 'pred_v'
+  beta_schedule : 
+    value : 'sigmoid'
+  min_snr_gamma : 
+    value : 5
+
+  # Unet specific parameters
+  dim : 
+    value : 64
+  init_dim : 
+    value : null
+  out_dim : 
+    value : 32
+  dim_mults : 
+    value : [1, 2, 4, 8]
+  learned_variance : 
+    value : False
+  learned_sinusoidal_cond : 
+    value : False
+  random_fourier_features : 
+    value : False
+  learned_sinusoidal_dim : 
+    value : 16
+  sinusoidal_pos_emb_theta : 
+    value : 10000
+  dropout : 
+    value : 0.
+  attn_dim_head : 
+    value : 32
+  attn_heads : 
+    value : 4
+  flash_attn : 
+    value : False
