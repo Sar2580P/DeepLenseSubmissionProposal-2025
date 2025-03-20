@@ -142,7 +142,7 @@ class MAE(nn.Module):
         
         # Reconstruct the pixel values from the masked decoded tokens
         pred_pixel_values = self.to_pixels(masked_decoded_tokens)
-        print(f"pred_pixel_values shape: {pred_pixel_values.shape}")
+        #print(f"pred_pixel_values shape: {pred_pixel_values.shape}")
         recon_loss = self.compute_loss(pred_pixel_values, masked_patches)
         
         return recon_loss
