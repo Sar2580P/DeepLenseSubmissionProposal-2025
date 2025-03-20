@@ -314,7 +314,7 @@ class GaussianDiffusion(nn.Module):
         _, assign = linear_sum_assignment(dist.cpu())
         return torch.from_numpy(assign).to(dist.device)
 
-    @autocast('cuda', enabled = False)
+    # @autocast('cuda', enabled = False)
     def q_sample(self, x_start, t, noise = None):
         noise = default(noise, lambda: torch.randn_like(x_start))
 

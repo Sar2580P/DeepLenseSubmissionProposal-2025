@@ -6,10 +6,10 @@ train_config:
   ckpt_file_name : '{epoch} | {val_MSE_loss:.3f}'
   dir : "results/Diffusion"
   accumulate_grad_batches : 8
-  accelerator : cpu
-  MAX_EPOCHS : 1
+  accelerator : gpu
+  MAX_EPOCHS : 100
   num_workers: 8
-  should_log_images : !!bool False
+  should_log_images : !!bool True
   log_images_every_n_epochs : 5
 
 data_config:
