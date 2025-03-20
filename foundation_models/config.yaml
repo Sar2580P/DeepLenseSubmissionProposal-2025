@@ -30,8 +30,8 @@ train_config:
   ckpt_file_name : '{epoch} | {val_MAE_loss:.3f}'
   dir : "results/MAE"
   accumulate_grad_batches : 8
-  accelerator : cpu
-  MAX_EPOCHS : 1
+  accelerator : gpu
+  MAX_EPOCHS : 100
   num_workers: 8
 
 data_config:

@@ -1,13 +1,13 @@
 train_config:
   model_name: "ImagenetModels"
-  BATCH_SIZE: 4
-  weight_decay : 0.0001
-  lr : 0.1
+  BATCH_SIZE: 64
+  weight_decay : 0.000001
+  lr : 5.0e-4
   ckpt_file_name : '{epoch} | {val_ce_loss:.3f} | {val_kappa:.3f} | {val_acc:.3f}'
   dir : "results/Classification"
   accumulate_grad_batches : 2
-  accelerator : cpu
-  MAX_EPOCHS : 1
+  accelerator : gpu
+  MAX_EPOCHS : 100
   num_workers: 8
   num_classes : 3
 

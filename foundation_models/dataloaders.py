@@ -15,6 +15,9 @@ class MAEDataset(Dataset):
         img_path = self.data_csv.iloc[idx]['img_path']
         
         img = np.load(img_path).astype(np.float32)
+        if 'axion' in img_path:  
+            # img.shape : (2,) , img[0]-> (64,64) , img[1]-> np.float64
+            img = img[0]
         img = np.expand_dims(img, axis=0)
         
         if self.transform:
