@@ -69,9 +69,9 @@ class Classifier(pl.LightningModule):
             image_array = image_array.reshape(fig.canvas.get_width_height()[::-1] + (3,))
 
             # Log to Weights & Biases
-            wandb.log({"plot": wandb.Image(image_array, caption=f"Confusion Matrix Plot (Validation- epoch={self.current_epoch})")})
-            plt.close(fig)  # Close the figure to free memory
-            self.val_conf_mat.reset()
+ @           wandb.log({"plot": wandb.Image(image_array, caption=f"Confusion Matrix Plot (Validation- epoch={self.current_epoch})")})
+#            plt.close(fig)  # Close the figure to free memory
+#            self.val_conf_mat.reset()
             
     return ce_loss
 
