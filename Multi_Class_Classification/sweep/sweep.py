@@ -58,4 +58,4 @@ def train(config=None):
         trainer.test(model_obj, tst_loader)
 
 # Run the sweep
-wandb.agent(sweep_id, function=train, count = 50)
+wandb.agent(sweep_id, function=train, count = 15)

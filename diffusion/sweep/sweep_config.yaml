@@ -6,33 +6,39 @@ metric :
 
 parameters :
   BATCH_SIZE : 
-    value : 32
+    value : 8
   weight_decay :
-    value :  0.0001
+    value: 0.00001
+    # distribution : 'normal'
+    # mu : 5e-5
+    # sigma : 1e-4
   lr :
-    value : 0.1
+    value : 3e-4
+    # distribution : 'normal'
+    # mu : 3e-4
+    # sigma : 1e-4
   scheduler_name : 
     value : 'cosine_decay_lr_scheduler'
 
   # gaussian diffusion specific parameters
   timesteps : 
-    value : 100
+    values : [50, 100]
   objective : 
     value : 'pred_v'
   beta_schedule : 
-    value : 'sigmoid'
+    value : ['sigmoid', 'cosine']
   min_snr_gamma : 
-    value : 5
+    values : [3,5]
 
   # Unet specific parameters
   dim : 
-    value : 64
+    values : [64, 96, 128]
   init_dim : 
-    value : null
-  out_dim : 
     value : 32
+  out_dim : 
+    value : 1
   dim_mults : 
-    value : [1, 2, 4, 8]
+    value : [1, 2, 3, 4]
   learned_variance : 
     value : False
   learned_sinusoidal_cond : 
@@ -40,11 +46,11 @@ parameters :
   random_fourier_features : 
     value : False
   learned_sinusoidal_dim : 
-    value : 16
+    value : 32
   sinusoidal_pos_emb_theta : 
     value : 10000
   dropout : 
-    value : 0.
+    value : 0.15
   attn_dim_head : 
     value : 32
   attn_heads : 

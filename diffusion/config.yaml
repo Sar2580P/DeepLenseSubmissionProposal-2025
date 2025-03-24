@@ -11,6 +11,7 @@ train_config:
   num_workers: 8
   should_log_images : !!bool True
   log_images_every_n_epochs : 5
+  loss_lambda : 10
 
 data_config:
   train_path: 'data/dataframes/diffusion_dataset/train_df.csv'

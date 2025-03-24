@@ -6,42 +6,48 @@ metric :
 
 parameters :
   BATCH_SIZE: 
-    value: 4
-  weight_decay : 
-    value : 0.0001
+    value: 64
+  weight_decay :
+    value : 2e-5 
+    # distribution : 'normal'
+    # mu : 5e-5
+    # sigma : 1e-4
   lr : 
-    value : 0.1
+    value : 3.0e-4
+    # distribution : 'normal'
+    # mu : 3.0e-4
+    # sigma : 1.0e-4
   scheduler_name: 
     value : 'cosine_decay_lr_scheduler'
 
   patch_size: 
-    value: 16
+    values : [4,8]
   num_classes: 
     value: 3 
   dim: 
-    value: 64
+    values : [64, 96]
   depth: 
-    value: 3
-  heads: 
+    values : [3,4]
+  heads:
     value: 4
   mlp_dim_ratio: 
-    value: 1.2
+    values: [1.5 , 2] 
   pool: 
     value: 'cls'
   channels: 
     value: 1
   dim_head: 
-    value: 64
+    values: [64, 96]
   dropout: 
-    value: 0.
+    value: 0.1
 
   decoder_dim : 
-    value: 64
+    values: [64, 96] 
   masking_ratio: 
-    value: 0.75
+    values : [0.25, 0.5 , 0.75, 0.9]
   decoder_depth: 
-    value: 1
+    values : [1,2]
   decoder_heads: 
-    value: 8
+    value: 4
   decoder_dim_head: 
     value: 64

@@ -11,11 +11,12 @@ class DiffusionTrainLoop(pl.LightningModule):
         super().__init__()
         self.model:CustomGaussianDiffusion = model
         self.config = config
+        self.loss_lambda = config['train_config']['loss_lambda'] 
 
     def training_step(self, batch, batch_idx):
         x0_samples = batch
         loss, *_ = self.model.forward(x0_samples)
-        loss = loss.mean()
+        loss = loss.mean()*self.loss_lambda
         self.log("train_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True)
 
         return loss
@@ -32,7 +33,7 @@ class DiffusionTrainLoop(pl.LightningModule):
                             "model_output": model_output[:max_samples_to_log]})
         else:
             loss, *_ = self.model.forward(x0_samples)
-        loss = loss.mean()
+        loss = loss.mean()*self.loss_lambda
         self.log("val_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True)
 
         return loss 
@@ -40,7 +41,7 @@ class DiffusionTrainLoop(pl.LightningModule):
     def test_step(self, batch, batch_idx):
         x0_samples = batch
         loss, *_ = self.model.forward(x0_samples)
-        loss = loss.mean()
+        loss = loss.mean()*self.loss_lambda
         self.log("test_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True)
 
         return loss

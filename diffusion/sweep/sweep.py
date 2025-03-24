@@ -3,7 +3,6 @@ from utils.utils import read_yaml
 import wandb
 from diffusion.train_loop import DiffusionTrainLoop
 from diffusion.dataloader import get_dataloaders
-from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning import Trainer
 from utils.callbacks import get_callbacks
 import yaml

@@ -1,29 +1,28 @@
 sweep_config:
-  BATCH_SIZE: 4
+  BATCH_SIZE: 64
   weight_decay : 0.0001
-  lr : 0.1
+  lr : 3.0e-4
   scheduler_name: 'cosine_decay_lr_scheduler'
 
-  patch_size: 16
+  patch_size: 4
   num_classes: 3 
-  dim: 64
+  dim: 96
   depth: 3
   heads: 4
   mlp_dim_ratio: 1.2
   pool: 'cls' 
   channels: 1
   dim_head: 64
-  dropout: 0.
+  dropout: 0.15
 
-  decoder_dim : 64
+  decoder_dim : 96
   masking_ratio: 0.75
   decoder_depth: 1
-  decoder_heads: 8
+  decoder_heads: 4
   decoder_dim_head: 64
 
-
 ViT_params:
-  image_size: 150
+  image_size: 64
   patch_size: ${sweep_config.patch_size}
   num_classes: ${sweep_config.num_classes}
   dim: ${sweep_config.dim}
@@ -51,9 +50,9 @@ train_config:
   lr : ${sweep_config.lr}
   ckpt_file_name : '{epoch} | {val_MAE_loss:.3f}'
   dir : "results/MAE"
-  accumulate_grad_batches : 5
-  accelerator : cpu
-  MAX_EPOCHS : 1
+  accumulate_grad_batches : 4
+  accelerator : gpu
+  MAX_EPOCHS : 200
   num_workers: 8
 
 data_config:
@@ -67,8 +66,8 @@ scheduler_params:
   scheduler_name: ${sweep_config.scheduler_name}
 
   cosine_decay_lr_scheduler_params:
-  T_max: 250
-  eta_min: 1.0e-07
+    T_max: 250
+    eta_min: 1.0e-07
 
   exponential_decay_lr_scheduler_params:
     gamma: 0.99
@@ -81,8 +80,8 @@ callbacks_config:
     save_last: True
     verbose : True
   EarlyStopping:
-    monitor: 'val_MAE_Loss'
+    monitor: 'val_MAE_loss'
     mode: 'min'
     min_delta : 0.00005
-    patience : 8
+    patience : 5
     verbose : True
