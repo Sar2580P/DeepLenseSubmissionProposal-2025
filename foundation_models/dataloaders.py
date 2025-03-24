@@ -1,6 +1,7 @@
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
 import pandas as pd
+from torchvision import transforms
 
 class MAEDataset(Dataset):
     def __init__(self, data_csv_path:str , transform=None):
@@ -20,10 +21,11 @@ class MAEDataset(Dataset):
         if 'axion' in img_path:  
             # img.shape : (2,) , img[0]-> (64,64) , img[1]-> np.float64
             img = img[0]
-        img = np.expand_dims(img, axis=0).astype(np.float32)
+        img = np.expand_dims(img, axis=2).astype(np.float32)
         
         if self.transform:
             img = self.transform(img)
+       # print("#########################" , img.shape)
         
         return img
     

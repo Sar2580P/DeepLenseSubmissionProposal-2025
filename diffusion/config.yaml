@@ -1,6 +1,6 @@
 train_config:
   model_name: "Vanilla_Gaussian_Diffusion"
-  BATCH_SIZE: 16
+  BATCH_SIZE: 8
   weight_decay : 0.0001
   lr : 2e-4
   ckpt_file_name : '{epoch} | {val_MSE_loss:.3f}'
@@ -80,7 +80,7 @@ callbacks_config:
     save_last: True
     verbose : True
   EarlyStopping:
-    monitor: 'val_MSE_Loss'
+    monitor: 'val_MSE_loss'
     mode: 'min'
     min_delta : 0.00005
     patience : 8
