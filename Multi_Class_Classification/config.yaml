@@ -28,7 +28,7 @@ callbacks_config:
     save_last: True
     verbose : True
   EarlyStopping:
-    monitor: 'val_HuberLoss'
+    monitor: 'val_ce_loss'
     mode: 'min'
     min_delta : 0.00005
     patience : 8

@@ -13,6 +13,7 @@ class DiffusionTrainLoop(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         x0_samples = batch
         loss, *_ = self.model.forward(x0_samples)
+        loss = loss.mean()
         self.log("train_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True)
 
         return loss
@@ -29,6 +30,7 @@ class DiffusionTrainLoop(pl.LightningModule):
                             "model_output": model_output[:max_samples_to_log]})
         else:
             loss, *_ = self.model.forward(x0_samples)
+        loss = loss.mean()
         self.log("val_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True)
 
         return loss 
@@ -36,6 +38,7 @@ class DiffusionTrainLoop(pl.LightningModule):
     def test_step(self, batch, batch_idx):
         x0_samples = batch
         loss, *_ = self.model.forward(x0_samples)
+        loss = loss.mean()
         self.log("test_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True)
 
         return loss
@@ -91,7 +94,7 @@ class DiffusionTrainLoop(pl.LightningModule):
         columns = [f"Sample-{i}" for i in range(num_samples)]
         
         # Log to wandb using a table format
-        wandb.log({
+        wandb.log({
             f"visualization (epoch-> {self.current_epoch})": wandb.Table(
                 columns=columns,
                 data=[

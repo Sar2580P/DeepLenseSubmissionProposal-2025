@@ -6,9 +6,10 @@ import pandas as pd
 import torchvision.transforms as T
 
 transform = T.Compose([
-    T.ToPILImage(),          # Convert numpy array (150x150) to PIL Image.
+  #  T.ToPILImage(),          # Convert numpy array (150x150) to PIL Image.
+    T.ToTensor() ,
     T.Pad(padding=1),        # Pad 1 pixel on all sides to get 152x152.
-    T.ToTensor()             # Convert back to tensor.
+   # T.ToTensor()             # Convert back to tensor.
 ])
 
 
@@ -31,6 +32,7 @@ class DiffusionDataset(Dataset):
         img_path = self.df.iloc[idx]['img_path']
         img = np.load(img_path).transpose(1, 2, 0)
         if self.transform:
+            img = img.astype(np.float32)
             img = self.transform(img)
         
         return img

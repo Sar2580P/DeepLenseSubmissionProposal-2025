@@ -23,8 +23,8 @@ scheduler_params:
   scheduler_name: 'cosine_decay_lr_scheduler'
 
   cosine_decay_lr_scheduler_params:
-  T_max: 250
-  eta_min: 1.0e-07
+    T_max: 250
+    eta_min: 1.0e-07
 
   exponential_decay_lr_scheduler_params:
     gamma: 0.99

@@ -4,7 +4,9 @@ import pandas as pd
 
 class MAEDataset(Dataset):
     def __init__(self, data_csv_path:str , transform=None):
-        self.transform = transform
+        self.transform = transform or transforms.Compose([
+           					 transforms.ToTensor()  # Ensures NumPy array is converted to a PyTorch tensor
+        				])
         self.data_csv = pd.read_csv(data_csv_path)
             
     
@@ -14,11 +16,11 @@ class MAEDataset(Dataset):
     def __getitem__(self, idx):
         img_path = self.data_csv.iloc[idx]['img_path']
         
-        img = np.load(img_path).astype(np.float32)
+        img = np.load(img_path)
         if 'axion' in img_path:  
             # img.shape : (2,) , img[0]-> (64,64) , img[1]-> np.float64
             img = img[0]
-        img = np.expand_dims(img, axis=0)
+        img = np.expand_dims(img, axis=0).astype(np.float32)
         
         if self.transform:
             img = self.transform(img)
