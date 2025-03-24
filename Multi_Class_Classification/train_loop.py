@@ -55,23 +55,23 @@ class Classifier(pl.LightningModule):
     self.log("val_acc", self.val_accuracy, on_step = False, on_epoch=True,prog_bar=True, logger=True)
     
     
-    # logic for logging confusion matrix plot while training the model...
-    if self.current_epoch%10==0:
-        if batch_idx<4:
-            y_pred = torch.argmax(y_hat, dim=1)
-            self.val_conf_mat.update(y_pred, y)
-        elif batch_idx==4:
-            fig, ax = self.val_conf_mat.plot(labels=['no' , 'sphere' ,'vort'])
-            ax.set_title("Sample Plot")
-            # Extract image array from the figure
-            fig.canvas.draw()
-            image_array = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
-            image_array = image_array.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+    # # logic for logging confusion matrix plot while training the model...
+    # if self.current_epoch%10==0:
+    #     if batch_idx<4:
+    #         y_pred = torch.argmax(y_hat, dim=1)
+    #         self.val_conf_mat.update(y_pred, y)
+    #     elif batch_idx==4:
+    #         fig, ax = self.val_conf_mat.plot(labels=['no' , 'sphere' ,'vort'])
+    #         ax.set_title("Sample Plot")
+    #         # Extract image array from the figure
+    #         fig.canvas.draw()
+    #         image_array = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
+    #         image_array = image_array.reshape(fig.canvas.get_width_height()[::-1] + (3,))
 
-            # Log to Weights & Biases
- @           wandb.log({"plot": wandb.Image(image_array, caption=f"Confusion Matrix Plot (Validation- epoch={self.current_epoch})")})
-#            plt.close(fig)  # Close the figure to free memory
-#            self.val_conf_mat.reset()
+    #         # Log to Weights & Biases
+    #         wandb.log({"plot": wandb.Image(image_array, caption=f"Confusion Matrix Plot (Validation- epoch={self.current_epoch})")})
+    #         plt.close(fig)  # Close the figure to free memory
+    #         self.val_conf_mat.reset()
             
     return ce_loss
 
