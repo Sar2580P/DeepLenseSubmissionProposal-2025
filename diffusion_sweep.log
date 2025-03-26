@@ -1,0 +1,61 @@
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Agent Starting Run: 2074krl9 with config:
+wandb: 	BATCH_SIZE: 8
+wandb: 	attn_dim_head: 32
+wandb: 	attn_heads: 4
+wandb: 	beta_schedule: sigmoid
+wandb: 	dim: 128
+wandb: 	dim_mults: [1, 2, 3, 4]
+wandb: 	dropout: 0.15
+wandb: 	flash_attn: False
+wandb: 	init_dim: 32
+wandb: 	learned_sinusoidal_cond: False
+wandb: 	learned_sinusoidal_dim: 32
+wandb: 	learned_variance: False
+wandb: 	lr: 0.0003
+wandb: 	min_snr_gamma: 3
+wandb: 	objective: pred_v
+wandb: 	out_dim: 1
+wandb: 	random_fourier_features: False
+wandb: 	scheduler_name: cosine_decay_lr_scheduler
+wandb: 	sinusoidal_pos_emb_theta: 10000
+wandb: 	timesteps: 100
+wandb: 	weight_decay: 1e-05
+wandb: Currently logged in as: sporwal1818 (shri_krishna) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: creating run
+wandb: Tracking run with wandb version 0.19.8
+wandb: Run data is saved locally in /scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/wandb/run-20250325_211334-2074krl9
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run rural-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep
+wandb: 🧹 View sweep at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/2pnsdopn
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/runs/2074krl9
+Trainer already configured with model summary callbacks: [<class 'pytorch_lightning.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/loggers/wandb.py:390: There is a wandb run already in progress and newly created instances of `WandbLogger` will reuse this run. If this is not desired, call `wandb.finish()` before instantiating `WandbLogger`.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+Create sweep with ID: 2pnsdopn
+Sweep URL: https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/2pnsdopn
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                        ┃ Type                    ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ model                       │ CustomGaussianDiffusion │ 55.4 M │
+│ 1  │ model.model                 │ Unet                    │ 55.4 M │
+│ 2  │ model.model.init_conv       │ Conv2d                  │  1.6 K │
+│ 3  │ model.model.time_mlp        │ Sequential              │  328 K │
+│ 4  │ model.model.downs           │ ModuleList              │ 12.7 M │
+│ 5  │ model.model.ups             │ ModuleList              │ 31.6 M │
+│ 6  │ model.model.mid_block1      │ ResnetBlock             │  5.2 M │
+│ 7  │ model.model.mid_attn        │ Attention               │  264 K │
+│ 8  │ model.model.mid_block2      │ ResnetBlock             │  5.2 M │
+│ 9  │ model.model.final_res_block │ ResnetBlock             │ 62.7 K │
+│ 10 │ model.model.final_conv      │ Conv2d                  │     33 │
+└────┴─────────────────────────────┴─────────────────────────┴────────┘
+Trainable params: 55.4 M                                                        
+Non-trainable params: 0                                                         
+Total params: 55.4 M                                                            
+Total estimated model params size (MB): 221                                     
+SLURM auto-requeueing enabled. Setting signal handlers.

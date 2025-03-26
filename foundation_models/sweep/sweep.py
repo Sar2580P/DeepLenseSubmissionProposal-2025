@@ -8,10 +8,12 @@ import time
 from omegaconf import OmegaConf
 from foundation_models.train_loop import MAETrainLoop
 from foundation_models.dataloaders import get_dataloaders
+from pytorch_lightning.loggers import WandbLogger
 
+PROJECT_NAME="DeepLense_Foundation_Models_Sweep"
 sweep_config =read_yaml('foundation_models/sweep/sweep_config.yaml')
 sweep_config = OmegaConf.to_container(sweep_config, resolve=True)
-sweep_id = wandb.sweep(sweep_config, project="DeepLense_Foundation_Models_Sweep")
+sweep_id = wandb.sweep(sweep_config, project=PROJECT_NAME)
 
 # Define the training function
 def train(config=None):
@@ -40,7 +42,7 @@ def train(config=None):
             from foundation_models.architectures.mae import MAE
             from foundation_models.architectures.vit import ViT
             encoder = ViT(**config['ViT_params'])
-            mae_model = MAE(encoder, **config['MAE_params'])
+            mae_model = MAE(encoder=encoder, **config['MAE_params'])
         else:
             raise ValueError(f"Unknown model name: {tr_config['model_name']}, please choose from ['MAE_ViT']")
 
@@ -50,15 +52,17 @@ def train(config=None):
         early_stop_callback, _, rich_progress_bar, rich_model_summary, lr_monitor = get_callbacks(config['callbacks_config'])
 
         #___________________________________________________________________________________________________________________
+        wandb_logger = WandbLogger(project=PROJECT_NAME)
 
         torch.set_float32_matmul_precision('high')
-        trainer = Trainer(callbacks=[early_stop_callback, rich_progress_bar, rich_model_summary, lr_monitor],
+        trainer = Trainer(callbacks=[early_stop_callback, rich_progress_bar, rich_model_summary, lr_monitor],logger=[wandb_logger] ,
                         accelerator = tr_config['accelerator'] ,accumulate_grad_batches=tr_config['accumulate_grad_batches'] , 
-                        max_epochs=tr_config['MAX_EPOCHS'])
+                        max_epochs=tr_config['MAX_EPOCHS'], devices=[0],         # Use only GPU 0
+    num_nodes=1)
 
         trainer.fit(model_obj, tr_loader, val_loader)
         trainer.test(model_obj, tst_loader)
 
 
 # Run the sweep
-wandb.agent(sweep_id, function=train, count = 50)
+wandb.agent(sweep_id, function=train, count =50)

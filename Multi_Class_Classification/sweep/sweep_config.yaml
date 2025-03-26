@@ -7,17 +7,21 @@ metric :
 parameters :
     BATCH_SIZE :
       value : 64
-    lr : 
-      distribution : 'normal'
-      mu : 4e-4
-      sigma : 1e-4
+    lr :
+      min : 5e-5
+      max : 2e-4 
+      #distribution : 'normal'
+      #mu : 2e-5
+     # sigma : 3e-4
     weight_decay :
-      distribution : 'normal'
-      mu : 1e-5
-      sigma : 1e-4
+      min : 1e-5
+      max : 7e-5
+#      distribution : 'normal'
+#      mu : 1e-5
+#      sigma : 1e-4
     accumulate_grad_batches : 
       values : [2, 4]
     ImagenetModels_submodel : 
       value : 'resnet18'
     should_finetune_model :
-      value : True
+      value : False

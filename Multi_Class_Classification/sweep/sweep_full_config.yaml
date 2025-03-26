@@ -1,49 +1,45 @@
-train_config:
-  model_name: "ImagenetModels"
-  BATCH_SIZE: 64
-  weight_decay : 0.000001
-  lr : 5.0e-4
-  ckpt_file_name : '{epoch} | {val_ce_loss:.3f} | {val_kappa:.3f} | {val_acc:.3f}'
-  dir : "results/Classification"
-  accumulate_grad_batches : 4
-  accelerator : gpu
-  MAX_EPOCHS : 200
-  num_workers: 8
-  num_classes : 3
-
-data_config:
-  dataset_type: "imagenet_3channel"
-  train_path : "data/dataframes/common_classification_dataset/train_df.csv"
-  val_path : "data/dataframes/common_classification_dataset/val_df.csv"
-  test_path : "data/dataframes/common_classification_dataset/test_df.csv"
-  batch_size : ${train_config.BATCH_SIZE}
-  num_workers : ${train_config.num_workers}
-  
-  
+ImagenetModels_params:
+  model_name: resnet18
+  num_classes: ${train_config.num_classes}
+  should_finetune: false
 callbacks_config:
-  ModelCheckpoint:
-    monitor: 'val_ce_loss'
-    mode: 'min'
-    save_top_k: 1
-    save_last: True
-    verbose : True
   EarlyStopping:
-    monitor: 'val_ce_loss'
-    mode: 'min'
-    min_delta : 0.00002
-    patience : 5
-    verbose : True
-
-lr_scheduler_params :
-  lr_scheduler_name: 'exponential_decay_lr_scheduler'
+    min_delta: 0.0001
+    mode: min
+    monitor: val_ce_loss
+    patience: 10
+    verbose: true
+  ModelCheckpoint:
+    mode: min
+    monitor: val_ce_loss
+    save_last: true
+    save_top_k: 1
+    verbose: true
+data_config:
+  batch_size: ${train_config.BATCH_SIZE}
+  dataset_type: imagenet_3channel
+  num_workers: ${train_config.num_workers}
+  test_path: data/dataframes/common_classification_dataset/test_df.csv
+  train_path: data/dataframes/common_classification_dataset/train_df.csv
+  val_path: data/dataframes/common_classification_dataset/val_df.csv
+lr_scheduler_params:
+  cosine_annealing_lr_scheduler_params:
+    T_max: 100
+    eta_min: 1.0e-07
   exponential_decay_lr_scheduler_params:
     gamma: 0.99
-
-  cosine_annealing_lr_scheduler_params:
-    T_max: 250
-    eta_min: 1.0e-07
-
-ImagenetModels_params : 
-  model_name : "resnet18"
-  should_finetune : False
-  num_classes : ${train_config.num_classes}
+  lr_scheduler_name: exponential_decay_lr_scheduler
+train_config:
+  BATCH_SIZE: 64
+  ImagenetModels_submodel: resnet18
+  MAX_EPOCHS: 60
+  accelerator: gpu
+  accumulate_grad_batches: 4
+  ckpt_file_name: '{epoch} | {val_ce_loss:.3f} | {val_kappa:.3f} | {val_acc:.3f}'
+  dir: results/Classification
+  lr: 0.0001178793039621521
+  model_name: ImagenetModels
+  num_classes: 3
+  num_workers: 8
+  should_finetune_model: false
+  weight_decay: 1.3314027877165238e-05

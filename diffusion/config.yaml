@@ -1,13 +1,13 @@
 train_config:
   model_name: "Vanilla_Gaussian_Diffusion"
   BATCH_SIZE: 8
-  weight_decay : 0.0001
-  lr : 2e-4
+  weight_decay : 5e-7
+  lr : 1e-4
   ckpt_file_name : '{epoch} | {val_MSE_loss:.3f}'
   dir : "results/Diffusion"
-  accumulate_grad_batches : 8
+  accumulate_grad_batches : 5
   accelerator : gpu
-  MAX_EPOCHS : 100
+  MAX_EPOCHS : 200
   num_workers: 8
   should_log_images : !!bool True
   log_images_every_n_epochs : 5
@@ -24,7 +24,7 @@ scheduler_params:
   scheduler_name: 'cosine_decay_lr_scheduler'
 
   cosine_decay_lr_scheduler_params:
-    T_max: 250
+    T_max: 100
     eta_min: 1.0e-07
 
   exponential_decay_lr_scheduler_params:
@@ -41,10 +41,10 @@ noise_scheduler_params:
 
 GaussianDiffusion_params:
   image_size: 152
-  timesteps: 100
+  timesteps: 50
   sampling_timesteps: null
   objective: 'pred_v'
-  beta_schedule : 'sigmoid'
+  beta_schedule : 'cosine'
   schedule_fn_kwargs : ${noise_scheduler_params.${GaussianDiffusion_params.beta_schedule}}
   ddim_sampling_eta : 0.4
   auto_normalize : True
@@ -54,7 +54,7 @@ GaussianDiffusion_params:
   immiscible : False
 
 UNet_params:
-  dim : 128
+  dim : 96
   init_dim : 32
   out_dim : 1
   dim_mults : [1, 2, 3, 4]
@@ -65,9 +65,9 @@ UNet_params:
   random_fourier_features : False
   learned_sinusoidal_dim : 32
   sinusoidal_pos_emb_theta : 10000 
-  dropout : 0.15
-  attn_dim_head : 32
-  attn_heads : 4
+  dropout : 0.1
+  attn_dim_head : 48
+  attn_heads : 6
   full_attn : null    # defaults to full attention only for inner most layer
   flash_attn : False
 
@@ -83,6 +83,6 @@ callbacks_config:
   EarlyStopping:
     monitor: 'val_MSE_loss'
     mode: 'min'
-    min_delta : 0.00005
+    min_delta : 0.00002
     patience : 8
     verbose : True

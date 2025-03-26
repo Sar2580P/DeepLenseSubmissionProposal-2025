@@ -170,6 +170,7 @@ class ViT(nn.Module):
 
         # Classification head
         self.mlp_head = nn.Linear(dim, num_classes)
+        self.dropout = nn.Dropout(dropout)  # Dropout layer for regularization
         
     def forward(self, img):
         """

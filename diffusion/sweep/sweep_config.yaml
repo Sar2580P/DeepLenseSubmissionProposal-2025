@@ -26,7 +26,7 @@ parameters :
   objective : 
     value : 'pred_v'
   beta_schedule : 
-    value : ['sigmoid', 'cosine']
+    values : ['sigmoid', 'cosine']
   min_snr_gamma : 
     values : [3,5]
 
