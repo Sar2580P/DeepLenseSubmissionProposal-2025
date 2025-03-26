@@ -17,7 +17,7 @@ class DiffusionTrainLoop(pl.LightningModule):
         x0_samples = batch
         loss, *_ = self.model.forward(x0_samples)
         loss = loss.mean()*self.loss_lambda
-        self.log("train_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True)
+        self.log("train_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
 
         return loss
 
@@ -34,7 +34,7 @@ class DiffusionTrainLoop(pl.LightningModule):
         else:
             loss, *_ = self.model.forward(x0_samples)
         loss = loss.mean()*self.loss_lambda
-        self.log("val_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True)
+        self.log("val_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
 
         return loss 
 
@@ -42,7 +42,7 @@ class DiffusionTrainLoop(pl.LightningModule):
         x0_samples = batch
         loss, *_ = self.model.forward(x0_samples)
         loss = loss.mean()*self.loss_lambda
-        self.log("test_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True)
+        self.log("test_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
 
         return loss
 

@@ -66,8 +66,8 @@ sweep_config:
   BATCH_SIZE: 8
   attn_dim_head: 32
   attn_heads: 4
-  beta_schedule: cosine
-  dim: 96
+  beta_schedule: sigmoid
+  dim: 128
   dim_mults:
   - 1
   - 2
@@ -86,7 +86,7 @@ sweep_config:
   random_fourier_features: false
   scheduler_name: cosine_decay_lr_scheduler
   sinusoidal_pos_emb_theta: 10000
-  timesteps: 50
+  timesteps: 100
   weight_decay: 1.0e-05
 train_config:
   BATCH_SIZE: ${sweep_config.BATCH_SIZE}

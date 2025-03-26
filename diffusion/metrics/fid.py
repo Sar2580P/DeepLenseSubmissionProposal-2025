@@ -41,7 +41,7 @@ class FIDEvaluation:
             samples = repeat(samples, "b 1 ... -> b c ...", c=3)
 
         self.inception_v3.eval()
-        features = self.inception_v3(samples)[0]
+        features = self.inception_v3(samples.to(self.device))[0]
 
         if features.size(2) != 1 or features.size(3) != 1:
             features = adaptive_avg_pool2d(features, output_size=(1, 1))

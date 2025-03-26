@@ -1,0 +1,82 @@
+/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+Trainer already configured with model summary callbacks: [<class 'pytorch_lightning.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: sporwal1818 (shri_krishna) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: creating run
+wandb: Tracking run with wandb version 0.19.8
+wandb: Run data is saved locally in ./wandb/run-20250326_130352-4bxr7hbx
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run ImagenetModels--data=imagenet_3channel--submodel=submodel=resnet18
+wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLenseClassificationTask
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLenseClassificationTask/runs/4bxr7hbx
+/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:652: Checkpoint directory results/Classification/ImagenetModels--data=imagenet_3channel/ckpts exists and is not empty.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                    ┃ Type                      ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ model_obj               │ ImagenetModels            │ 11.2 M │
+│ 1  │ model_obj.model         │ ResNet                    │ 11.2 M │
+│ 2  │ model_obj.model.conv1   │ Conv2d                    │  9.4 K │
+│ 3  │ model_obj.model.bn1     │ BatchNorm2d               │    128 │
+│ 4  │ model_obj.model.relu    │ ReLU                      │      0 │
+│ 5  │ model_obj.model.maxpool │ MaxPool2d                 │      0 │
+│ 6  │ model_obj.model.layer1  │ Sequential                │  147 K │
+│ 7  │ model_obj.model.layer2  │ Sequential                │  525 K │
+│ 8  │ model_obj.model.layer3  │ Sequential                │  2.1 M │
+│ 9  │ model_obj.model.layer4  │ Sequential                │  8.4 M │
+│ 10 │ model_obj.model.avgpool │ AdaptiveAvgPool2d         │      0 │
+│ 11 │ model_obj.model.fc      │ Linear                    │  1.5 K │
+│ 12 │ tr_kappa                │ MulticlassCohenKappa      │      0 │
+│ 13 │ val_kappa               │ MulticlassCohenKappa      │      0 │
+│ 14 │ tst_kappa               │ MulticlassCohenKappa      │      0 │
+│ 15 │ tr_accuracy             │ MulticlassAccuracy        │      0 │
+│ 16 │ val_accuracy            │ MulticlassAccuracy        │      0 │
+│ 17 │ tst_accuracy            │ MulticlassAccuracy        │      0 │
+│ 18 │ val_conf_mat            │ MulticlassConfusionMatrix │      0 │
+│ 19 │ criterion               │ CrossEntropyLoss          │      0 │
+└────┴─────────────────────────┴───────────────────────────┴────────┘
+Trainable params: 11.2 M                                                        
+Non-trainable params: 0                                                         
+Total params: 11.2 M                                                            
+Total estimated model params size (MB): 44                                      
+SLURM auto-requeueing enabled. Setting signal handlers.
+Metric val_ce_loss improved. New best score: 1.102
+Epoch 0, global step 95: 'val_ce_loss' reached 1.10203 (best 1.10203), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=0 | val_ce_loss=1.102 | val_kappa=0.023 | val_acc=0.344.ckpt' as top 1
+Epoch 1, global step 190: 'val_ce_loss' was not in top 1
+Epoch 2, global step 285: 'val_ce_loss' was not in top 1
+Epoch 3, global step 380: 'val_ce_loss' was not in top 1
+Epoch 4, global step 475: 'val_ce_loss' was not in top 1
+Epoch 5, global step 570: 'val_ce_loss' was not in top 1
+Epoch 6, global step 665: 'val_ce_loss' was not in top 1
+Epoch 7, global step 760: 'val_ce_loss' was not in top 1
+Monitored metric val_ce_loss did not improve in the last 8 records. Best score: 1.102. Signaling Trainer to stop.
+Epoch 8, global step 855: 'val_ce_loss' was not in top 1
+Epoch 8/99 ━━━━━━━━━━━━━━━━ 380/380 0:00:23 •        16.76it/s v_num: bx_5      
+                                    0:00:00                    val_ce_loss:     
+                                                               2.178 val_kappa: 
+                                                               0.133 val_acc:   
+                                                               0.398            
+                                                               train_ce_loss:   
+                                                               0.098            
+                                                               train_kappa:     
+                                                               0.973 train_acc: 
+                                                               0.976            
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃        Test metric        ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│      test_acc_epoch       │    0.3970000147819519     │
+│    test_ce_loss_epoch     │     2.186984062194824     │
+│     test_kappa_epoch      │    0.14680230617523193    │
+└───────────────────────────┴───────────────────────────┘
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47/47 0:00:02 • 0:00:00 18.12it/s 
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mImagenetModels--data=imagenet_3channel--submodel=submodel=resnet18[0m at: [34mhttps://wandb.ai/shri_krishna/DeepLenseClassificationTask/runs/4bxr7hbx[0m

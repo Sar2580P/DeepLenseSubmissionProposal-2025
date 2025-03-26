@@ -4,10 +4,10 @@ ImagenetModels_params:
   should_finetune: false
 callbacks_config:
   EarlyStopping:
-    min_delta: 1.0e-05
+    min_delta: 0.0001
     mode: min
     monitor: val_ce_loss
-    patience: 15
+    patience: 10
     verbose: true
   ModelCheckpoint:
     mode: min
@@ -24,22 +24,22 @@ data_config:
   val_path: data/dataframes/common_classification_dataset/val_df.csv
 lr_scheduler_params:
   cosine_annealing_lr_scheduler_params:
-    T_max: 250
+    T_max: 100
     eta_min: 1.0e-07
   exponential_decay_lr_scheduler_params:
     gamma: 0.99
   lr_scheduler_name: exponential_decay_lr_scheduler
 train_config:
-  BATCH_SIZE: 128
+  BATCH_SIZE: 64
   ImagenetModels_submodel: resnet18
-  MAX_EPOCHS: 200
+  MAX_EPOCHS: 60
   accelerator: gpu
   accumulate_grad_batches: 4
   ckpt_file_name: '{epoch} | {val_ce_loss:.3f} | {val_kappa:.3f} | {val_acc:.3f}'
   dir: results/Classification
-  lr: 1.9421020788658476e-05
+  lr: 0.0001178793039621521
   model_name: ImagenetModels
   num_classes: 3
   num_workers: 8
-  should_finetune_model: true
-  weight_decay: 2.127725806601565e-05
+  should_finetune_model: false
+  weight_decay: 1.3314027877165238e-05

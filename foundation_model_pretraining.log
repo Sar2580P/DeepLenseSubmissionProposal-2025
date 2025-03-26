@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/foundation_models/trainer.py", line 34, in <module>
+Traceback (most recent call last):
+  File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/foundation_models/trainer.py", line 34, in <module>
+    raise ValueError(f"Unknown model name: {tr_config['model_name']}")
+ValueError: Unknown model name: Task-4A_ViT
+    raise ValueError(f"Unknown model name: {tr_config['model_name']}")
+ValueError: Unknown model name: Task-4A_ViT
+srun: error: gpu001: task 1: Exited with exit code 1
+srun: error: gpu001: task 0: Exited with exit code 1

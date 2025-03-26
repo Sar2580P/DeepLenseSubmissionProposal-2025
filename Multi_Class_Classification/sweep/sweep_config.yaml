@@ -6,10 +6,10 @@ metric :
 
 parameters :
     BATCH_SIZE :
-      value : 128
+      value : 64
     lr :
-      min : 1e-5
-      max : 5e-5 
+      min : 5e-5
+      max : 2e-4 
       #distribution : 'normal'
       #mu : 2e-5
      # sigma : 3e-4
@@ -24,4 +24,4 @@ parameters :
     ImagenetModels_submodel : 
       value : 'resnet18'
     should_finetune_model :
-      value : True
+      value : False

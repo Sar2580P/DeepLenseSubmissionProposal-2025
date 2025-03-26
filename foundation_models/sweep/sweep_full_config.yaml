@@ -49,16 +49,16 @@ sweep_config:
   decoder_dim: 96
   decoder_dim_head: 64
   decoder_heads: 4
-  depth: 4
-  dim: 64
+  depth: 3
+  dim: 96
   dim_head: 96
   dropout: 0.1
   heads: 4
   lr: 0.0003
   masking_ratio: 0.5
-  mlp_dim_ratio: 2
+  mlp_dim_ratio: 1.5
   num_classes: 3
-  patch_size: 4
+  patch_size: 8
   pool: cls
   scheduler_name: cosine_decay_lr_scheduler
   weight_decay: 2.0e-05
