@@ -38,7 +38,7 @@ def train(config=None):
         tr_config = config['train_config']
         data_config = config['data_config']
 
-        unet = Unet(**config['Unet_params'])
+        unet = Unet(**config['UNet_params'])
         if tr_config['model_name'].lower()=='Vanilla_Gaussian_Diffusion'.lower():
             model = CustomGaussianDiffusion(unet, **config['GaussianDiffusion_params'])
         else:
@@ -54,7 +54,10 @@ def train(config=None):
         torch.set_float32_matmul_precision('high')
         trainer = Trainer(callbacks=[early_stop_callback, rich_progress_bar, rich_model_summary, lr_monitor],
                         accelerator = tr_config['accelerator'] ,accumulate_grad_batches=tr_config['accumulate_grad_batches'] , 
-                        max_epochs=tr_config['MAX_EPOCHS'])
+                        max_epochs=tr_config['MAX_EPOCHS'], devices=[0],          # Use both GPUs (device 0 and device 1)
+    num_nodes=1,        # Single GPU node
+#    strategy="ddp",     # Distributed Data Parallel (DDP)
+)
 
         trainer.fit(model_obj, tr_loader, val_loader)
         trainer.test(model_obj, tst_loader)

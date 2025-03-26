@@ -40,7 +40,7 @@ def train(config=None):
             from foundation_models.architectures.mae import MAE
             from foundation_models.architectures.vit import ViT
             encoder = ViT(**config['ViT_params'])
-            mae_model = MAE(encoder, **config['MAE_params'])
+            mae_model = MAE(encoder=encoder, **config['MAE_params'])
         else:
             raise ValueError(f"Unknown model name: {tr_config['model_name']}, please choose from ['MAE_ViT']")
 
@@ -54,7 +54,8 @@ def train(config=None):
         torch.set_float32_matmul_precision('high')
         trainer = Trainer(callbacks=[early_stop_callback, rich_progress_bar, rich_model_summary, lr_monitor],
                         accelerator = tr_config['accelerator'] ,accumulate_grad_batches=tr_config['accumulate_grad_batches'] , 
-                        max_epochs=tr_config['MAX_EPOCHS'])
+                        max_epochs=tr_config['MAX_EPOCHS'], devices=[0],         # Use only GPU 0
+    num_nodes=1)
 
         trainer.fit(model_obj, tr_loader, val_loader)
         trainer.test(model_obj, tst_loader)

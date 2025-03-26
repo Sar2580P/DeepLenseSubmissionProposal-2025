@@ -43,7 +43,7 @@ def train(config=None):
         else:
             raise ValueError(f"Unknown model name: {tr_config['model_name']}")
 
-        model_obj = Classifier(model, train_config=tr_config)
+        model_obj = Classifier(model, config=config)
 
         tr_loader, val_loader, tst_loader = get_dataloaders(data_config)
         
@@ -52,7 +52,8 @@ def train(config=None):
         torch.set_float32_matmul_precision('high')
         trainer = Trainer(callbacks=[early_stop_callback, rich_progress_bar, rich_model_summary, lr_monitor],
                 accelerator = tr_config['accelerator'] ,accumulate_grad_batches=tr_config['accumulate_grad_batches'] , 
-                max_epochs=tr_config['MAX_EPOCHS'])
+                max_epochs=tr_config['MAX_EPOCHS'], devices=[0],         # Use only GPU 0
+    num_nodes=1,)         # Single GPU node)
 
         trainer.fit(model_obj, tr_loader, val_loader)
         trainer.test(model_obj, tst_loader)
