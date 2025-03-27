@@ -37,6 +37,18 @@ class SuperResolutionAE(MAE):
             nn.Conv2d(32, 1, kernel_size=3, stride=1, padding=1),
             nn.Sigmoid()  # Normalize to [0, 1]
         )
+        
+    def compute_loss(self, pred_super_res, high_res_img):
+        # Compute the reconstruction loss (mean squared error)
+        recon_loss = F.mse_loss(pred_super_res, high_res_img, reduction="none")
+        
+        mse_per_image = torch.mean(recon_loss, dim=[1, 2, 3])   # Shape: (batch_size,)
+        mse_per_image = torch.clamp(mse_per_image, min=1e-8)
+        psnr_per_image = 10 * torch.log10(1 / mse_per_image)    # MAX_I=1 for pixel values in [0, 1]
+        
+
+        return mse_per_image.mean().item(), psnr_per_image.mean().item()
+    
 
     def forward(self, img, high_res_img):
         device = img.device
@@ -74,7 +86,7 @@ class SuperResolutionAE(MAE):
         
         pred_super_res = self.upsample(pred_pixel_values)
         #print(f"pred_pixel_values shape: {pred_pixel_values.shape}")
-        recon_loss = self.compute_loss(pred_super_res, high_res_img)
+        # losses = self.compute_loss(pred_super_res, high_res_img)
         
-        return recon_loss, pred_super_res, high_res_img
+        return  pred_super_res
 

@@ -11,23 +11,14 @@ ViT_params:
   dim_head: 64
   dropout: 0.1
 
-MAE_params:
-  decoder_dim : 128
-  masking_ratio: 0.75   # Test it for [0.6, 0.75 , 0.85]
-  decoder_depth: 1
-  decoder_heads: 4
-  decoder_dim_head: 64
-  mlp_dim_ratio: 3
-  dropout: 0.1
-
 
 train_config:
-  model_name: 'Task-4A_ViT'       #"MAE_ViT"
+  model_name: 'Task-4A_ViT' 
   dataset_objective : "finetuned_classification"
   BATCH_SIZE: 64
   weight_decay : 0.0001
-  lr : 3.0e-5
-  ckpt_file_name : '{epoch} | {val_ce_loss:.3f}'   #  '{epoch} | {val_MAE_loss:.3f}'
+  lr : 5.0e-6
+  ckpt_file_name : '{epoch} | {val_ce_loss:.3f}'
   dir : "results/MAE"
   accumulate_grad_batches : 3
   accelerator : 'gpu'
@@ -56,13 +47,13 @@ scheduler_params:
 
 callbacks_config:
   ModelCheckpoint:
-    monitor: 'val_ce_loss'   # 'val_MAE_loss'
+    monitor: 'val_ce_loss'
     mode: 'min'
     save_top_k: 1
     save_last: True
     verbose : True
   EarlyStopping:
-    monitor: 'val_ce_loss'  # 'val_MAE_loss'
+    monitor: 'val_ce_loss'
     mode: 'min'
     min_delta : 0.00005
     patience : 8
