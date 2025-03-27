@@ -1,12 +1,12 @@
- ViT_params:
+ViT_params:
   image_size: 64
   patch_size: 4
-  num_classes: 3
+  num_classes: 3 
   dim: 128
   depth: 4
   heads: 4
   mlp_dim_ratio: 3
-  pool: 'cls'
+  pool: 'cls' 
   channels: 1
   dim_head: 64
   dropout: 0.1
@@ -14,37 +14,31 @@
 MAE_params:
   decoder_dim : 128
   masking_ratio: 0.75   # Test it for [0.6, 0.75 , 0.85]
-  decoder_depth: 3
+  decoder_depth: 1
   decoder_heads: 4
   decoder_dim_head: 64
   mlp_dim_ratio: 3
   dropout: 0.1
 
-SuperResolutionAE_params:
-  patch_height: 16 
-  patch_width: 16 
-  high_res_height: 128 
-  high_res_width: 128
 
 train_config:
-  model_name: 'Task-4B_SuperResolution'
-  dataset_objective : "finetuned_super_res"
+  model_name: "MAE_ViT"
+  dataset_objective : "pretraining"
   BATCH_SIZE: 64
   weight_decay : 0.0001
   lr : 3.0e-5
-  ckpt_file_name : '{epoch} | {val_MSE_loss:.3f}'   #  '{epoch} | {val_MAE_loss:.3f}'
+  ckpt_file_name : '{epoch} | {val_MSE_loss:.3f}'
   dir : "results/MAE"
   accumulate_grad_batches : 3
   accelerator : 'gpu'
   MAX_EPOCHS : 100
   num_workers: 8
-  pretrained_mae_ckpt_path: 'results/MAE/MAE_ViT_pretraining/ckpts/epoch=119 | val_MAE_loss=0.010.ckpt'
-  find_unused_parameters : False
+  find_unused_parameters : True
 
 data_config:
-  tr_path: "data/dataframes/foundation_models_superres_dataset/train_df.csv"
-  val_path : "data/dataframes/foundation_models_superres_dataset/val_df.csv"
-  tst_path : "data/dataframes/foundation_models_superres_dataset/test_df.csv"
+  tr_path: "data/dataframes/foundation_models_classification_dataset/train_df.csv"
+  val_path : "data/dataframes/foundation_models_classification_dataset/val_df.csv"
+  tst_path : "data/dataframes/foundation_models_classification_dataset/test_df.csv"
   batch_size : ${train_config.BATCH_SIZE}
   num_workers : ${train_config.num_workers}
   objective : ${train_config.dataset_objective}
@@ -61,13 +55,13 @@ scheduler_params:
 
 callbacks_config:
   ModelCheckpoint:
-    monitor: 'val_MSE_loss'   # 'val_MAE_loss'
+    monitor:  'val_MSE_loss'
     mode: 'min'
     save_top_k: 1
     save_last: True
     verbose : True
   EarlyStopping:
-    monitor: 'val_MSE_loss'  # 'val_MAE_loss'
+    monitor: 'val_MSE_loss'
     mode: 'min'
     min_delta : 0.00005
     patience : 8

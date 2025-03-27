@@ -21,22 +21,33 @@ class SuperResolutionAE(MAE):
 
         # Upsampling layers for super-resolution
         self.upsample = nn.Sequential(
-            Rearrange('b (h w) (p1 p2 c) -> b c (h p1) (w p2)', 
+            # Rearrange patches into image format
+            Rearrange('b (h w) (p1 p2 c) -> b c (h p1) (w p2)',
                       p1=patch_height, p2=patch_width),
-            nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1),
-            nn.PReLU(),
-            nn.Conv2d(32, 48, kernel_size=3, stride=1, padding=1),
+
+            # Upsample from 76x76 to 152x152 using bilinear interpolation
+            nn.Upsample(scale_factor=2, mode='bilinear', align_corners=False),
+
+            # Convolutional layer to refine features after upsampling
+            nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1),
             nn.PReLU(),
 
-            # Adaptive Upsampling
-            nn.Upsample(size=(high_res_height // 2, high_res_width // 2), mode="bilinear", align_corners=False),
-            nn.Conv2d(48, 32, kernel_size=3, stride=1, padding=1),
-            nn.PReLU(),
-
-            nn.Upsample(size=(high_res_height, high_res_width), mode="bilinear", align_corners=False),
-            nn.Conv2d(32, 1, kernel_size=3, stride=1, padding=1),
-            nn.Sigmoid()  # Normalize to [0, 1]
+            # Final convolution to produce the high-resolution image
+            nn.Conv2d(64, 1, kernel_size=3, stride=1, padding=1),
+            nn.Sigmoid()  # Normalize output to [0, 1]
         )
+        
+    def compute_loss(self, pred_super_res, high_res_img):
+        # Compute the reconstruction loss (mean squared error)
+        recon_loss = F.mse_loss(pred_super_res, high_res_img, reduction="none")
+        
+        mse_per_image = torch.mean(recon_loss, dim=[1, 2, 3])   # Shape: (batch_size,)
+        mse_per_image = torch.clamp(mse_per_image, min=1e-8)
+        psnr_per_image = 10 * torch.log10(1 / mse_per_image)    # MAX_I=1 for pixel values in [0, 1]
+        
+
+        return mse_per_image.mean().item(), psnr_per_image.mean().item()
+    
 
     def forward(self, img, high_res_img):
         device = img.device
@@ -74,7 +85,7 @@ class SuperResolutionAE(MAE):
         
         pred_super_res = self.upsample(pred_pixel_values)
         #print(f"pred_pixel_values shape: {pred_pixel_values.shape}")
-        recon_loss = self.compute_loss(pred_super_res, high_res_img)
+        # losses = self.compute_loss(pred_super_res, high_res_img)
         
-        return recon_loss, pred_super_res, high_res_img
+        return  pred_super_res
 

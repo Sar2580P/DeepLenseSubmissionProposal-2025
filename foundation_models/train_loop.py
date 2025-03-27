@@ -2,6 +2,12 @@ import torch
 import pytorch_lightning as pl
 from foundation_models.architectures.mae import MAE
 import torchmetrics
+from foundation_models.architectures.vit import ViT
+from foundation_models.architectures.super_resolution import SuperResolutionAE
+import wandb
+from pytorch_lightning.loggers import WandbLogger
+import numpy as np
+from torchmetrics.image import StructuralSimilarityIndexMeasure
 
 class MAETrainLoop(pl.LightningModule):
     def __init__(self, model, config:dict):
@@ -12,21 +18,21 @@ class MAETrainLoop(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         x_samples = batch
         loss = self.model.forward(x_samples)
-        self.log("train_MAE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+        self.log("train_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
 
         return loss
 
     def validation_step(self, batch, batch_idx):
         x_samples = batch
         loss = self.model.forward(x_samples)
-        self.log("val_MAE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+        self.log("val_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
 
         return loss
     
     def test_step(self, batch, batch_idx):
         x_samples = batch
         loss = self.model.forward(x_samples)
-        self.log("test_MAE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+        self.log("test_MSE_loss", loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
 
         return loss
 
@@ -43,7 +49,7 @@ class MAETrainLoop(pl.LightningModule):
         elif schdlr_config['scheduler_name'] == 'cosine_decay_lr_scheduler':
             lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optim, **scheduler_params)
 
-        return [optim], [{'scheduler': lr_scheduler, 'interval': 'epoch', 'monitor': 'train_MAE_loss',
+        return [optim], [{'scheduler': lr_scheduler, 'interval': 'epoch', 'monitor': 'train_MSE_loss',
                         'name': schdlr_config['scheduler_name']}]
 
 
@@ -114,7 +120,7 @@ class ViT_Classifier_TrainLoop(pl.LightningModule):
     base_params = [p for n, p in self.model.named_parameters() if "mlp_head" not in n]
     layer_lr = [
                  {'params': base_params},
-                 {'params': self.model.mlp_head.parameters(), 'lr': tr_config['lr'] * 5}
+                 {'params': self.model.mlp_head.parameters(), 'lr': tr_config['lr'] * 10.0}
                ]
 
     optim =  torch.optim.Adam(layer_lr, lr = tr_config['lr'], weight_decay =tr_config['weight_decay'])   # https://pytorch.org/docs/stable/optim.html
@@ -131,3 +137,133 @@ class ViT_Classifier_TrainLoop(pl.LightningModule):
 
     return [optim], [{'scheduler': lr_scheduler, 'interval': 'epoch', 'monitor': 'train_ce_loss', 'name':lr_scheduler_config['scheduler_name']}]
 
+
+
+class SuperResAE_TrainLoop(pl.LightningModule):
+    def __init__(self, model, config:dict):
+      super().__init__()
+      self.model:SuperResolutionAE = model
+      self.config = config
+      
+      self.tr_ssim = StructuralSimilarityIndexMeasure(data_range=1.0)
+      self.val_ssim = StructuralSimilarityIndexMeasure(data_range=1.0)
+      self.tst_ssim = StructuralSimilarityIndexMeasure(data_range=1.0)
+      self.mse = torch.nn.MSELoss()
+      self.tr_psnr = torchmetrics.PeakSignalNoiseRatio()
+      self.val_psnr = torchmetrics.PeakSignalNoiseRatio()
+      self.tst_psnr = torchmetrics.PeakSignalNoiseRatio()
+
+    def training_step(self, batch, batch_idx):
+      low_res, high_res = batch
+      pred_high_res = self.model.forward(low_res, high_res)
+      
+      recon_loss = self.mse(pred_high_res, high_res)
+      psnr = self.tr_psnr(pred_high_res, high_res)
+      ssim = self.tr_ssim(pred_high_res, high_res)
+      self.log("train_MSE_loss", recon_loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+      self.log("train_PSNR", psnr, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+      self.log("train_SSIM", ssim, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+      return recon_loss
+
+    def validation_step(self, batch, batch_idx):
+      low_res, high_res = batch
+      pred_high_res = self.model.forward(low_res, high_res)
+      
+      recon_loss = self.mse(pred_high_res, high_res)
+      psnr = self.val_psnr(pred_high_res, high_res)
+      ssim = self.val_ssim(pred_high_res, high_res)
+      self.log("val_MSE_loss", recon_loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+      self.log("val_PSNR", psnr, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+      self.log("val_SSIM", ssim, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+      
+      # logging images for qualitative evaluation
+      if self.config['train_config']['should_log_images'] and batch_idx==0 and  \
+        self.current_epoch % self.config['train_config']['log_images_every_n_epochs'] == 0:
+            
+        # log the generated samples
+        max_samples_to_log = min(5, high_res.shape[0])
+        self.log_images({"low_res_images": low_res[:max_samples_to_log], "original_high_res_images": high_res[:max_samples_to_log],
+                        "pred_high_res_images": pred_high_res[:max_samples_to_log]})
+
+      return recon_loss
+    
+    def test_step(self, batch, batch_idx):
+      low_res, high_res = batch
+      pred_high_res = self.model.forward(low_res, high_res)
+      
+      recon_loss = self.mse(pred_high_res, high_res)
+      psnr = self.tst_psnr(pred_high_res, high_res)
+      ssim = self.tst_ssim(pred_high_res, high_res)
+      self.log("test_SSIM", ssim, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+      self.log("test_PSNR", psnr, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+      self.log("test_MSE_loss", recon_loss, on_step = False, on_epoch=True, prog_bar=True, logger=True, sync_dist=True)
+      return recon_loss
+    
+    def configure_optimizers(self):
+      tr_config = self.config['train_config']
+      schdlr_config = self.config['scheduler_params']
+      
+      base_params = [p for n, p in self.model.named_parameters() if "enocder" not in n]
+      layer_lr = [
+                  {'params': base_params},
+                  {'params': self.model.encoder.parameters(), 'lr': tr_config['lr'] /50.0}
+                ]
+    
+      optim =  torch.optim.Adam(layer_lr, lr = tr_config['lr'], 
+                              weight_decay = tr_config['weight_decay'])   
+      scheduler_params = schdlr_config[f"{schdlr_config['scheduler_name']}_params"]
+
+      if schdlr_config['scheduler_name'] == 'exponential_decay_lr_scheduler':
+          lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(optim, **scheduler_params)
+
+      elif schdlr_config['scheduler_name'] == 'cosine_decay_lr_scheduler':
+          lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optim, **scheduler_params)
+
+      return [optim], [{'scheduler': lr_scheduler, 'interval': 'epoch', 'monitor': 'train_MSE_loss',
+                      'name': schdlr_config['scheduler_name']}]
+        
+    def log_images(self, images_dict: dict):
+      """
+      Log grayscale images to Weights & Biases during training, organizing each image type in its own row.
+
+      Args:
+          images_dict (dict): Dictionary of torch tensors to log.
+              Expected keys: "low_res_images", "original_high_res_images", "pred_high_res_images"
+      """
+
+      if not hasattr(self, "logger") or not isinstance(self.logger, WandbLogger):
+          print("WandbLogger not found. Skipping image logging.")
+          return
+
+      processed_images = {}
+
+      for key, tensor in images_dict.items():
+          images = tensor.detach().cpu().numpy()
+
+          # Convert grayscale images from [B, 1, H, W] -> [B, H, W]
+          if images.shape[1] == 1:
+              images = np.squeeze(images, axis=1)
+
+          # Min-max normalization per image
+          min_vals = images.min(axis=(1, 2), keepdims=True)
+          max_vals = images.max(axis=(1, 2), keepdims=True)
+          images = (images - min_vals) / (max_vals - min_vals)
+
+          processed_images[key] = images
+
+      num_samples = list(processed_images.values())[0].shape[0]
+
+      # Creating a W&B image grid
+      columns = ["Type"] + [f"Sample-{i}" for i in range(num_samples)]
+      data = [
+          ["Original (low_res)"] + [wandb.Image(processed_images["low_res_images"][i], mode="L") for i in range(num_samples)],
+          ["Original (high_res)"] + [wandb.Image(processed_images["original_high_res_images"][i], mode="L") for i in range(num_samples)],
+          ["Predicted (high res)"] + [wandb.Image(processed_images["pred_high_res_images"][i], mode="L") for i in range(num_samples)]
+      ]
+
+      table = wandb.Table(columns=columns, data=data)
+
+      # ✅ Corrected logging method
+      self.logger.experiment.log({
+          f"visualization (epoch-> {self.current_epoch})": table
+      })

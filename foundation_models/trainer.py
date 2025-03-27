@@ -1,4 +1,4 @@
-from foundation_models.train_loop import MAETrainLoop, ViT_Classifier_TrainLoop
+from foundation_models.train_loop import MAETrainLoop, ViT_Classifier_TrainLoop, SuperResAE_TrainLoop
 from foundation_models.dataloaders import get_dataloaders
 from utils.utils import read_yaml
 from utils.callbacks import get_callbacks
@@ -46,7 +46,7 @@ elif tr_config["model_name"].lower()=="Task-4B_SuperRes".lower():
     
 
     model = SuperResolutionAE(encoder=encoder, **config["SuperRes_params"], **config['MAE_params'])
-    model_obj = SuperResTrainLoop(model, config)
+    model_obj = SuperResAE_TrainLoop(model, config)
 else:
     raise ValueError(f"Unknown model name: {tr_config['model_name']}")
 
