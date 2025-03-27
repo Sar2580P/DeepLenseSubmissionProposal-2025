@@ -110,6 +110,32 @@ def foundation_models_classification_dataset(save_dir:str):
     
     return
 
+def foundation_models_SuperRes_dataset(save_dir:str):
+    
+    SOURCE_DIR = 'data/SR/Dataset'
+    low_res_files = glob.glob(os.path.join(SOURCE_DIR, 'LR', '*.npy'))
+    high_res_files = glob.glob(os.path.join(SOURCE_DIR, 'HR', '*.npy'))
+    
+    # Split data into train, val, test
+    low_res_train, low_res_test = train_test_split(low_res_files, test_size=0.1, random_state=42, shuffle=True)
+    high_res_train, high_res_test = train_test_split(high_res_files, test_size=0.1, random_state=42, shuffle=True)
+    
+    low_res_train, low_res_val = train_test_split(low_res_train, test_size=0.1, random_state=42, shuffle=True)
+    high_res_train, high_res_val = train_test_split(high_res_train, test_size=0.1, random_state=42, shuffle=True)
+    
+    # Create dataframes
+    train_df = pd.DataFrame({'low_res_img_path': low_res_train, 'high_res_img_path': high_res_train}).sample(frac=1).reset_index(drop=True)
+    val_df = pd.DataFrame({'low_res_img_path': low_res_val, 'high_res_img_path': high_res_val}).sample(frac=1).reset_index(drop=True)
+    test_df = pd.DataFrame({'low_res_img_path': low_res_test, 'high_res_img_path': high_res_test}).sample(frac=1).reset_index(drop=True)
+    
+    # save dataframes
+    dir = os.path.join(save_dir, 'foundation_models_superres_dataset')
+    os.makedirs(dir, exist_ok=True)
+    train_df.to_csv(os.path.join(dir, 'train_df.csv'), index=False)
+    val_df.to_csv(os.path.join(dir, 'val_df.csv'), index=False)
+    test_df.to_csv(os.path.join(dir, 'test_df.csv'), index=False)
+    
+    return
 
 if __name__=="__main__":
     save_dir = 'data/dataframes'
@@ -117,5 +143,6 @@ if __name__=="__main__":
     diffusion_dataset(save_dir)
     foundation_models_pretraining_dataset(save_dir)
     foundation_models_classification_dataset(save_dir)
+    foundation_models_SuperRes_dataset(save_dir)
     
     print('Datasets created successfully!')

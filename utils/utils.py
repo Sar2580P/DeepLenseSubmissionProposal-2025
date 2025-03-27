@@ -1,4 +1,5 @@
 from omegaconf import OmegaConf
+import os 
 
 def read_yaml(file_path):
     conf = OmegaConf.load(file_path)
@@ -13,6 +14,7 @@ def unzip_file(zip_path: str, extract_dir: str) -> None:
 
 
 if __name__ == '__main__':
-    unzip_file('data/dataset.zip', 'data/')
-    unzip_file('data/Dataset.zip', 'data/')
-    unzip_file('data/Samples.zip', 'data/')
+    if not os.path.exists('data/dataset'): unzip_file('data/dataset.zip', 'data/')
+    if not os.path.exists('data/Dataset'): unzip_file('data/Dataset.zip', 'data/')
+    if not os.path.exists('data/Samples'): unzip_file('data/Samples.zip', 'data/')
+    if not os.path.exists('data/SR/Dataset'): unzip_file('data/Dataset (1).zip', 'data/SR/')
