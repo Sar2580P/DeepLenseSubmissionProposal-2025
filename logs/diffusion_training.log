@@ -3,8 +3,8 @@ GPU available: True (cuda), used: True
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-Initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/2
 Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/2
+Initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/2
 ----------------------------------------------------------------------------------------------------
 distributed_backend=nccl
 All distributed processes registered. Starting with 2 processes
@@ -13,12 +13,11 @@ All distributed processes registered. Starting with 2 processes
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
 wandb: Currently logged in as: sporwal1818 (shri_krishna) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: Tracking run with wandb version 0.19.8
-wandb: Run data is saved locally in ./wandb/run-20250326_134050-jnpeiujx
+wandb: Run data is saved locally in ./wandb/run-20250327_184638-96wx8np1
 wandb: Run `wandb offline` to turn off syncing.
 wandb: Syncing run Vanilla_Gaussian_Diffusion
 wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Task
-wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Task/runs/jnpeiujx
-/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:652: Checkpoint directory results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts exists and is not empty.
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Task/runs/96wx8np1
 LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
 LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
 ┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
@@ -42,68 +41,82 @@ Total params: 32.8 M
 Total estimated model params size (MB): 131                                     
 SLURM auto-requeueing enabled. Setting signal handlers.
 SLURM auto-requeueing enabled. Setting signal handlers.
-[rank: 0] Metric val_MSE_loss improved. New best score: 0.199
-[rank: 1] Metric val_MSE_loss improved. New best score: 0.199
-Epoch 0, global step 102: 'val_MSE_loss' reached 0.19925 (best 0.19925), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=0 | val_MSE_loss=0.199.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.098 >= min_delta = 2e-05. New best score: 0.102
-[rank: 1] Metric val_MSE_loss improved by 0.098 >= min_delta = 2e-05. New best score: 0.102
-Epoch 1, global step 204: 'val_MSE_loss' reached 0.10164 (best 0.10164), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=1 | val_MSE_loss=0.102.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.029 >= min_delta = 2e-05. New best score: 0.072
-[rank: 1] Metric val_MSE_loss improved by 0.029 >= min_delta = 2e-05. New best score: 0.072
-Epoch 2, global step 306: 'val_MSE_loss' reached 0.07231 (best 0.07231), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=2 | val_MSE_loss=0.072.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.019 >= min_delta = 2e-05. New best score: 0.053
-[rank: 1] Metric val_MSE_loss improved by 0.019 >= min_delta = 2e-05. New best score: 0.053
-Epoch 3, global step 408: 'val_MSE_loss' reached 0.05317 (best 0.05317), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=3 | val_MSE_loss=0.053.ckpt' as top 1
+[rank: 0] Metric val_MSE_loss improved. New best score: 0.190
+[rank: 1] Metric val_MSE_loss improved. New best score: 0.190
+Epoch 0, global step 102: 'val_MSE_loss' reached 0.18976 (best 0.18976), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=0 | val_MSE_loss=0.190.ckpt' as top 1
+[rank: 0] Metric val_MSE_loss improved by 0.084 >= min_delta = 2e-05. New best score: 0.105
+[rank: 1] Metric val_MSE_loss improved by 0.084 >= min_delta = 2e-05. New best score: 0.105
+Epoch 1, global step 204: 'val_MSE_loss' reached 0.10532 (best 0.10532), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=1 | val_MSE_loss=0.105.ckpt' as top 1
+[rank: 0] Metric val_MSE_loss improved by 0.020 >= min_delta = 2e-05. New best score: 0.085
+[rank: 1] Metric val_MSE_loss improved by 0.020 >= min_delta = 2e-05. New best score: 0.085
+Epoch 2, global step 306: 'val_MSE_loss' reached 0.08546 (best 0.08546), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=2 | val_MSE_loss=0.085.ckpt' as top 1
+[rank: 0] Metric val_MSE_loss improved by 0.023 >= min_delta = 2e-05. New best score: 0.062
+[rank: 1] Metric val_MSE_loss improved by 0.023 >= min_delta = 2e-05. New best score: 0.062
+Epoch 3, global step 408: 'val_MSE_loss' reached 0.06209 (best 0.06209), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=3 | val_MSE_loss=0.062.ckpt' as top 1
 Epoch 4, global step 510: 'val_MSE_loss' was not in top 1
-Epoch 5, global step 612: 'val_MSE_loss' was not in top 1
-[rank: 0] Metric val_MSE_loss improved by 0.011 >= min_delta = 2e-05. New best score: 0.042
-[rank: 1] Metric val_MSE_loss improved by 0.011 >= min_delta = 2e-05. New best score: 0.042
-Epoch 6, global step 714: 'val_MSE_loss' reached 0.04234 (best 0.04234), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=6 | val_MSE_loss=0.042.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.009 >= min_delta = 2e-05. New best score: 0.034
-[rank: 1] Metric val_MSE_loss improved by 0.009 >= min_delta = 2e-05. New best score: 0.034
-Epoch 7, global step 816: 'val_MSE_loss' reached 0.03373 (best 0.03373), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=7 | val_MSE_loss=0.034.ckpt' as top 1
-Epoch 8, global step 918: 'val_MSE_loss' was not in top 1
-[rank: 0] Metric val_MSE_loss improved by 0.002 >= min_delta = 2e-05. New best score: 0.031
-[rank: 1] Metric val_MSE_loss improved by 0.002 >= min_delta = 2e-05. New best score: 0.031
-Epoch 9, global step 1020: 'val_MSE_loss' reached 0.03141 (best 0.03141), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=9 | val_MSE_loss=0.031.ckpt' as top 1
+[rank: 0] Metric val_MSE_loss improved by 0.018 >= min_delta = 2e-05. New best score: 0.045
+[rank: 1] Metric val_MSE_loss improved by 0.018 >= min_delta = 2e-05. New best score: 0.045
+Epoch 5, global step 612: 'val_MSE_loss' reached 0.04451 (best 0.04451), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=5 | val_MSE_loss=0.045.ckpt' as top 1
+[rank: 0] Metric val_MSE_loss improved by 0.003 >= min_delta = 2e-05. New best score: 0.042
+[rank: 1] Metric val_MSE_loss improved by 0.003 >= min_delta = 2e-05. New best score: 0.042
+Epoch 6, global step 714: 'val_MSE_loss' reached 0.04166 (best 0.04166), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=6 | val_MSE_loss=0.042.ckpt' as top 1
+[rank: 0] Metric val_MSE_loss improved by 0.005 >= min_delta = 2e-05. New best score: 0.036
+[rank: 1] Metric val_MSE_loss improved by 0.005 >= min_delta = 2e-05. New best score: 0.036
+Epoch 7, global step 816: 'val_MSE_loss' reached 0.03627 (best 0.03627), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=7 | val_MSE_loss=0.036.ckpt' as top 1
+[rank: 0] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.036
+[rank: 1] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.036
+Epoch 8, global step 918: 'val_MSE_loss' reached 0.03562 (best 0.03562), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=8 | val_MSE_loss=0.036.ckpt' as top 1
+[rank: 1] Metric val_MSE_loss improved by 0.002 >= min_delta = 2e-05. New best score: 0.034
+[rank: 0] Metric val_MSE_loss improved by 0.002 >= min_delta = 2e-05. New best score: 0.034
+Epoch 9, global step 1020: 'val_MSE_loss' reached 0.03399 (best 0.03399), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=9 | val_MSE_loss=0.034.ckpt' as top 1
 Epoch 10, global step 1122: 'val_MSE_loss' was not in top 1
-Epoch 11, global step 1224: 'val_MSE_loss' was not in top 1
-Epoch 12, global step 1326: 'val_MSE_loss' was not in top 1
+[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 2e-05. New best score: 0.034
+[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 2e-05. New best score: 0.034
+Epoch 11, global step 1224: 'val_MSE_loss' reached 0.03396 (best 0.03396), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=11 | val_MSE_loss=0.034.ckpt' as top 1
+[rank: 1] Metric val_MSE_loss improved by 0.004 >= min_delta = 2e-05. New best score: 0.030
+[rank: 0] Metric val_MSE_loss improved by 0.004 >= min_delta = 2e-05. New best score: 0.030
+Epoch 12, global step 1326: 'val_MSE_loss' reached 0.02976 (best 0.02976), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=12 | val_MSE_loss=0.030.ckpt' as top 1
 Epoch 13, global step 1428: 'val_MSE_loss' was not in top 1
-Epoch 14, global step 1530: 'val_MSE_loss' was not in top 1
+[rank: 0] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.028
+[rank: 1] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.028
+Epoch 14, global step 1530: 'val_MSE_loss' reached 0.02836 (best 0.02836), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=14 | val_MSE_loss=0.028.ckpt' as top 1
 Epoch 15, global step 1632: 'val_MSE_loss' was not in top 1
-[rank: 0] Metric val_MSE_loss improved by 0.003 >= min_delta = 2e-05. New best score: 0.029
-[rank: 1] Metric val_MSE_loss improved by 0.003 >= min_delta = 2e-05. New best score: 0.029
-Epoch 16, global step 1734: 'val_MSE_loss' reached 0.02870 (best 0.02870), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=16 | val_MSE_loss=0.029.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.027
-[rank: 1] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.027
-Epoch 17, global step 1836: 'val_MSE_loss' reached 0.02722 (best 0.02722), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=17 | val_MSE_loss=0.027.ckpt' as top 1
-Epoch 18, global step 1938: 'val_MSE_loss' was not in top 1
+[rank: 0] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.028
+[rank: 1] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.028
+Epoch 16, global step 1734: 'val_MSE_loss' reached 0.02766 (best 0.02766), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=16 | val_MSE_loss=0.028.ckpt' as top 1
+Epoch 17, global step 1836: 'val_MSE_loss' was not in top 1
 [rank: 0] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.026
 [rank: 1] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.026
-Epoch 19, global step 2040: 'val_MSE_loss' reached 0.02644 (best 0.02644), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=19 | val_MSE_loss=0.026.ckpt' as top 1
+Epoch 18, global step 1938: 'val_MSE_loss' reached 0.02642 (best 0.02642), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=18 | val_MSE_loss=0.026.ckpt' as top 1
+Epoch 19, global step 2040: 'val_MSE_loss' was not in top 1
 Epoch 20, global step 2142: 'val_MSE_loss' was not in top 1
-[rank: 0] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.026
-[rank: 1] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.026
-Epoch 21, global step 2244: 'val_MSE_loss' reached 0.02573 (best 0.02573), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=21 | val_MSE_loss=0.026.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.002 >= min_delta = 2e-05. New best score: 0.024
-[rank: 1] Metric val_MSE_loss improved by 0.002 >= min_delta = 2e-05. New best score: 0.024
-Epoch 22, global step 2346: 'val_MSE_loss' reached 0.02369 (best 0.02369), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=22 | val_MSE_loss=0.024.ckpt' as top 1
-Epoch 23, global step 2448: 'val_MSE_loss' was not in top 1
+[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 2e-05. New best score: 0.026
+[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 2e-05. New best score: 0.026
+Epoch 21, global step 2244: 'val_MSE_loss' reached 0.02593 (best 0.02593), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=21 | val_MSE_loss=0.026.ckpt' as top 1
+Epoch 22, global step 2346: 'val_MSE_loss' was not in top 1
+[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 2e-05. New best score: 0.025
+[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 2e-05. New best score: 0.025
+Epoch 23, global step 2448: 'val_MSE_loss' reached 0.02543 (best 0.02543), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=23 | val_MSE_loss=0.025.ckpt' as top 1
 Epoch 24, global step 2550: 'val_MSE_loss' was not in top 1
 Epoch 25, global step 2652: 'val_MSE_loss' was not in top 1
-Epoch 26, global step 2754: 'val_MSE_loss' was not in top 1
+[rank: 0] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.024
+[rank: 1] Metric val_MSE_loss improved by 0.001 >= min_delta = 2e-05. New best score: 0.024
+Epoch 26, global step 2754: 'val_MSE_loss' reached 0.02406 (best 0.02406), saving model to 'results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=26 | val_MSE_loss=0.024.ckpt' as top 1
 Epoch 27, global step 2856: 'val_MSE_loss' was not in top 1
 Epoch 28, global step 2958: 'val_MSE_loss' was not in top 1
 Epoch 29, global step 3060: 'val_MSE_loss' was not in top 1
+Epoch 30, global step 3162: 'val_MSE_loss' was not in top 1
+Epoch 31, global step 3264: 'val_MSE_loss' was not in top 1
+Epoch 32, global step 3366: 'val_MSE_loss' was not in top 1
+Epoch 33, global step 3468: 'val_MSE_loss' was not in top 1
 [rank: 0] Monitored metric val_MSE_loss did not improve in the last 8 records. Best score: 0.024. Signaling Trainer to stop.
 [rank: 1] Monitored metric val_MSE_loss did not improve in the last 8 records. Best score: 0.024. Signaling Trainer to stop.
-Epoch 30, global step 3162: 'val_MSE_loss' was not in top 1
-Epoch 30/199 ━━━━━━━━━━━━━━━━ 507/507 0:02:31 •       3.35it/s v_num: x_17      
+Epoch 34, global step 3570: 'val_MSE_loss' was not in top 1
+Epoch 34/199 ━━━━━━━━━━━━━━━━ 507/507 0:02:31 •       3.36it/s v_num: p1_0      
                                       0:00:00                  val_MSE_loss:    
                                                                0.028            
                                                                train_MSE_loss:  
-                                                               0.030            
+                                                               0.033            
 LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
 LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
 SLURM auto-requeueing enabled. Setting signal handlers.
@@ -112,8 +125,8 @@ SLURM auto-requeueing enabled. Setting signal handlers.
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃        Test metric        ┃       DataLoader 0        ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│       test_MSE_loss       │    0.02708503045141697    │
+│       test_MSE_loss       │    0.02504010684788227    │
 └───────────────────────────┴───────────────────────────┘
-Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63/63 0:00:05 • 0:00:00 10.98it/s 
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63/63 0:00:05 • 0:00:00 10.94it/s 
 [1;34mwandb[0m: 
-[1;34mwandb[0m: 🚀 View run [33mVanilla_Gaussian_Diffusion[0m at: [34mhttps://wandb.ai/shri_krishna/DeepLense_Diffusion_Task/runs/jnpeiujx[0m
+[1;34mwandb[0m: 🚀 View run [33mVanilla_Gaussian_Diffusion[0m at: [34mhttps://wandb.ai/shri_krishna/DeepLense_Diffusion_Task/runs/96wx8np1[0m

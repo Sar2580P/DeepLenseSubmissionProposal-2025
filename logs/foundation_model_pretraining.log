@@ -1,10 +1,79 @@
+Trainer already configured with model summary callbacks: [<class 'pytorch_lightning.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/2
+Initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/2
+----------------------------------------------------------------------------------------------------
+distributed_backend=nccl
+All distributed processes registered. Starting with 2 processes
+----------------------------------------------------------------------------------------------------
+
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: sporwal1818 (shri_krishna) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.8
+wandb: Run data is saved locally in ./wandb/run-20250327_210716-sqxkmdbz
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Task-4A_ViT_finetuned_classification
+wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis/runs/sqxkmdbz
+/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:652: Checkpoint directory results/MAE/Task-4A_ViT_finetuned_classification/ckpts exists and is not empty.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
+76 4 76 4
+Successfully loaded the model weights for classification
 Traceback (most recent call last):
-  File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/foundation_models/trainer.py", line 34, in <module>
+  File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/foundation_models/trainer.py", line 93, in <module>
+    trainer.fit(model_obj, tr_loader, val_loader)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 543, in fit
+    call._call_and_handle_interrupt(
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/call.py", line 43, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/launchers/subprocess_script.py", line 105, in launch
+    return function(*args, **kwargs)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 579, in _fit_impl
+76 4 76 4
+Successfully loaded the model weights for classification
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 962, in _run
+    self.strategy.setup(self)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 174, in setup
+    self.setup_optimizers(trainer)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/strategy.py", line 139, in setup_optimizers
+    self.optimizers, self.lr_scheduler_configs = _init_optimizers_and_lr_schedulers(self.lightning_module)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/core/optimizer.py", line 178, in _init_optimizers_and_lr_schedulers
+    optim_conf = call._call_lightning_module_hook(model.trainer, "configure_optimizers", pl_module=model)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/call.py", line 157, in _call_lightning_module_hook
+    output = fn(*args, **kwargs)
+  File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/foundation_models/train_loop.py", line 123, in configure_optimizers
+    {'params': self.model.mlp_head.parameters()/5, 'lr': tr_config['lr'] }
+TypeError: unsupported operand type(s) for /: 'generator' and 'int'
 Traceback (most recent call last):
-  File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/foundation_models/trainer.py", line 34, in <module>
-    raise ValueError(f"Unknown model name: {tr_config['model_name']}")
-ValueError: Unknown model name: Task-4A_ViT
-    raise ValueError(f"Unknown model name: {tr_config['model_name']}")
-ValueError: Unknown model name: Task-4A_ViT
-srun: error: gpu001: task 1: Exited with exit code 1
-srun: error: gpu001: task 0: Exited with exit code 1
+  File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/foundation_models/trainer.py", line 93, in <module>
+    trainer.fit(model_obj, tr_loader, val_loader)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-slurmstepd: error: *** STEP 368406.0 ON gpu005 CANCELLED AT 2025-03-27T21:08:05 ***
+handle_interrupt(
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/call.py", line 43, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/launchers/subprocess_script.py", line 105, in launch
+    return function(*args, **kwargs)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 579, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 962, in _run
+    self.strategy.setup(self)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 174, in setup
+    self.setup_optimizers(trainer)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/strategy.py", line 139, in setup_optimizers
+    self.optimizers, self.lr_scheduler_configs = _init_optimizers_and_lr_schedulers(self.lightning_module)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/core/optimizer.py", line 178, in _init_optimizers_and_lr_schedulers
+    optim_conf = call._call_lightning_module_hook(model.trainer, "configure_optimizers", pl_module=model)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/call.py", line 157, in _call_lightning_module_hook
+    output = fn(*args, **kwargs)
+  File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/foundation_models/train_loop.py", line 123, in configure_optimizers
+    {'params': self.model.mlp_head.parameters()/5, 'lr': tr_config['lr'] }
+TypeError: unsupported operand type(s) for /: 'generator' and 'int'
+srun: error: gpu007: task 1: Exited with exit code 1
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mTask-4A_ViT_finetuned_classification[0m at: [34mhttps://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis/runs/sqxkmdbz[0m
+srun: error: gpu007: task 0: Exited with exit code 1
