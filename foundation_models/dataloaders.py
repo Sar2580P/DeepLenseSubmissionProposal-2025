@@ -35,7 +35,7 @@ class MAEDataset(Dataset):
         '''
         transform = transforms.Compose([
             transforms.ToPILImage(),
-            transforms.Pad((0, 1, 0, 0)),  # Padding: (left, top, right, bottom)
+            transforms.Pad((1, 1, 0, 0)),  # Padding: (left, top, right, bottom)
             transforms.ToTensor()
         ])
         return transform(img)
@@ -47,7 +47,7 @@ class MAEDataset(Dataset):
         '''
         transform = transforms.Compose([
             transforms.ToPILImage(),
-            transforms.Pad((0, 1, 0, 1)),  # Padding: (left, top, right, bottom)
+            transforms.Pad((1, 1, 1, 1)),  # Padding: (left, top, right, bottom)
             transforms.ToTensor()
         ])
         return transform(img)
