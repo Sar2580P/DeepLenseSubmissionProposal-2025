@@ -5,6 +5,15 @@ from torchvision import transforms
 import pandas as pd
 from typing import Dict, Tuple
 
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.RandomRotation(degrees=15),
+    transforms.RandomHorizontalFlip(),
+    transforms.RandomVerticalFlip(),
+    
+])
+
+
 class Imagenet_3Channel_Dataset(Dataset):
     def __init__(self, data_df:pd.DataFrame, transform=None):
         """
@@ -46,7 +55,7 @@ def get_dataloaders(data_config:Dict)->Tuple[DataLoader, DataLoader, DataLoader]
     )  
     if dataset_type.lower()=="imagenet_3channel":
         tr_dataset, val_dataset, test_dataset = (
-                                                    Imagenet_3Channel_Dataset(train_df),
+                                                    Imagenet_3Channel_Dataset(train_df, transform=transform),
                                                     Imagenet_3Channel_Dataset(val_df),
                                                     Imagenet_3Channel_Dataset(test_df)
                                                 )

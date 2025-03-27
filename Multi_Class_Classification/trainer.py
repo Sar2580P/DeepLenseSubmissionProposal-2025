@@ -41,8 +41,7 @@ torch.set_float32_matmul_precision('high')
 trainer = Trainer(callbacks=[early_stop_callback, checkpoint_callback, rich_progress_bar, rich_model_summary, lr_monitor],
                 accelerator = tr_config['accelerator'] ,accumulate_grad_batches=tr_config['accumulate_grad_batches'] , 
                 max_epochs=tr_config['MAX_EPOCHS'], logger=[wandb_logger, csv_logger], devices=[0],  # Selecting the first GPU on node 1
-                num_nodes=2,
-                node_rank=1,)
+                )
 
 trainer.fit(model_obj, tr_loader, val_loader)
 trainer.test(model_obj, tst_loader)
