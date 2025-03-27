@@ -1,5 +1,5 @@
 #!/bin/bash
-#BATCH -J foundation_models
+#SBATCH -J foundation_models
 #SBATCH -p gpu
 #SBATCH -N 1
 #SBATCH --gres=gpu:2             # Request 2 GPUs
@@ -26,11 +26,10 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 #python foundation_models/trainer.py > logs/foundation_model_pretraining.log 2>&1
 
 # Launch the training script with srun, which spawns 2 tasks in parallel
-#srun --ntasks=2 --cpus-per-task=10 python foundation_models/trainer.py --config="pretraining"  > logs/foundation_model_pretraining.log 2>&1
-srun --ntasks=2 --cpus-per-task=10 python foundation_models/trainer.py --config="Task-4A"  > logs/Task-4A_foundationModel_finetuning_classification.log 2>&1
+#srun --ntasks=2 --cpus-per-task=10 python foundation_models/trainer.py > logs/foundation_model_pretraining.log 2>&1
+srun --ntasks=2 --cpus-per-task=10 python foundation_models/trainer.py > logs/Task-4A_foundationModel_finetuning_classification.log 2>&1
 
-#srun --ntasks=2 --cpus-per-task=10 python foundation_models/trainer.py > logs/Task-4A_foundationModel_finetuning_classification.log 2>&1
-
-
+srun --ntasks=2 --cpus-per-task=10 python foundation_models/trainer.py --config="Task-4B" > logs/Task-4B_foundationModel_finetuning_superresolution.log 2>&1
 # Optional: Detach from the script completely
 exit 0
+
