@@ -120,7 +120,7 @@ class ViT_Classifier_TrainLoop(pl.LightningModule):
     base_params = [p for n, p in self.model.named_parameters() if "mlp_head" not in n]
     layer_lr = [
                  {'params': base_params},
-                 {'params': self.model.mlp_head.parameters(), 'lr': tr_config['lr'] * 10.0}
+                 {'params': self.model.mlp_head.parameters(), 'lr': tr_config['lr']/5 }
                ]
 
     optim =  torch.optim.Adam(layer_lr, lr = tr_config['lr'], weight_decay =tr_config['weight_decay'])   # https://pytorch.org/docs/stable/optim.html
@@ -203,7 +203,8 @@ class SuperResAE_TrainLoop(pl.LightningModule):
       tr_config = self.config['train_config']
       schdlr_config = self.config['scheduler_params']
       
-      base_params = [p for n, p in self.model.named_parameters() if "enocder" not in n]
+      encoder_param_ids = {id(p) for p in self.model.encoder.parameters()}
+      base_params = [p for n, p in self.model.named_parameters() if "encoder" not in n and id(p) not in encoder_param_ids]
       layer_lr = [
                   {'params': base_params},
                   {'params': self.model.encoder.parameters(), 'lr': tr_config['lr'] /50.0}

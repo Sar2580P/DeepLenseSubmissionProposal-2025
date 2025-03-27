@@ -2,45 +2,47 @@ ViT_params:
   image_size: 76
   patch_size: 4
   num_classes: 3
-  dim: 128
-  depth: 4
-  heads: 4
-  mlp_dim_ratio: 3
+  dim: 256
+  depth: 6
+  heads: 6
+  mlp_dim_ratio: 4
   pool: 'cls'
   channels: 1
-  dim_head: 64
+  dim_head: 128
   dropout: 0.1
 
 MAE_params:
   decoder_dim : 128
-  masking_ratio: 0.75   # Test it for [0.6, 0.75 , 0.85]
+  masking_ratio: 0.1   # does not matter as setting masking_ratio=1 in code for super-resolution
   decoder_depth: 3
   decoder_heads: 4
   decoder_dim_head: 64
   mlp_dim_ratio: 3
   dropout: 0.1
 
-SuperResolutionAE_params:
-  patch_height: 16 
-  patch_width: 16 
+SuperRes_params:
+  patch_height: ${ViT_params.patch_size}
+  patch_width: ${ViT_params.patch_size}
   high_res_height: 152
   high_res_width: 152
+  low_res_height : ${ViT_params.image_size}
+  low_res_width : ${ViT_params.image_size}
 
 train_config:
   model_name: 'Task-4B_SuperRes'
   dataset_objective : "finetuned_super_res"
   BATCH_SIZE: 64
   weight_decay : 0.0001
-  lr : 3.0e-5
+  lr : 1.0e-4
   ckpt_file_name : '{epoch} | {val_MSE_loss:.3f}'   
   dir : "results/MAE"
   accumulate_grad_batches : 3
   accelerator : 'gpu'
-  MAX_EPOCHS : 100
+  MAX_EPOCHS : 200
   num_workers: 8
-  pretrained_mae_ckpt_path: 'results/MAE/MAE_ViT_pretraining/ckpts/epoch=119 | val_MAE_loss=0.010.ckpt'
-  find_unused_parameters : False
-  should_log_images : False
+  pretrained_mae_ckpt_path: 'results/MAE/MAE_ViT_pretraining/ckpts/epoch=45 | val_MSE_loss=0.064.ckpt'
+  find_unused_parameters : True
+  should_log_images : True
   log_images_every_n_epochs : 10
 
 data_config:

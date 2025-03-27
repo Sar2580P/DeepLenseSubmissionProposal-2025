@@ -110,6 +110,7 @@ class MAE(nn.Module):
         return recon_loss
     
     def forward(self, img):
+        #print(len(img), img[0].shape ,img[1].shape,   "$$$$$$$$$$$$$$$$############$$$$$$$$$$$$$$$")
         device = img.device
 
         # Convert the input image into patches

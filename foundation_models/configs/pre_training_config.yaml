@@ -1,23 +1,23 @@
 ViT_params:
-  image_size: 64
+  image_size: 76
   patch_size: 4
   num_classes: 3 
-  dim: 128
-  depth: 4
-  heads: 4
-  mlp_dim_ratio: 3
+  dim: 256
+  depth: 6
+  heads: 6
+  mlp_dim_ratio: 4
   pool: 'cls' 
   channels: 1
-  dim_head: 64
+  dim_head: 128
   dropout: 0.1
 
 MAE_params:
-  decoder_dim : 128
+  decoder_dim : 256
   masking_ratio: 0.75   # Test it for [0.6, 0.75 , 0.85]
   decoder_depth: 1
   decoder_heads: 4
-  decoder_dim_head: 64
-  mlp_dim_ratio: 3
+  decoder_dim_head: 128
+  mlp_dim_ratio: 4
   dropout: 0.1
 
 
@@ -31,14 +31,14 @@ train_config:
   dir : "results/MAE"
   accumulate_grad_batches : 3
   accelerator : 'gpu'
-  MAX_EPOCHS : 100
+  MAX_EPOCHS : 150
   num_workers: 8
   find_unused_parameters : True
 
 data_config:
-  tr_path: "data/dataframes/foundation_models_classification_dataset/train_df.csv"
-  val_path : "data/dataframes/foundation_models_classification_dataset/val_df.csv"
-  tst_path : "data/dataframes/foundation_models_classification_dataset/test_df.csv"
+  tr_path: "data/dataframes/foundation_models_pretraining_dataset/train_df.csv"
+  val_path : "data/dataframes/foundation_models_pretraining_dataset/val_df.csv"
+  tst_path : "data/dataframes/foundation_models_pretraining_dataset/test_df.csv"
   batch_size : ${train_config.BATCH_SIZE}
   num_workers : ${train_config.num_workers}
   objective : ${train_config.dataset_objective}

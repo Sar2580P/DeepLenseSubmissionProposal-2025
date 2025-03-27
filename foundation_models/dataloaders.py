@@ -7,7 +7,8 @@ import torch
 class MAEDataset(Dataset):
     def __init__(self, data_csv_path:str , transform=None, objective="pretraining"):
         self.transform = transform or transforms.Compose([
-           					 transforms.ToTensor()  # Ensures NumPy array is converted to a PyTorch tensor
+           					 transforms.ToTensor() ,  # Ensures NumPy array is converted to a PyTorch tensor
+                                                transforms.Pad(padding=6, fill=0, padding_mode='constant'),   # for pretraining and finetuned-classification task (64x64 -> 76x76)
         				])
         self.data_csv = pd.read_csv(data_csv_path)
         self.objective = objective   
@@ -77,8 +78,19 @@ class MAEDataset(Dataset):
         if self.transform:
            img = self.transform(img)
 
-        return img, label if label is not None else img   # finetuned_classification-->(img, label)  ; pretraining-->(img)
+        return (img, label) if label is not None else img   # finetuned_classification-->(img, label)  ; pretraining-->(img)
     
+
+transform = transforms.Compose([
+     transforms.ToTensor(),
+    transforms.Pad(padding=6, fill=0, padding_mode='constant'),
+    transforms.RandomRotation(degrees=15),
+    transforms.RandomHorizontalFlip(),
+    transforms.RandomVerticalFlip(),
+    
+])
+
+
 def get_dataloaders(data_config:dict):
     """
     Utility function to get train, validation and test dataloaders for VAE training
@@ -87,7 +99,7 @@ def get_dataloaders(data_config:dict):
         data_config (dict): Configuration dictionary for data
     """
     
-    tr_dataset = MAEDataset(data_csv_path=data_config['tr_path'], objective=data_config['objective']) 
+    tr_dataset = MAEDataset(data_csv_path=data_config['tr_path'], objective=data_config['objective'], transform=transform) 
     val_dataset= MAEDataset(data_csv_path=data_config['val_path'], objective=data_config['objective'])
     tst_dataset = MAEDataset(data_csv_path=data_config['tst_path'], objective=data_config['objective'])
     train_loader = DataLoader(

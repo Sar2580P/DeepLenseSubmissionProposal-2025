@@ -1,14 +1,14 @@
 ViT_params:
-  image_size: 64
+  image_size: 76
   patch_size: 4
   num_classes: 3 
-  dim: 128
-  depth: 4
-  heads: 4
-  mlp_dim_ratio: 3
+  dim: 256
+  depth: 6
+  heads: 6
+  mlp_dim_ratio: 4
   pool: 'cls' 
   channels: 1
-  dim_head: 64
+  dim_head: 128
   dropout: 0.1
 
 
@@ -17,14 +17,14 @@ train_config:
   dataset_objective : "finetuned_classification"
   BATCH_SIZE: 64
   weight_decay : 0.0001
-  lr : 5.0e-6
+  lr : 5.0e-5
   ckpt_file_name : '{epoch} | {val_ce_loss:.3f}'
   dir : "results/MAE"
   accumulate_grad_batches : 3
   accelerator : 'gpu'
-  MAX_EPOCHS : 100
+  MAX_EPOCHS : 200
   num_workers: 8
-  pretrained_mae_ckpt_path: 'results/MAE/MAE_ViT_pretraining/ckpts/epoch=119 | val_MAE_loss=0.010.ckpt'
+  pretrained_mae_ckpt_path: 'results/MAE/MAE_ViT_pretraining/ckpts/epoch=45 | val_MSE_loss=0.064.ckpt'
   find_unused_parameters : False
 
 data_config:

@@ -8,8 +8,26 @@ import torch
 import os
 from pytorch_lightning.strategies import DDPStrategy
 from foundation_models.architectures.vit import ViT
+import argparse
 
-config = read_yaml('foundation_models/super_res_config.yaml')
+def parse_args():
+    parser = argparse.ArgumentParser(description="Trainer with configurable YAML")
+    parser.add_argument("--config", type=str, required=True,
+                        help="Name of the config file (e.g., super_res_config.yaml, config2.yaml, config3.yaml)")
+    return parser.parse_args()
+
+args = parse_args()
+if args.config=="pretraining":
+  config = read_yaml('foundation_models/configs/pre_training_config.yaml')
+elif args.config=="Task-4A":
+  config = read_yaml('foundation_models/configs/classification_finetuning_config.yaml')
+elif args.config=="Task-4B":
+  config = read_yaml('foundation_models/configs/super_res_config.yaml')
+else :
+  raise ValueError(f'Provide right config, one of [pretraining, Task-4A, Task-4B], but provided {args.config}')
+
+#__________________________________________________________________________________________________________________________
+
 tr_config = config['train_config']
 data_config = config['data_config']
 device="cuda" if torch.cuda.is_available() else "cpu"
@@ -43,6 +61,7 @@ elif tr_config["model_name"].lower()=="Task-4B_SuperRes".lower():
       print("Successfully loaded the encoder weights for Super Resolution")
     except Exception as e:
       print(f"Failed to load the checkpoint for super resolution... initialising model randomly")
+      print(e)
     
 
     model = SuperResolutionAE(encoder=encoder, **config["SuperRes_params"], **config['MAE_params'])
