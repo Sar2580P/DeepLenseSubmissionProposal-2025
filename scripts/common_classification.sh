@@ -20,8 +20,8 @@ conda activate deeplense
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 
 
-#python Multi_Class_Classification/sweep/sweep.py > common_classification_sweep.log 2>&1
-python Multi_Class_Classification/trainer.py > common_classification_training.log 2>&1
+#python Multi_Class_Classification/sweep/sweep.py > logs/common_classification_sweep.log 2>&1
+python Multi_Class_Classification/trainer.py > logs/common_classification_training.log 2>&1
 # Optional: Detach from the script completely
 exit 0
 

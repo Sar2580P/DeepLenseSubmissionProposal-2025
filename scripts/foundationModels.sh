@@ -22,11 +22,13 @@ conda activate deeplense
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 
 
-# python foundation_models/sweep/sweep.py > foundation_model_sweep.log 2>&1
-#python foundation_models/trainer.py > foundation_model_pretraining.log 2>&1
+# python foundation_models/sweep/sweep.py > logs/foundation_model_sweep.log 2>&1
+#python foundation_models/trainer.py > logs/foundation_model_pretraining.log 2>&1
 
 # Launch the training script with srun, which spawns 2 tasks in parallel
-#srun --ntasks=2 --cpus-per-task=10 python foundation_models/trainer.py > foundation_model_pretraining.log 2>&1
-srun --ntasks=2 --cpus-per-task=10 python foundation_models/trainer.py > Task-4A_foundationModel_finetuning_classification.log 2>&1
+#srun --ntasks=2 --cpus-per-task=10 python foundation_models/trainer.py > logs/foundation_model_pretraining.log 2>&1
+srun --ntasks=2 --cpus-per-task=10 python foundation_models/trainer.py > logs/Task-4A_foundationModel_finetuning_classification.log 2>&1
+
+
 # Optional: Detach from the script completely
 exit 0
