@@ -87,7 +87,7 @@ sweep_config:
   scheduler_name: cosine_decay_lr_scheduler
   sinusoidal_pos_emb_theta: 10000
   timesteps: 100
-  weight_decay: 1.0e-05
+  weight_decay: 5e-7
 train_config:
   BATCH_SIZE: ${sweep_config.BATCH_SIZE}
   MAX_EPOCHS: 100

@@ -24,7 +24,7 @@ scheduler_params:
   scheduler_name: 'cosine_decay_lr_scheduler'
 
   cosine_decay_lr_scheduler_params:
-    T_max: 100
+    T_max: 200
     eta_min: 1.0e-07
 
   exponential_decay_lr_scheduler_params:
@@ -32,7 +32,7 @@ scheduler_params:
 
 noise_scheduler_params:
   cosine:
-    s : 0.008
+    s : 0.0008
   sigmoid:
     start : -3
     end : 3

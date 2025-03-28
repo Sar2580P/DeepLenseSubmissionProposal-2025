@@ -8,12 +8,12 @@ parameters :
   BATCH_SIZE : 
     value : 8
   weight_decay :
-    value: 0.00001
+    value: 5e-7
     # distribution : 'normal'
     # mu : 5e-5
     # sigma : 1e-4
   lr :
-    value : 3e-4
+    value : 1e-4
     # distribution : 'normal'
     # mu : 3e-4
     # sigma : 1e-4
@@ -22,17 +22,19 @@ parameters :
 
   # gaussian diffusion specific parameters
   timesteps : 
-    values : [50, 100]
+    value : 50
+  ddim_sampling_eta : 
+    values : [0.2, 0.4 , 0.8]
   objective : 
     value : 'pred_v'
   beta_schedule : 
-    values : ['sigmoid', 'cosine']
+    value : 'cosine'
   min_snr_gamma : 
     values : [3,5]
 
   # Unet specific parameters
   dim : 
-    values : [64, 96, 128]
+    values : [96, 128]
   init_dim : 
     value : 32
   out_dim : 
@@ -50,10 +52,10 @@ parameters :
   sinusoidal_pos_emb_theta : 
     value : 10000
   dropout : 
-    value : 0.15
+    value : 0.1
   attn_dim_head : 
-    value : 32
+    value : 48
   attn_heads : 
-    value : 4
+    value : 6
   flash_attn : 
     value : False
