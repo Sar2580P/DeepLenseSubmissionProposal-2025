@@ -23,9 +23,9 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 #python diffusion/trainer.py  > logs/diffusion_training.log 2>&1
 
 ## Launch the training script with srun, which spawns 2 tasks in parallel
-srun --ntasks=2 --cpus-per-task=10 python diffusion/trainer.py  > logs/diffusion_training.log 2>&1
+#srun --ntasks=2 --cpus-per-task=10 python diffusion/trainer.py  > logs/diffusion_training.log 2>&1
 
-# python diffusion/fid_eval.py > logs/diffusion_fid_eval.log 2>&1
+python diffusion/fid_eval.py > logs/diffusion_fid_eval.log 2>&1
 
 # Optional: Detach from the script completely
 exit 0

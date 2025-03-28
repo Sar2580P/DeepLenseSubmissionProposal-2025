@@ -30,7 +30,7 @@ def initialise_diffusion(ckpt_path:str, map_to_cpu:bool=False):
   except Exception as e:
     print("Failed to load model weights", e)
     
-  return model
+  return model.eval()
 
 def get_dataloader(BATCH_SIZE:int , num_workers:int , csv_path:str):
   dataset = DiffusionDataset(data_csv_path=csv_path)
@@ -48,7 +48,7 @@ if __name__=="__main__":
   total_samples, loader = get_dataloader(batch_size , num_workers , 
                                         "data/dataframes/diffusion_dataset/test_df.csv")
   
-  ckpt_path="results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=22 | val_MSE_loss=0.024.ckpt"
+  ckpt_path="results/Diffusion/Vanilla_Gaussian_Diffusion/ckpts/epoch=26 | val_MSE_loss=0.024.ckpt"
   diffusion_model = initialise_diffusion(ckpt_path, map_to_cpu= False)
  
   fid_eval = FIDEvaluation(batch_size,
