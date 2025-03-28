@@ -57,7 +57,7 @@ def train(config=None):
         torch.set_float32_matmul_precision('high')
         trainer = Trainer(callbacks=[early_stop_callback, rich_progress_bar, rich_model_summary, lr_monitor], 
                         accelerator = tr_config['accelerator'] ,accumulate_grad_batches=tr_config['accumulate_grad_batches'] , logger=[wandb_logger] , 
-                        max_epochs=tr_config['MAX_EPOCHS'],  devices=[0] , num_nodes=1    # Distributed Data Parallel (DDP)
+                        max_epochs=tr_config['MAX_EPOCHS'],  devices=2, num_nodes=1, strategy="ddp"
                         )
 
         trainer.fit(model_obj, tr_loader, val_loader)
@@ -65,4 +65,4 @@ def train(config=None):
 
 
 # Run the sweep
-wandb.agent(sweep_id, function=train, count = 50)
+wandb.agent(sweep_id, function=train, count = 24)
