@@ -8,8 +8,8 @@ from typing import Dict, Tuple
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.RandomRotation(degrees=15),
-    transforms.RandomHorizontalFlip(),
-    transforms.RandomVerticalFlip(),
+    transforms.RandomHorizontalFlip(p=0.3),
+    transforms.RandomVerticalFlip(p=0.3),
     
 ])
 

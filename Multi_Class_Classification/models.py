@@ -6,7 +6,7 @@ class ImagenetModels(nn.Module):
     AVAILABLE_MODELS = [name for name in dir(models) if callable(getattr(models, name)) and not name.startswith("_")]
     
 
-    def __init__(self, model_name, should_finetune, num_classes):
+    def __init__(self, model_name, should_finetune, num_classes, lr):
         super(ImagenetModels, self).__init__()
 
         self.model_name = model_name
@@ -18,9 +18,26 @@ class ImagenetModels(nn.Module):
 
         # Load model and modify output layer
         self.model = self.get_model()
-        self.layer_lr = [{'params' : self.model.parameters()}]
+        self.layer_lr = self.get_layer_lr(lr)  
+        
+    def get_layer_lr(self, lr):
+        def get_params(modules):
+            params = []
+            for module in modules:
+                params.extend(list(module.parameters()))
+            return params
 
-    def get_model(self):
+        if self.model_name=="resnet-18":
+            children = list(self.model.children())
+            base = children[:-3]
+            classifier = children[-3:]
+            base_lr = [{'params' : get_params(base), 'lr' : lr/20}]
+            classifier_lr = [{'params' : get_params(classifier), 'lr' : lr}]
+            return base_lr + classifier_lr
+        else :
+            raise ValueError(f"Model '{self.model_name}' not supported for layer-wise learning rate adjustment")
+
+    def get_model(self)->nn.Module:
         # Load the model from torchvision
         try:
             base_model = getattr(models, self.model_name)(pretrained=self.should_finetune)
@@ -48,5 +65,11 @@ if __name__=="__main__":
     model = ImagenetModels(model_name='resnet18', should_finetune=True, num_classes=3)
     print(model.AVAILABLE_MODELS)
     inp = torch.randn(1, 3, 150, 150)
-    out = model(inp)
-    print(out.shape)
+    children = list(model.model.children())
+    print(len(children))
+    for ch in children:
+        print(ch)
+        print("\n\n")
+        print("_"*50)
+    # out = model(inp)
+    # print(out.shape)
