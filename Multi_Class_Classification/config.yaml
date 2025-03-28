@@ -1,7 +1,7 @@
 train_config:
   model_name: "ImagenetModels"
   BATCH_SIZE: 64
-  weight_decay : 0.000001
+  weight_decay : 0.0000005
   lr : 2.0e-4
   ckpt_file_name : '{epoch} | {val_ce_loss:.3f} | {val_kappa:.3f} | {val_acc:.3f}'
   dir : "results/Classification"

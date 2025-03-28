@@ -7,9 +7,9 @@ from typing import Dict, Tuple
 
 transform = transforms.Compose([
     transforms.ToTensor(),
-    transforms.RandomRotation(degrees=15),
-    transforms.RandomHorizontalFlip(p=0.3),
-    transforms.RandomVerticalFlip(p=0.3),
+    transforms.RandomRotation(degrees=5),
+    transforms.RandomHorizontalFlip(p=0.1),
+    transforms.RandomVerticalFlip(p=0.1),
     
 ])
 
