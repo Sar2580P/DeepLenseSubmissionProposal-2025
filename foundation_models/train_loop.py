@@ -155,7 +155,7 @@ class SuperResAE_TrainLoop(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
       low_res, high_res = batch
-      pred_high_res = self.model.forward(low_res, high_res)
+      _, pred_high_res = self.model.forward(low_res)
       
       recon_loss = self.mse(pred_high_res, high_res)
       psnr = self.tr_psnr(pred_high_res, high_res)
@@ -167,7 +167,7 @@ class SuperResAE_TrainLoop(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
       low_res, high_res = batch
-      pred_high_res = self.model.forward(low_res, high_res)
+      restored_low_res_from_patches, pred_high_res = self.model.forward(low_res)
       
       recon_loss = self.mse(pred_high_res, high_res)
       psnr = self.val_psnr(pred_high_res, high_res)
@@ -183,13 +183,14 @@ class SuperResAE_TrainLoop(pl.LightningModule):
         # log the generated samples
         max_samples_to_log = min(5, high_res.shape[0])
         self.log_images({"low_res_images": low_res[:max_samples_to_log], "original_high_res_images": high_res[:max_samples_to_log],
-                        "pred_high_res_images": pred_high_res[:max_samples_to_log]})
+                        "pred_high_res_images": pred_high_res[:max_samples_to_log], 
+                        "restored_low_res_images": restored_low_res_from_patches[:max_samples_to_log]})
 
       return recon_loss
     
     def test_step(self, batch, batch_idx):
       low_res, high_res = batch
-      pred_high_res = self.model.forward(low_res, high_res)
+      _, pred_high_res = self.model.forward(low_res)
       
       recon_loss = self.mse(pred_high_res, high_res)
       psnr = self.tst_psnr(pred_high_res, high_res)

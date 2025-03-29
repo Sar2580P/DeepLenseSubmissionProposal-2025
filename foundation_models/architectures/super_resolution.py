@@ -22,11 +22,10 @@ class SuperResolutionAE(MAE):
         self.high_res_width = high_res_width
 
         # Upsampling layers for super-resolution
+        self.restore_image_from_patches = Rearrange('b (h w) (p1 p2 c) -> b c (h p1) (w p2)',
+                      p1=patch_height, p2=patch_width, h=low_res_height//patch_height , w=low_res_width//patch_width)
+        
         self.upsample = nn.Sequential(
-            # Rearrange patches into image format
-            Rearrange('b (h w) (p1 p2 c) -> b c (h p1) (w p2)',
-                      p1=patch_height, p2=patch_width, h=low_res_height//patch_height , w=low_res_width//patch_width),
-
             # Upsample from 76x76 to 152x152 using bilinear interpolation
             nn.Upsample(scale_factor=2, mode='bilinear', align_corners=False),
 
@@ -36,7 +35,6 @@ class SuperResolutionAE(MAE):
 
             # Final convolution to produce the high-resolution image
             nn.Conv2d(64, 1, kernel_size=3, stride=1, padding=1),
-            nn.Sigmoid()  # Normalize output to [0, 1]
         )
         self.masking_ratio=1   # setting it to 1 as in super-resolution, we need to construct back image from patches for upsampling        
 
@@ -52,7 +50,7 @@ class SuperResolutionAE(MAE):
         return mse_per_image.mean().item(), psnr_per_image.mean().item()
     
 
-    def forward(self, img, high_res_img):
+    def forward(self, img):
         device = img.device
 
         # Convert the input image into patches
@@ -84,10 +82,14 @@ class SuperResolutionAE(MAE):
                                             num_masked , device , batch_size, num_patches)
         
         # Reconstruct the pixel values from the masked decoded tokens
+        
         pred_pixel_values = self.to_pixels(masked_decoded_tokens)
-        pred_super_res = self.upsample(pred_pixel_values)
+        restored_img = self.restore_image_from_patches(pred_pixel_values)
+        pred_super_res = self.upsample(restored_img)
         #print(f"pred_pixel_values shape: {pred_pixel_values.shape}")
         # losses = self.compute_loss(pred_super_res, high_res_img)
         
-        return  pred_super_res
+        # normalize the output to [0, 1] using min-max scaling
+        pred_super_res = (pred_super_res - pred_super_res.min()) / (pred_super_res.max() - pred_super_res.min())
+        return  restored_img, pred_super_res
 
