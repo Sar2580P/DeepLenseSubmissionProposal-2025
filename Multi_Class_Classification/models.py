@@ -27,11 +27,11 @@ class ImagenetModels(nn.Module):
                 params.extend(list(module.parameters()))
             return params
 
-        if self.model_name=="resnet-18":
+        if self.model_name=="resnet18":
             children = list(self.model.children())
             base = children[:-3]
             classifier = children[-3:]
-            base_lr = [{'params' : get_params(base), 'lr' : lr/20}]
+            base_lr = [{'params' : get_params(base), 'lr' : lr/40}]
             classifier_lr = [{'params' : get_params(classifier), 'lr' : lr}]
             return base_lr + classifier_lr
         else :

@@ -26,7 +26,7 @@ class Classifier(pl.LightningModule):
 
     self.val_conf_mat = MulticlassConfusionMatrix(num_classes =self.tr_config['num_classes'])
 
-    self.criterion = torch.nn.CrossEntropyLoss()
+    self.criterion = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
     self.tst_y_hat , self.tst_y_true = [], []
     self.save_hyperparameters(ignore=['model_obj', 'layer_lr', 'tst_y_hat', 'tst_y_true'])
 

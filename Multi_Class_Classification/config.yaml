@@ -31,13 +31,13 @@ callbacks_config:
     monitor: 'val_ce_loss'
     mode: 'min'
     min_delta : 0.00005
-    patience : 8
+    patience : 10
     verbose : True
 
 lr_scheduler_params :
   lr_scheduler_name: 'exponential_decay_lr_scheduler'
   exponential_decay_lr_scheduler_params:
-    gamma: 0.99
+    gamma: 0.98
 
   cosine_annealing_lr_scheduler_params:
     T_max: 150
