@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.metrics import roc_curve, auc
+from sklearn.metrics import roc_curve, auc, classification_report
 from sklearn.preprocessing import label_binarize
 import pickle 
 def plot_multiclass_roc(y_true, y_scores, n_classes, save_path=None):
@@ -83,6 +83,20 @@ def main():
     )
     
     print(f"Macro-average ROC AUC: {macro_auc:.4f}")
+   
+    # Generate classification report
+    # For classification report, convert probability scores to predicted labels using argmax
+    y_pred = np.argmax(y_scores, axis=1)
+    report = classification_report(y_true, y_pred, digits=4)
+    print("\nClassification Report:\n")
+    print(report)
+    
+    # Save classification report as a text file
+    report_save_path = 'logs/common_classification_report.txt'
+
+    with open(report_save_path, 'w') as f:
+        f.write(report)
+    print(f"Classification report saved to {report_save_path}")
 
 if __name__=="__main__":
   main()

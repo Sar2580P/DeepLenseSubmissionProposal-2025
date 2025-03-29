@@ -1,6 +1,6 @@
 /home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
   warnings.warn(
-/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
 Trainer already configured with model summary callbacks: [<class 'pytorch_lightning.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
 GPU available: True (cuda), used: True
@@ -10,11 +10,12 @@ HPU available: False, using: 0 HPUs
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
 wandb: Currently logged in as: sporwal1818 (shri_krishna) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: Tracking run with wandb version 0.19.8
-wandb: Run data is saved locally in ./wandb/run-20250327_184834-b3lq4tps
+wandb: Run data is saved locally in ./wandb/run-20250329_162035-l6qt08qc
 wandb: Run `wandb offline` to turn off syncing.
 wandb: Syncing run ImagenetModels--data=imagenet_3channel--submodel=submodel=resnet18
 wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLenseClassificationTask
-wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLenseClassificationTask/runs/b3lq4tps
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLenseClassificationTask/runs/l6qt08qc
+/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:652: Checkpoint directory results/Classification/ImagenetModels--data=imagenet_3channel/ckpts exists and is not empty.
 LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
 ┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
 ┃    ┃ Name                    ┃ Type                      ┃ Params ┃
@@ -45,89 +46,69 @@ Non-trainable params: 0
 Total params: 11.2 M                                                            
 Total estimated model params size (MB): 44                                      
 SLURM auto-requeueing enabled. Setting signal handlers.
-Metric val_ce_loss improved. New best score: 1.104
-Epoch 0, global step 95: 'val_ce_loss' reached 1.10362 (best 1.10362), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=0 | val_ce_loss=1.104 | val_kappa=0.023 | val_acc=0.345.ckpt' as top 1
-Epoch 1, global step 190: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.004 >= min_delta = 5e-05. New best score: 1.100
-Epoch 2, global step 285: 'val_ce_loss' reached 1.09952 (best 1.09952), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=2 | val_ce_loss=1.100 | val_kappa=0.034 | val_acc=0.349.ckpt' as top 1
-Epoch 3, global step 380: 'val_ce_loss' was not in top 1
-Epoch 4, global step 475: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.003 >= min_delta = 5e-05. New best score: 1.097
-Epoch 5, global step 570: 'val_ce_loss' reached 1.09698 (best 1.09698), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=5 | val_ce_loss=1.097 | val_kappa=0.056 | val_acc=0.359.ckpt' as top 1
-Metric val_ce_loss improved by 0.005 >= min_delta = 5e-05. New best score: 1.092
-Epoch 6, global step 665: 'val_ce_loss' reached 1.09211 (best 1.09211), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=6 | val_ce_loss=1.092 | val_kappa=0.086 | val_acc=0.366.ckpt' as top 1
-Metric val_ce_loss improved by 0.009 >= min_delta = 5e-05. New best score: 1.083
-Epoch 7, global step 760: 'val_ce_loss' reached 1.08348 (best 1.08348), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=7 | val_ce_loss=1.083 | val_kappa=0.116 | val_acc=0.380.ckpt' as top 1
-Epoch 8, global step 855: 'val_ce_loss' was not in top 1
-Epoch 9, global step 950: 'val_ce_loss' was not in top 1
+Metric val_ce_loss improved. New best score: 1.086
+Epoch 0, global step 95: 'val_ce_loss' reached 1.08600 (best 1.08600), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=0 | val_ce_loss=1.086 | val_kappa=0.117 | val_acc=0.389.ckpt' as top 1
+Metric val_ce_loss improved by 0.020 >= min_delta = 5e-05. New best score: 1.066
+Epoch 1, global step 190: 'val_ce_loss' reached 1.06598 (best 1.06598), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=1 | val_ce_loss=1.066 | val_kappa=0.185 | val_acc=0.421.ckpt' as top 1
+Metric val_ce_loss improved by 0.013 >= min_delta = 5e-05. New best score: 1.053
+Epoch 2, global step 285: 'val_ce_loss' reached 1.05279 (best 1.05279), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=2 | val_ce_loss=1.053 | val_kappa=0.188 | val_acc=0.437.ckpt' as top 1
+Metric val_ce_loss improved by 0.006 >= min_delta = 5e-05. New best score: 1.047
+Epoch 3, global step 380: 'val_ce_loss' reached 1.04658 (best 1.04658), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=3 | val_ce_loss=1.047 | val_kappa=0.254 | val_acc=0.463.ckpt' as top 1
+Metric val_ce_loss improved by 0.015 >= min_delta = 5e-05. New best score: 1.032
+Epoch 4, global step 475: 'val_ce_loss' reached 1.03170 (best 1.03170), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=4 | val_ce_loss=1.032 | val_kappa=0.282 | val_acc=0.483.ckpt' as top 1
+Metric val_ce_loss improved by 0.028 >= min_delta = 5e-05. New best score: 1.004
+Epoch 5, global step 570: 'val_ce_loss' reached 1.00392 (best 1.00392), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=5 | val_ce_loss=1.004 | val_kappa=0.341 | val_acc=0.502.ckpt' as top 1
+Metric val_ce_loss improved by 0.006 >= min_delta = 5e-05. New best score: 0.997
+Epoch 6, global step 665: 'val_ce_loss' reached 0.99744 (best 0.99744), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=6 | val_ce_loss=0.997 | val_kappa=0.358 | val_acc=0.514.ckpt' as top 1
+Metric val_ce_loss improved by 0.019 >= min_delta = 5e-05. New best score: 0.978
+Epoch 7, global step 760: 'val_ce_loss' reached 0.97815 (best 0.97815), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=7 | val_ce_loss=0.978 | val_kappa=0.363 | val_acc=0.525.ckpt' as top 1
+Metric val_ce_loss improved by 0.021 >= min_delta = 5e-05. New best score: 0.957
+Epoch 8, global step 855: 'val_ce_loss' reached 0.95742 (best 0.95742), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=8 | val_ce_loss=0.957 | val_kappa=0.418 | val_acc=0.544.ckpt' as top 1
+Metric val_ce_loss improved by 0.016 >= min_delta = 5e-05. New best score: 0.942
+Epoch 9, global step 950: 'val_ce_loss' reached 0.94160 (best 0.94160), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=9 | val_ce_loss=0.942 | val_kappa=0.448 | val_acc=0.559.ckpt' as top 1
 Epoch 10, global step 1045: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.067 >= min_delta = 5e-05. New best score: 1.016
-Epoch 11, global step 1140: 'val_ce_loss' reached 1.01636 (best 1.01636), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=11 | val_ce_loss=1.016 | val_kappa=0.287 | val_acc=0.463.ckpt' as top 1
-Epoch 12, global step 1235: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.017 >= min_delta = 5e-05. New best score: 0.999
-Epoch 13, global step 1330: 'val_ce_loss' reached 0.99907 (best 0.99907), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=13 | val_ce_loss=0.999 | val_kappa=0.350 | val_acc=0.482.ckpt' as top 1
-Epoch 14, global step 1425: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.079 >= min_delta = 5e-05. New best score: 0.920
-Epoch 15, global step 1520: 'val_ce_loss' reached 0.91991 (best 0.91991), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=15 | val_ce_loss=0.920 | val_kappa=0.493 | val_acc=0.543.ckpt' as top 1
+Metric val_ce_loss improved by 0.014 >= min_delta = 5e-05. New best score: 0.927
+Epoch 11, global step 1140: 'val_ce_loss' reached 0.92712 (best 0.92712), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=11 | val_ce_loss=0.927 | val_kappa=0.456 | val_acc=0.581.ckpt' as top 1
+Metric val_ce_loss improved by 0.004 >= min_delta = 5e-05. New best score: 0.923
+Epoch 12, global step 1235: 'val_ce_loss' reached 0.92271 (best 0.92271), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=12 | val_ce_loss=0.923 | val_kappa=0.478 | val_acc=0.581.ckpt' as top 1
+Epoch 13, global step 1330: 'val_ce_loss' was not in top 1
+Metric val_ce_loss improved by 0.009 >= min_delta = 5e-05. New best score: 0.914
+Epoch 14, global step 1425: 'val_ce_loss' reached 0.91401 (best 0.91401), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=14 | val_ce_loss=0.914 | val_kappa=0.492 | val_acc=0.599.ckpt' as top 1
+Metric val_ce_loss improved by 0.023 >= min_delta = 5e-05. New best score: 0.891
+Epoch 15, global step 1520: 'val_ce_loss' reached 0.89111 (best 0.89111), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=15 | val_ce_loss=0.891 | val_kappa=0.516 | val_acc=0.615.ckpt' as top 1
 Epoch 16, global step 1615: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.003 >= min_delta = 5e-05. New best score: 0.917
-Epoch 17, global step 1710: 'val_ce_loss' reached 0.91728 (best 0.91728), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=17 | val_ce_loss=0.917 | val_kappa=0.462 | val_acc=0.551.ckpt' as top 1
+Metric val_ce_loss improved by 0.012 >= min_delta = 5e-05. New best score: 0.879
+Epoch 17, global step 1710: 'val_ce_loss' reached 0.87915 (best 0.87915), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=17 | val_ce_loss=0.879 | val_kappa=0.529 | val_acc=0.620.ckpt' as top 1
 Epoch 18, global step 1805: 'val_ce_loss' was not in top 1
 Epoch 19, global step 1900: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.034 >= min_delta = 5e-05. New best score: 0.883
-Epoch 20, global step 1995: 'val_ce_loss' reached 0.88338 (best 0.88338), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=20 | val_ce_loss=0.883 | val_kappa=0.513 | val_acc=0.567.ckpt' as top 1
+Epoch 20, global step 1995: 'val_ce_loss' was not in top 1
 Epoch 21, global step 2090: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.016 >= min_delta = 5e-05. New best score: 0.867
-Epoch 22, global step 2185: 'val_ce_loss' reached 0.86736 (best 0.86736), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=22 | val_ce_loss=0.867 | val_kappa=0.522 | val_acc=0.573.ckpt' as top 1
+Epoch 22, global step 2185: 'val_ce_loss' was not in top 1
 Epoch 23, global step 2280: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.048 >= min_delta = 5e-05. New best score: 0.820
-Epoch 24, global step 2375: 'val_ce_loss' reached 0.81953 (best 0.81953), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=24 | val_ce_loss=0.820 | val_kappa=0.583 | val_acc=0.606.ckpt' as top 1
+Epoch 24, global step 2375: 'val_ce_loss' was not in top 1
 Epoch 25, global step 2470: 'val_ce_loss' was not in top 1
 Epoch 26, global step 2565: 'val_ce_loss' was not in top 1
+Monitored metric val_ce_loss did not improve in the last 10 records. Best score: 0.879. Signaling Trainer to stop.
 Epoch 27, global step 2660: 'val_ce_loss' was not in top 1
-Epoch 28, global step 2755: 'val_ce_loss' was not in top 1
-Epoch 29, global step 2850: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.068 >= min_delta = 5e-05. New best score: 0.752
-Epoch 30, global step 2945: 'val_ce_loss' reached 0.75159 (best 0.75159), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=30 | val_ce_loss=0.752 | val_kappa=0.633 | val_acc=0.634.ckpt' as top 1
-Epoch 31, global step 3040: 'val_ce_loss' was not in top 1
-Epoch 32, global step 3135: 'val_ce_loss' was not in top 1
-Epoch 33, global step 3230: 'val_ce_loss' was not in top 1
-Epoch 34, global step 3325: 'val_ce_loss' was not in top 1
-Epoch 35, global step 3420: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.011 >= min_delta = 5e-05. New best score: 0.741
-Epoch 36, global step 3515: 'val_ce_loss' reached 0.74080 (best 0.74080), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=36 | val_ce_loss=0.741 | val_kappa=0.638 | val_acc=0.646.ckpt' as top 1
-Epoch 37, global step 3610: 'val_ce_loss' was not in top 1
-Epoch 38, global step 3705: 'val_ce_loss' was not in top 1
-Metric val_ce_loss improved by 0.028 >= min_delta = 5e-05. New best score: 0.713
-Epoch 39, global step 3800: 'val_ce_loss' reached 0.71261 (best 0.71261), saving model to 'results/Classification/ImagenetModels--data=imagenet_3channel/ckpts/submodel=resnet18--epoch=39 | val_ce_loss=0.713 | val_kappa=0.653 | val_acc=0.661.ckpt' as top 1
-Epoch 40, global step 3895: 'val_ce_loss' was not in top 1
-Epoch 41, global step 3990: 'val_ce_loss' was not in top 1
-Epoch 42, global step 4085: 'val_ce_loss' was not in top 1
-Epoch 43, global step 4180: 'val_ce_loss' was not in top 1
-Epoch 44, global step 4275: 'val_ce_loss' was not in top 1
-Epoch 45, global step 4370: 'val_ce_loss' was not in top 1
-Epoch 46, global step 4465: 'val_ce_loss' was not in top 1
-Monitored metric val_ce_loss did not improve in the last 8 records. Best score: 0.713. Signaling Trainer to stop.
-Epoch 47, global step 4560: 'val_ce_loss' was not in top 1
-Epoch 47/99 ━━━━━━━━━━━━━━━━ 380/380 0:00:30 •       12.65it/s v_num: ps_1      
+Epoch 27/149 ━━━━━━━━━━━━━━━ 380/380 0:00:27 •       13.94it/s v_num: qc_3      
                                      0:00:00                   val_ce_loss:     
-                                                               1.045 val_kappa: 
-                                                               0.465 val_acc:   
-                                                               0.532            
+                                                               0.912 val_kappa: 
+                                                               0.534 val_acc:   
+                                                               0.622            
                                                                train_ce_loss:   
-                                                               0.604            
+                                                               0.679            
                                                                train_kappa:     
-                                                               0.724 train_acc: 
-                                                               0.728            
+                                                               0.723 train_acc: 
+                                                               0.771            
 LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
 SLURM auto-requeueing enabled. Setting signal handlers.
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃        Test metric        ┃       DataLoader 0        ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│      test_acc_epoch       │    0.5406666398048401     │
-│    test_ce_loss_epoch     │     1.022071361541748     │
-│     test_kappa_epoch      │    0.4765123128890991     │
+│      test_acc_epoch       │    0.6320000290870667     │
+│    test_ce_loss_epoch     │    0.8944753408432007     │
+│     test_kappa_epoch      │    0.5607196092605591     │
 └───────────────────────────┴───────────────────────────┘
-Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47/47 0:00:06 • 0:00:00 7.19it/s 
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47/47 0:00:06 • 0:00:00 6.66it/s 
 [1;34mwandb[0m: 
-[1;34mwandb[0m: 🚀 View run [33mImagenetModels--data=imagenet_3channel--submodel=submodel=resnet18[0m at: [34mhttps://wandb.ai/shri_krishna/DeepLenseClassificationTask/runs/b3lq4tps[0m
+[1;34mwandb[0m: 🚀 View run [33mImagenetModels--data=imagenet_3channel--submodel=submodel=resnet18[0m at: [34mhttps://wandb.ai/shri_krishna/DeepLenseClassificationTask/runs/l6qt08qc[0m

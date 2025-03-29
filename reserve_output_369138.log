@@ -1,0 +1,20 @@
+==========================================
+SLURM_CLUSTER_NAME = paramganga
+SLURM_ARRAY_JOB_ID = 
+SLURM_ARRAY_TASK_ID = 
+SLURM_ARRAY_TASK_COUNT = 
+SLURM_ARRAY_TASK_MAX = 
+SLURM_ARRAY_TASK_MIN = 
+SLURM_JOB_ACCOUNT = iitr
+SLURM_JOB_ID = 369138
+SLURM_JOB_NAME = foundation_models
+SLURM_JOB_NODELIST = gpu011
+SLURM_JOB_USER = s_porwal_me.iitr
+SLURM_JOB_UID = 39014
+SLURM_JOB_PARTITION = gpu
+SLURM_TASK_PID = 12826
+SLURM_SUBMIT_DIR = /scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025
+SLURM_CPUS_ON_NODE = 20
+SLURM_NTASKS = 2
+SLURM_TASK_PID = 12826
+==========================================

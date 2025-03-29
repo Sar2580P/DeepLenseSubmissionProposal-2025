@@ -26,7 +26,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 #srun --ntasks=2 --cpus-per-task=10 python diffusion/trainer.py  > logs/diffusion_training.log 2>&1
 
 srun --ntasks=2 --cpus-per-task=10 python diffusion/sweep/sweep.py  > logs/diffusion_sweep.log 2>&1
-python diffusion/fid_eval.py > logs/diffusion_fid_eval.log 2>&1
+#python diffusion/fid_eval.py > logs/diffusion_fid_eval.log 2>&1
 
 # Optional: Detach from the script completely
 exit 0

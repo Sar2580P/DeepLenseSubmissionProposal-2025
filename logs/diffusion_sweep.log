@@ -1,61 +1,389 @@
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
-wandb: Agent Starting Run: 2074krl9 with config:
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Sweep Agent: Waiting for job.
+wandb: Job received.
+wandb: Agent Starting Run: c8ewtcfx with config:
 wandb: 	BATCH_SIZE: 8
-wandb: 	attn_dim_head: 32
-wandb: 	attn_heads: 4
-wandb: 	beta_schedule: sigmoid
+wandb: 	attn_dim_head: 48
+wandb: 	attn_heads: 6
+wandb: 	beta_schedule: cosine
+wandb: 	ddim_sampling_eta: 0.2
 wandb: 	dim: 128
 wandb: 	dim_mults: [1, 2, 3, 4]
-wandb: 	dropout: 0.15
+wandb: 	dropout: 0.1
 wandb: 	flash_attn: False
 wandb: 	init_dim: 32
 wandb: 	learned_sinusoidal_cond: False
 wandb: 	learned_sinusoidal_dim: 32
 wandb: 	learned_variance: False
-wandb: 	lr: 0.0003
+wandb: 	lr: 0.0001
+wandb: 	min_snr_gamma: 5
+wandb: 	objective: pred_v
+wandb: 	out_dim: 1
+wandb: 	random_fourier_features: False
+wandb: 	scheduler_name: cosine_decay_lr_scheduler
+wandb: 	sinusoidal_pos_emb_theta: 10000
+wandb: 	timesteps: 50
+wandb: 	weight_decay: 5e-07
+wandb: Currently logged in as: sporwal1818 (shri_krishna) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Agent Starting Run: mmr1buj6 with config:
+wandb: 	BATCH_SIZE: 8
+wandb: 	attn_dim_head: 48
+wandb: 	attn_heads: 6
+wandb: 	beta_schedule: cosine
+wandb: 	ddim_sampling_eta: 0.4
+wandb: 	dim: 128
+wandb: 	dim_mults: [1, 2, 3, 4]
+wandb: 	dropout: 0.1
+wandb: 	flash_attn: False
+wandb: 	init_dim: 32
+wandb: 	learned_sinusoidal_cond: False
+wandb: 	learned_sinusoidal_dim: 32
+wandb: 	learned_variance: False
+wandb: 	lr: 0.0001
+wandb: 	min_snr_gamma: 5
+wandb: 	objective: pred_v
+wandb: 	out_dim: 1
+wandb: 	random_fourier_features: False
+wandb: 	scheduler_name: cosine_decay_lr_scheduler
+wandb: 	sinusoidal_pos_emb_theta: 10000
+wandb: 	timesteps: 50
+wandb: 	weight_decay: 5e-07
+wandb: Currently logged in as: sporwal1818 (shri_krishna) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: creating run
+wandb: creating run
+wandb: Tracking run with wandb version 0.19.8
+wandb: Run data is saved locally in /scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/wandb/run-20250329_151129-c8ewtcfx
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run good-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep
+wandb: 🧹 View sweep at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/ekaah4lc
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/runs/c8ewtcfx
+wandb: Tracking run with wandb version 0.19.8
+wandb: Run data is saved locally in /scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/wandb/run-20250329_151130-mmr1buj6
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run valiant-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep
+wandb: 🧹 View sweep at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/y9x9hh5i
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/runs/mmr1buj6
+Trainer already configured with model summary callbacks: [<class 'pytorch_lightning.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/2
+Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/2
+----------------------------------------------------------------------------------------------------
+distributed_backend=nccl
+All distributed processes registered. Starting with 2 processes
+----------------------------------------------------------------------------------------------------
+
+/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/loggers/wandb.py:390: There is a wandb run already in progress and newly created instances of `WandbLogger` will reuse this run. If this is not desired, call `wandb.finish()` before instantiating `WandbLogger`.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
+Create sweep with ID: ekaah4lc
+Sweep URL: https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/ekaah4lc
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                        ┃ Type                    ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ model                       │ CustomGaussianDiffusion │ 57.1 M │
+│ 1  │ model.model                 │ Unet                    │ 57.1 M │
+│ 2  │ model.model.init_conv       │ Conv2d                  │  1.6 K │
+│ 3  │ model.model.time_mlp        │ Sequential              │  328 K │
+│ 4  │ model.model.downs           │ ModuleList              │ 13.2 M │
+│ 5  │ model.model.ups             │ ModuleList              │ 32.4 M │
+│ 6  │ model.model.mid_block1      │ ResnetBlock             │  5.2 M │
+│ 7  │ model.model.mid_attn        │ Attention               │  593 K │
+│ 8  │ model.model.mid_block2      │ ResnetBlock             │  5.2 M │
+│ 9  │ model.model.final_res_block │ ResnetBlock             │ 62.7 K │
+│ 10 │ model.model.final_conv      │ Conv2d                  │     33 │
+└────┴─────────────────────────────┴─────────────────────────┴────────┘
+Trainable params: 57.1 M                                                        
+Non-trainable params: 0                                                         
+Total params: 57.1 M                                                            
+Total estimated model params size (MB): 228                                     
+SLURM auto-requeueing enabled. Setting signal handlers.
+SLURM auto-requeueing enabled. Setting signal handlers.
+Create sweep with ID: y9x9hh5i
+Sweep URL: https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/y9x9hh5i
+[rank: 0] Metric val_MSE_loss improved. New best score: 0.626
+[rank: 1] Metric val_MSE_loss improved. New best score: 0.626
+[rank: 0] Metric val_MSE_loss improved by 0.372 >= min_delta = 5e-05. New best score: 0.254
+[rank: 1] Metric val_MSE_loss improved by 0.372 >= min_delta = 5e-05. New best score: 0.254
+[rank: 0] Metric val_MSE_loss improved by 0.036 >= min_delta = 5e-05. New best score: 0.218
+[rank: 1] Metric val_MSE_loss improved by 0.036 >= min_delta = 5e-05. New best score: 0.218
+[rank: 0] Metric val_MSE_loss improved by 0.061 >= min_delta = 5e-05. New best score: 0.157
+[rank: 1] Metric val_MSE_loss improved by 0.061 >= min_delta = 5e-05. New best score: 0.157
+[rank: 0] Metric val_MSE_loss improved by 0.035 >= min_delta = 5e-05. New best score: 0.122
+[rank: 1] Metric val_MSE_loss improved by 0.035 >= min_delta = 5e-05. New best score: 0.122
+[rank: 0] Metric val_MSE_loss improved by 0.020 >= min_delta = 5e-05. New best score: 0.102
+[rank: 1] Metric val_MSE_loss improved by 0.020 >= min_delta = 5e-05. New best score: 0.102
+[rank: 0] Metric val_MSE_loss improved by 0.012 >= min_delta = 5e-05. New best score: 0.090
+[rank: 1] Metric val_MSE_loss improved by 0.012 >= min_delta = 5e-05. New best score: 0.090
+[rank: 0] Metric val_MSE_loss improved by 0.005 >= min_delta = 5e-05. New best score: 0.085
+[rank: 1] Metric val_MSE_loss improved by 0.005 >= min_delta = 5e-05. New best score: 0.085
+[rank: 0] Metric val_MSE_loss improved by 0.010 >= min_delta = 5e-05. New best score: 0.075
+[rank: 1] Metric val_MSE_loss improved by 0.010 >= min_delta = 5e-05. New best score: 0.075
+[rank: 0] Metric val_MSE_loss improved by 0.004 >= min_delta = 5e-05. New best score: 0.071
+[rank: 1] Metric val_MSE_loss improved by 0.004 >= min_delta = 5e-05. New best score: 0.071
+[rank: 0] Metric val_MSE_loss improved by 0.005 >= min_delta = 5e-05. New best score: 0.066
+[rank: 1] Metric val_MSE_loss improved by 0.005 >= min_delta = 5e-05. New best score: 0.066
+[rank: 0] Metric val_MSE_loss improved by 0.006 >= min_delta = 5e-05. New best score: 0.060
+[rank: 1] Metric val_MSE_loss improved by 0.006 >= min_delta = 5e-05. New best score: 0.060
+[rank: 0] Metric val_MSE_loss improved by 0.011 >= min_delta = 5e-05. New best score: 0.049
+[rank: 1] Metric val_MSE_loss improved by 0.011 >= min_delta = 5e-05. New best score: 0.049
+[rank: 0] Monitored metric val_MSE_loss did not improve in the last 5 records. Best score: 0.049. Signaling Trainer to stop.
+[rank: 1] Monitored metric val_MSE_loss did not improve in the last 5 records. Best score: 0.049. Signaling Trainer to stop.
+Epoch 22/99 ━━━━━━━━━━━━━━━━ 507/507 0:03:19 •        2.56it/s v_num: tcfx      
+                                     0:00:00                   val_MSE_loss:    
+                                                               0.055            
+                                                               train_MSE_loss:  
+                                                               0.076            
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
+SLURM auto-requeueing enabled. Setting signal handlers.
+SLURM auto-requeueing enabled. Setting signal handlers.
+/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:232: Using `DistributedSampler` with the dataloaders. During `trainer.test()`, it is recommended to use `Trainer(devices=1, num_nodes=1)` to ensure each sample/batch gets evaluated exactly once. Otherwise, multi-device settings use `DistributedSampler` that replicates some samples to make sure all devices have same batch size in case of uneven inputs.
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃        Test metric        ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│       test_MSE_loss       │    0.05374125391244888    │
+└───────────────────────────┴───────────────────────────┘
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63/63 0:00:10 • 0:00:00 5.93it/s 
+wandb: uploading output.log; uploading wandb-summary.json; uploading config.yaml
+wandb: uploading output.log; uploading wandb-summary.json
+wandb:                                                                                
+wandb: 🚀 View run valiant-sweep-1 at: https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/runs/mmr1buj6
+wandb: ⭐️ View project at: https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250329_151130-mmr1buj6/logs
+wandb: uploading wandb-summary.json; uploading config.yaml
+wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: cosine_decay_lr_scheduler ████████▇▇▇▇▇▇▇▇▇▇▇▇▆▆▆▅▅▄▄▄▄▄▃▃▃▂▂▂▂▂▂▁
+wandb:                     epoch ▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▆▇▇▇▇▇██
+wandb:             test_MSE_loss ▁
+wandb:            train_MSE_loss █▃▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:       trainer/global_step ▁▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▄▅▅▆▆▆▇▇▇▇▇▇▇▇▇███
+wandb:              val_MSE_loss █▃▃▂▂▂▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: cosine_decay_lr_scheduler 0.0001
+wandb:                     epoch 23
+wandb:             test_MSE_loss 0.05374
+wandb:            train_MSE_loss 0.07618
+wandb:       trainer/global_step 1472
+wandb:              val_MSE_loss 0.05523
+wandb: 
+wandb: 🚀 View run good-sweep-1 at: https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/runs/c8ewtcfx
+wandb: ⭐️ View project at: https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250329_151129-c8ewtcfx/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Agent Starting Run: jubp5ia3 with config:
+wandb: 	BATCH_SIZE: 8
+wandb: 	attn_dim_head: 48
+wandb: 	attn_heads: 6
+wandb: 	beta_schedule: cosine
+wandb: 	ddim_sampling_eta: 0.4
+wandb: 	dim: 128
+wandb: 	dim_mults: [1, 2, 3, 4]
+wandb: 	dropout: 0.1
+wandb: 	flash_attn: False
+wandb: 	init_dim: 32
+wandb: 	learned_sinusoidal_cond: False
+wandb: 	learned_sinusoidal_dim: 32
+wandb: 	learned_variance: False
+wandb: 	lr: 0.0001
 wandb: 	min_snr_gamma: 3
 wandb: 	objective: pred_v
 wandb: 	out_dim: 1
 wandb: 	random_fourier_features: False
 wandb: 	scheduler_name: cosine_decay_lr_scheduler
 wandb: 	sinusoidal_pos_emb_theta: 10000
-wandb: 	timesteps: 100
-wandb: 	weight_decay: 1e-05
-wandb: Currently logged in as: sporwal1818 (shri_krishna) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: creating run
+wandb: 	timesteps: 50
+wandb: 	weight_decay: 5e-07
 wandb: Tracking run with wandb version 0.19.8
-wandb: Run data is saved locally in /scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/wandb/run-20250325_211334-2074krl9
+wandb: Run data is saved locally in /scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/wandb/run-20250329_163153-jubp5ia3
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run rural-sweep-1
+wandb: Syncing run fancy-sweep-2
 wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep
-wandb: 🧹 View sweep at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/2pnsdopn
-wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/runs/2074krl9
+wandb: 🧹 View sweep at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/ekaah4lc
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/runs/jubp5ia3
 Trainer already configured with model summary callbacks: [<class 'pytorch_lightning.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
 GPU available: True (cuda), used: True
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
 /home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/loggers/wandb.py:390: There is a wandb run already in progress and newly created instances of `WandbLogger` will reuse this run. If this is not desired, call `wandb.finish()` before instantiating `WandbLogger`.
+wandb: Job received.
+wandb: Agent Starting Run: 7feqwc9x with config:
+wandb: 	BATCH_SIZE: 8
+wandb: 	attn_dim_head: 48
+wandb: 	attn_heads: 6
+wandb: 	beta_schedule: cosine
+wandb: 	ddim_sampling_eta: 0.4
+wandb: 	dim: 96
+wandb: 	dim_mults: [1, 2, 3, 4]
+wandb: 	dropout: 0.1
+wandb: 	flash_attn: False
+wandb: 	init_dim: 32
+wandb: 	learned_sinusoidal_cond: False
+wandb: 	learned_sinusoidal_dim: 32
+wandb: 	learned_variance: False
+wandb: 	lr: 0.0001
+wandb: 	min_snr_gamma: 5
+wandb: 	objective: pred_v
+wandb: 	out_dim: 1
+wandb: 	random_fourier_features: False
+wandb: 	scheduler_name: cosine_decay_lr_scheduler
+wandb: 	sinusoidal_pos_emb_theta: 10000
+wandb: 	timesteps: 50
+wandb: 	weight_decay: 5e-07
+wandb: Tracking run with wandb version 0.19.8
+wandb: Run data is saved locally in /scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/wandb/run-20250329_163158-7feqwc9x
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run gallant-sweep-2
+wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep
+wandb: 🧹 View sweep at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/y9x9hh5i
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/runs/7feqwc9x
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
 LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
-Create sweep with ID: 2pnsdopn
-Sweep URL: https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/2pnsdopn
 ┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
 ┃    ┃ Name                        ┃ Type                    ┃ Params ┃
 ┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━┩
-│ 0  │ model                       │ CustomGaussianDiffusion │ 55.4 M │
-│ 1  │ model.model                 │ Unet                    │ 55.4 M │
+│ 0  │ model                       │ CustomGaussianDiffusion │ 57.1 M │
+│ 1  │ model.model                 │ Unet                    │ 57.1 M │
 │ 2  │ model.model.init_conv       │ Conv2d                  │  1.6 K │
 │ 3  │ model.model.time_mlp        │ Sequential              │  328 K │
-│ 4  │ model.model.downs           │ ModuleList              │ 12.7 M │
-│ 5  │ model.model.ups             │ ModuleList              │ 31.6 M │
+│ 4  │ model.model.downs           │ ModuleList              │ 13.2 M │
+│ 5  │ model.model.ups             │ ModuleList              │ 32.4 M │
 │ 6  │ model.model.mid_block1      │ ResnetBlock             │  5.2 M │
-│ 7  │ model.model.mid_attn        │ Attention               │  264 K │
+│ 7  │ model.model.mid_attn        │ Attention               │  593 K │
 │ 8  │ model.model.mid_block2      │ ResnetBlock             │  5.2 M │
 │ 9  │ model.model.final_res_block │ ResnetBlock             │ 62.7 K │
 │ 10 │ model.model.final_conv      │ Conv2d                  │     33 │
 └────┴─────────────────────────────┴─────────────────────────┴────────┘
-Trainable params: 55.4 M                                                        
+Trainable params: 57.1 M                                                        
 Non-trainable params: 0                                                         
-Total params: 55.4 M                                                            
-Total estimated model params size (MB): 221                                     
-SLURM auto-requeueing enabled. Setting signal handlers.
+Total params: 57.1 M                                                            
+Total estimated model params size (MB): 228                                     
+Traceback (most recent call last):
+  File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/diffusion/sweep/sweep.py", line 57, in train
+    trainer.fit(model_obj, tr_loader, val_loader)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 543, in fit
+    call._call_and_handle_interrupt(
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/call.py", line 43, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/launchers/subprocess_script.py", line 105, in launch
+    return function(*args, **kwargs)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 579, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 962, in _run
+    self.strategy.setup(self)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 171, in setup
+    self.configure_ddp()
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 283, in configure_ddp
+    self.model = self._setup_model(self.model)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 195, in _setup_model
+    return DistributedDataParallel(module=model, device_ids=device_ids, **self._ddp_kwargs)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 655, in __init__
+    _verify_param_shape_across_processes(self.process_group, parameters)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torch/distributed/utils.py", line 112, in _verify_param_shape_across_processes
+    return dist._verify_params_across_processes(process_group, tensors, logger)
+RuntimeError: [1]: params[2] in this process with sizes [384, 96] appears not to match sizes of the same param in process 0.
+wandb: uploading config.yaml
+wandb:                                                                                
+wandb: 🚀 View run gallant-sweep-2 at: https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/runs/7feqwc9x
+wandb: ⭐️ View project at: https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250329_163158-7feqwc9x/logs
+Run 7feqwc9x errored:
+Traceback (most recent call last):
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/wandb/agents/pyagent.py", line 306, in _run_job
+    self._function()
+  File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/diffusion/sweep/sweep.py", line 57, in train
+    trainer.fit(model_obj, tr_loader, val_loader)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 543, in fit
+    call._call_and_handle_interrupt(
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/call.py", line 43, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/launchers/subprocess_script.py", line 105, in launch
+    return function(*args, **kwargs)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 579, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 962, in _run
+    self.strategy.setup(self)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 171, in setup
+    self.configure_ddp()
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 283, in configure_ddp
+    self.model = self._setup_model(self.model)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 195, in _setup_model
+    return DistributedDataParallel(module=model, device_ids=device_ids, **self._ddp_kwargs)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 655, in __init__
+    _verify_param_shape_across_processes(self.process_group, parameters)
+  File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torch/distributed/utils.py", line 112, in _verify_param_shape_across_processes
+    return dist._verify_params_across_processes(process_group, tensors, logger)
+RuntimeError: [1]: params[2] in this process with sizes [384, 96] appears not to match sizes of the same param in process 0.
+
+wandb: ERROR Run 7feqwc9x errored:
+wandb: ERROR Traceback (most recent call last):
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/wandb/agents/pyagent.py", line 306, in _run_job
+wandb: ERROR     self._function()
+wandb: ERROR   File "/scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/diffusion/sweep/sweep.py", line 57, in train
+wandb: ERROR     trainer.fit(model_obj, tr_loader, val_loader)
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 543, in fit
+wandb: ERROR     call._call_and_handle_interrupt(
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/call.py", line 43, in _call_and_handle_interrupt
+wandb: ERROR     return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/launchers/subprocess_script.py", line 105, in launch
+wandb: ERROR     return function(*args, **kwargs)
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 579, in _fit_impl
+wandb: ERROR     self._run(model, ckpt_path=ckpt_path)
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/trainer.py", line 962, in _run
+wandb: ERROR     self.strategy.setup(self)
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 171, in setup
+wandb: ERROR     self.configure_ddp()
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 283, in configure_ddp
+wandb: ERROR     self.model = self._setup_model(self.model)
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/strategies/ddp.py", line 195, in _setup_model
+wandb: ERROR     return DistributedDataParallel(module=model, device_ids=device_ids, **self._ddp_kwargs)
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 655, in __init__
+wandb: ERROR     _verify_param_shape_across_processes(self.process_group, parameters)
+wandb: ERROR   File "/home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/torch/distributed/utils.py", line 112, in _verify_param_shape_across_processes
+wandb: ERROR     return dist._verify_params_across_processes(process_group, tensors, logger)
+wandb: ERROR RuntimeError: [1]: params[2] in this process with sizes [384, 96] appears not to match sizes of the same param in process 0.
+wandb: ERROR 
+wandb: Agent Starting Run: 31nynt1i with config:
+wandb: 	BATCH_SIZE: 8
+wandb: 	attn_dim_head: 48
+wandb: 	attn_heads: 6
+wandb: 	beta_schedule: cosine
+wandb: 	ddim_sampling_eta: 0.8
+wandb: 	dim: 96
+wandb: 	dim_mults: [1, 2, 3, 4]
+wandb: 	dropout: 0.1
+wandb: 	flash_attn: False
+wandb: 	init_dim: 32
+wandb: 	learned_sinusoidal_cond: False
+wandb: 	learned_sinusoidal_dim: 32
+wandb: 	learned_variance: False
+wandb: 	lr: 0.0001
+wandb: 	min_snr_gamma: 5
+wandb: 	objective: pred_v
+wandb: 	out_dim: 1
+wandb: 	random_fourier_features: False
+wandb: 	scheduler_name: cosine_decay_lr_scheduler
+wandb: 	sinusoidal_pos_emb_theta: 10000
+wandb: 	timesteps: 50
+wandb: 	weight_decay: 5e-07
+wandb: Tracking run with wandb version 0.19.8
+wandb: Run data is saved locally in /scratch/s_porwal_me.iitr/DeepLenseSubmissionProposal-2025/wandb/run-20250329_163204-31nynt1i
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run usual-sweep-3
+wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep
+wandb: 🧹 View sweep at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/sweeps/y9x9hh5i
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_Diffusion_Sweep/runs/31nynt1i
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 369122.0 ON gpu015 CANCELLED AT 2025-03-29T17:08:34 ***
