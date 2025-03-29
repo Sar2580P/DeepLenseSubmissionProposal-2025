@@ -4,4 +4,5 @@
 
  - **Dataset Description**: The dataset comprises 10,000 strong lensing images to train your model.
 
- - **Evaluation Metrics**: Use qualitative assessments and quantitative metrics such as Fréchet Inception Distance (FID) to measure the realism and variety of the generated samples.
+ ## **Solution**
+  I have implemented diffusion model with the help of a library.
