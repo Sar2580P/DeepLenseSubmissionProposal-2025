@@ -220,3 +220,13 @@ class ViT(nn.Module):
             'feature_map': feature_map,  # Feature map (patch embeddings)
             'classification_head_logits': classification_result  # Final classification result
         }
+
+
+if __name__=="__main__":
+    from utils.utils import plot_model, read_yaml
+    from foundation_models.architectures.vit import ViT
+    config = read_yaml('foundation_models/configs/classification_finetuning_config.yaml')
+    model = ViT(**config['ViT_params'])  
+    input_size = (8, 1, 76, 76)
+    
+    plot_model(input_size, model, "ViT_Classification", depth=2)

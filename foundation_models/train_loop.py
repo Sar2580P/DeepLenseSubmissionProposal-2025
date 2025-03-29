@@ -260,7 +260,8 @@ class SuperResAE_TrainLoop(pl.LightningModule):
       data = [
           ["Original (low_res)"] + [wandb.Image(processed_images["low_res_images"][i], mode="L") for i in range(num_samples)],
           ["Original (high_res)"] + [wandb.Image(processed_images["original_high_res_images"][i], mode="L") for i in range(num_samples)],
-          ["Predicted (high res)"] + [wandb.Image(processed_images["pred_high_res_images"][i], mode="L") for i in range(num_samples)]
+          ["Predicted (high res)"] + [wandb.Image(processed_images["pred_high_res_images"][i], mode="L") for i in range(num_samples)],
+          ["Restored (low_res)"] + [wandb.Image(processed_images["restored_low_res_images"][i], mode="L") for i in range(num_samples)]
       ]
 
       table = wandb.Table(columns=columns, data=data)
