@@ -5,4 +5,5 @@ results
 lightning_logs
 diffusion/trainer_gcskdcnw.py
 DeepLenseClassificationSweep/
+DeepLense_Diffusion_Sweep/
 DeepLense_Foundation_Models_Sweep/
