@@ -68,7 +68,7 @@ class ViT_Classifier_TrainLoop(pl.LightningModule):
     self.val_accuracy = torchmetrics.Accuracy(task = 'multiclass' , num_classes =num_classes)
     self.tst_accuracy = torchmetrics.Accuracy(task = 'multiclass' , num_classes =num_classes)
 
-    self.criterion = torch.nn.CrossEntropyLoss()
+    self.criterion = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
     self.tst_y_hat , self.tst_y_true = [], []
     self.save_hyperparameters(ignore=['model', 'layer_lr', 'tst_y_hat', 'tst_y_true'])
 
@@ -119,8 +119,8 @@ class ViT_Classifier_TrainLoop(pl.LightningModule):
    
     base_params = [p for n, p in self.model.named_parameters() if "mlp_head" not in n]
     layer_lr = [
-                 {'params': base_params},
-                 {'params': self.model.mlp_head.parameters(), 'lr': tr_config['lr']/5 }
+                 {'params': base_params, 'lr': tr_config['lr']/10},
+                 {'params': self.model.mlp_head.parameters() }
                ]
 
     optim =  torch.optim.Adam(layer_lr, lr = tr_config['lr'], weight_decay =tr_config['weight_decay'])   # https://pytorch.org/docs/stable/optim.html

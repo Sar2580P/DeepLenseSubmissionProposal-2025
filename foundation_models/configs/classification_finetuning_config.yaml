@@ -16,7 +16,7 @@ train_config:
   model_name: 'Task-4A_ViT' 
   dataset_objective : "finetuned_classification"
   BATCH_SIZE: 64
-  weight_decay : 0.0001
+  weight_decay : 0.000001
   lr : 5.0e-5
   ckpt_file_name : '{epoch} | {val_ce_loss:.3f}'
   dir : "results/MAE"
@@ -36,7 +36,7 @@ data_config:
   objective : ${train_config.dataset_objective}
 
 scheduler_params:
-  scheduler_name: 'cosine_decay_lr_scheduler'
+  scheduler_name: 'exponential_decay_lr_scheduler'
 
   cosine_decay_lr_scheduler_params:
     T_max: 150
@@ -56,5 +56,5 @@ callbacks_config:
     monitor: 'val_ce_loss'
     mode: 'min'
     min_delta : 0.00005
-    patience : 8
+    patience : 10
     verbose : True
