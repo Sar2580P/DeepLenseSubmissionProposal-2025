@@ -64,30 +64,31 @@ scheduler_params:
   scheduler_name: ${sweep_config.scheduler_name}
 sweep_config:
   BATCH_SIZE: 8
-  attn_dim_head: 32
-  attn_heads: 4
-  beta_schedule: sigmoid
+  attn_dim_head: 48
+  attn_heads: 6
+  beta_schedule: cosine
+  ddim_sampling_eta: 0.8
   dim: 128
   dim_mults:
   - 1
   - 2
   - 3
   - 4
-  dropout: 0.15
+  dropout: 0.1
   flash_attn: false
   init_dim: 32
   learned_sinusoidal_cond: false
   learned_sinusoidal_dim: 32
   learned_variance: false
-  lr: 0.0003
+  lr: 0.0001
   min_snr_gamma: 3
   objective: pred_v
   out_dim: 1
   random_fourier_features: false
   scheduler_name: cosine_decay_lr_scheduler
   sinusoidal_pos_emb_theta: 10000
-  timesteps: 100
-  weight_decay: 5e-7
+  timesteps: 50
+  weight_decay: 5.0e-07
 train_config:
   BATCH_SIZE: ${sweep_config.BATCH_SIZE}
   MAX_EPOCHS: 100

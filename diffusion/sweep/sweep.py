@@ -21,21 +21,15 @@ sweep_id = wandb.sweep(sweep_config, project=PROJECT_NAME)
 def train(config=None):
     with wandb.init(config=config):
         wandb_config = wandb.config
-
         original_config_filepath = "diffusion/sweep/sweep_full_config.yaml"
-
-        # ✅ First, read the existing YAML config
-        original_config = yaml.safe_load(open(original_config_filepath, 'r'))
-
+        # ✅ Load full config without resolving $ → so we can update sweep values
+        with open(original_config_filepath, 'r') as f:
+            original_config = yaml.safe_load(f)
         # ✅ Then, update and write it back
         original_config['sweep_config'].update(wandb_config)
         # print(original_config)
 
-        with open(original_config_filepath, "w") as f:
-            yaml.dump(original_config, f)
-
-        time.sleep(0.05)  # Ensure the file is closed before reading it
-        config = read_yaml(original_config_filepath)
+        config = OmegaConf.create(OmegaConf.to_yaml(original_config, resolve=True))
 
         tr_config = config['train_config']
         data_config = config['data_config']
