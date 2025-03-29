@@ -76,7 +76,7 @@ def main():
     y_true , y_scores = data["y_true"], data["y_hat"]    
     y_true, y_scores = np.concatenate(y_true), np.concatenate(y_scores)
     # Example save path (modify as needed)
-    save_path = 'multiclass_roc_curve.png'
+    save_path = 'pics/common_multiclass_roc_curve.png'
     # Calculate and save ROC curves
     class_auc_scores, macro_auc = plot_multiclass_roc(
         y_true, y_scores, n_classes, save_path
