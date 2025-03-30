@@ -64,7 +64,7 @@ elif tr_config["model_name"].lower()=="Task-4B_SuperRes".lower():
       print(e)
     
 
-    model = SuperResolutionAE(encoder=encoder, **config["SuperRes_params"], **config['MAE_params'])
+    model = SuperResolutionAE(encoder=encoder, **config["SuperRes_params"])
     model_obj = SuperResAE_TrainLoop(model, config)
 else:
     raise ValueError(f"Unknown model name: {tr_config['model_name']}")
