@@ -11,15 +11,6 @@ ViT_params:
   dim_head: 128
   dropout: 0.1
 
-MAE_params:
-  decoder_dim : 128
-  masking_ratio: 0.1   # does not matter as setting masking_ratio=1 in code for super-resolution
-  decoder_depth: 3
-  decoder_heads: 4
-  decoder_dim_head: 64
-  mlp_dim_ratio: 3
-  dropout: 0.1
-
 SuperRes_params:
   patch_height: ${ViT_params.patch_size}
   patch_width: ${ViT_params.patch_size}
@@ -27,6 +18,9 @@ SuperRes_params:
   high_res_width: 152
   low_res_height : ${ViT_params.image_size}
   low_res_width : ${ViT_params.image_size}
+  out_channels: 1
+  shift: 0.02
+  scale: 1.8
 
 train_config:
   model_name: 'Task-4B_SuperRes'

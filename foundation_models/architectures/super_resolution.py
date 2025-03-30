@@ -1,53 +1,59 @@
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from einops.layers.torch import Rearrange
-from foundation_models.architectures.mae import MAE
+from foundation_models.architectures.super_res_decoder_modules import SuperResolutionDecoder
 
-class SuperResolutionAE(MAE):
+class SuperResolutionAE(nn.Module):
     def __init__(
-        self, 
+        self,
+        encoder,
         patch_height=16, 
         patch_width=16, 
         high_res_height=128, 
         high_res_width=128,
-        low_res_height=64, 
-        low_res_width=64 , 
-        **kwargs):
-        super().__init__(**kwargs)
+        low_res_height = 64, 
+        low_res_width =64 ,
+        out_channels=1,
+        shift=0.0 ,
+        scale=1.0
+        ):
+        super().__init__()
+        # Save the encoder (a Vision Transformer to be trained)
+        self.encoder = encoder
+        # Extract the number of patches and the encoder's dimensionality from the positional embeddings
+        encoder_dim = encoder.pos_embedding.shape[-1]
 
-        self.patch_height = patch_height
-        self.patch_width = patch_width
-        self.high_res_height = high_res_height
-        self.high_res_width = high_res_width
-
-        # Upsampling layers for super-resolution
-        self.restore_image_from_patches = Rearrange('b (h w) (p1 p2 c) -> b c (h p1) (w p2)',
-                      p1=patch_height, p2=patch_width, h=low_res_height//patch_height , w=low_res_width//patch_width)
+        # Separate the patch embedding layers from the encoder
+        # The first layer converts the image into patches
+        self.to_patch = encoder.to_patch_embedding[0]
+        # The remaining layers embed the patches
+        self.patch_to_emb = nn.Sequential(*encoder.to_patch_embedding[1:])
         
-        self.upsample = nn.Sequential(
-            # Upsample from 76x76 to 152x152 using bilinear interpolation
-            nn.Upsample(scale_factor=2, mode='bilinear', align_corners=False),
-
-            # Convolutional layer to refine features after upsampling
-            nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1),
-            nn.PReLU(),
-
-            # Final convolution to produce the high-resolution image
-            nn.Conv2d(64, 1, kernel_size=3, stride=1, padding=1),
+        self.reshape_patches_to_img = Rearrange(
+            'b (h w) c -> b c h w',
+            h=low_res_height// patch_height,
+            w=low_res_width // patch_width,
         )
-        self.masking_ratio=1   # setting it to 1 as in super-resolution, we need to construct back image from patches for upsampling        
+        
+        self.super_res_decoder = SuperResolutionDecoder(
+                                    in_channels=encoder_dim,
+                                    super_res_H=high_res_height,
+                                    super_res_W=high_res_width,
+                                    in_H=low_res_height// patch_height,
+                                    in_W=low_res_width // patch_width,
+                                    hidden_channels=128,
+                                    residual_blocks=10, 
+                                    final_channels=out_channels
+                                )
+        
+        self.shift = shift
+        self.scale = scale
 
     def compute_loss(self, pred_super_res, high_res_img):
         # Compute the reconstruction loss (mean squared error)
-        recon_loss = F.mse_loss(pred_super_res, high_res_img, reduction="none")
-        
-        mse_per_image = torch.mean(recon_loss, dim=[1, 2, 3])   # Shape: (batch_size,)
-        mse_per_image = torch.clamp(mse_per_image, min=1e-8)
-        psnr_per_image = 10 * torch.log10(1 / mse_per_image)    # MAX_I=1 for pixel values in [0, 1]
-        
-
-        return mse_per_image.mean().item(), psnr_per_image.mean().item()
+        weight_mask = (high_res_img + self.shift) * self.scale
+        weighted_recon_loss = F.mse_loss(pred_super_res, high_res_img, reduction="mean", weight=weight_mask)
+        return weighted_recon_loss
     
 
     def forward(self, img):
@@ -55,7 +61,7 @@ class SuperResolutionAE(MAE):
 
         # Convert the input image into patches
         patches = self.to_patch(img)  # Shape: (batch_size, num_patches, patch_size)
-        batch_size, num_patches, *_ = patches.shape
+        _, num_patches, *_ = patches.shape
 
         # Embed the patches using the encoder's patch embedding layers
         tokens = self.patch_to_emb(patches)  # Shape: (batch_size, num_patches, encoder_dim)
@@ -67,42 +73,25 @@ class SuperResolutionAE(MAE):
             # If using mean pooling, use all positional embeddings
             tokens += self.encoder.pos_embedding.to(device, dtype=tokens.dtype)
             
-        masked_indices , unmasked_indices, num_masked = self.perform_masking(num_patches , device , batch_size)
-        # Select the tokens corresponding to unmasked patches
-        batch_range = torch.arange(batch_size, device=device)[:, None]
-        tokens = tokens[batch_range, unmasked_indices]
-
-        # Select the original patches that are masked (for reconstruction loss)
-        masked_patches = patches[batch_range, masked_indices]
-
         # Encode the unmasked tokens using the encoder's transformer
         encoded_tokens = self.encoder.transformer(tokens)
         
-        masked_decoded_tokens = self.decode(encoded_tokens , masked_indices , unmasked_indices , 
-                                            num_masked , device , batch_size, num_patches)
+        # convert patched to image
+        encoder_features = self.reshape_patches_to_img(encoded_tokens)
         
-        # Reconstruct the pixel values from the masked decoded tokens
-        
-        pred_pixel_values = self.to_pixels(masked_decoded_tokens)
-        restored_img = self.restore_image_from_patches(pred_pixel_values)
-        pred_super_res = self.upsample(restored_img)
-        #print(f"pred_pixel_values shape: {pred_pixel_values.shape}")
-        # losses = self.compute_loss(pred_super_res, high_res_img)
-        
-        # normalize the output to [0, 1] using min-max scaling
-        pred_super_res = (pred_super_res - pred_super_res.min()) / (pred_super_res.max() - pred_super_res.min())
-        return  restored_img, pred_super_res
+        pred_super_res = self.super_res_decoder(encoder_features)
+        return  encoder_features[:, 0, :, :] , pred_super_res
     
 
 
-#if __name__=="__main__":
-#    from utils.utils import plot_model, read_yaml
-#    from foundation_models.architectures.vit import ViT
-#    from foundation_models.architectures.super_resolution import SuperResolutionAE
-#    config = read_yaml('foundation_models/configs/super_res_config.yaml')
-#    encoder = ViT(**config['ViT_params'])
-#    model = SuperResolutionAE(encoder=encoder, **config["SuperRes_params"], **config['MAE_params'])
-#    input_size = (8, 1, 76, 76)
+if __name__=="__main__":
+   from utils.utils import plot_model, read_yaml
+   from foundation_models.architectures.vit import ViT
+   from foundation_models.architectures.super_resolution import SuperResolutionAE
+   config = read_yaml('foundation_models/configs/super_res_config.yaml')
+   encoder = ViT(**config['ViT_params'])
+   model = SuperResolutionAE(encoder=encoder, **config["SuperRes_params"])
+   input_size = (8, 1, 76, 76)
     
-#    plot_model(input_size, model, "SuperResolutionAE", depth=2)
+   plot_model(input_size, model, "SuperResolutionAE", depth=2)
 
