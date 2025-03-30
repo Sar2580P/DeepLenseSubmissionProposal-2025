@@ -155,14 +155,14 @@ class MAE(nn.Module):
 
 
 
-if __name__=="__main__":
-    from utils.utils import plot_model, read_yaml
-    from foundation_models.architectures.mae import MAE
-    from foundation_models.architectures.vit import ViT
-    config = read_yaml('foundation_models/configs/pre_training_config.yaml')
-    encoder = ViT(**config['ViT_params'])
-    model = MAE(encoder=encoder, **config['MAE_params'])
-    input_size = (8, 1, 76, 76)
-    
-    plot_model(input_size, model, "MAE_Pretraining", depth=2)
+#if __name__=="__main__":
+ #   from utils.utils import plot_model, read_yaml
+  #  from foundation_models.architectures.mae import MAE
+   # from foundation_models.architectures.vit import ViT
+    #config = read_yaml('foundation_models/configs/pre_training_config.yaml')
+    #encoder = ViT(**config['ViT_params'])
+ #   model = MAE(encoder=encoder, **config['MAE_params'])
+ #   input_size = (8, 1, 76, 76)
+  #  
+   # plot_model(input_size, model, "MAE_Pretraining", depth=2)
 
