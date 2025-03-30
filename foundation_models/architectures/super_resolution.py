@@ -92,4 +92,17 @@ class SuperResolutionAE(MAE):
         # normalize the output to [0, 1] using min-max scaling
         pred_super_res = (pred_super_res - pred_super_res.min()) / (pred_super_res.max() - pred_super_res.min())
         return  restored_img, pred_super_res
+    
+
+
+if __name__=="__main__":
+    from utils.utils import plot_model, read_yaml
+    from foundation_models.architectures.vit import ViT
+    from foundation_models.architectures.super_resolution import SuperResolutionAE
+    config = read_yaml('foundation_models/configs/super_res_config.yaml')
+    encoder = ViT(**config['ViT_params'])
+    model = SuperResolutionAE(encoder=encoder, **config["SuperRes_params"], **config['MAE_params'])
+    input_size = (8, 1, 76, 76)
+    
+    plot_model(input_size, model, "SuperResolutionAE", depth=2)
 
