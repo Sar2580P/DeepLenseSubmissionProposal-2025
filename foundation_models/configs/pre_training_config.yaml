@@ -19,6 +19,8 @@ MAE_params:
   decoder_dim_head: 128
   mlp_dim_ratio: 4
   dropout: 0.1
+  shift : 0.02
+  scale : 1.8
 
 
 train_config:
@@ -26,7 +28,7 @@ train_config:
   dataset_objective : "pretraining"
   BATCH_SIZE: 64
   weight_decay : 0.0001
-  lr : 3.0e-5
+  lr : 5.0e-5
   ckpt_file_name : '{epoch} | {val_MSE_loss:.3f}'
   dir : "results/MAE"
   accumulate_grad_batches : 3

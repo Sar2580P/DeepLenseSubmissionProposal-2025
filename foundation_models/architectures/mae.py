@@ -16,7 +16,9 @@ class MAE(nn.Module):
         decoder_heads=8,
         decoder_dim_head=64, 
         mlp_dim_ratio=4,
-        dropout=0.0
+        dropout=0.0, 
+        shift=0.0 ,
+        scale=1.0
     ):
         super().__init__()
         # Ensure the masking ratio is valid
@@ -61,7 +63,8 @@ class MAE(nn.Module):
         self.decoder_pos_emb = nn.Embedding(num_patches, decoder_dim)
         # Linear layer to reconstruct pixel values from decoder outputs
         self.to_pixels = nn.Linear(decoder_dim, pixel_values_per_patch)
-        
+        self.shift = shift
+        self.scale = scale
     
     def perform_masking(self, num_patches , device , batch_size):
         # MASKING...
@@ -106,8 +109,10 @@ class MAE(nn.Module):
     
     def compute_loss(self, pred_pixel_values, masked_patches):
         # Compute the reconstruction loss (mean squared error)
-        recon_loss = F.mse_loss(pred_pixel_values, masked_patches)
-        return recon_loss
+        weight_mask = (masked_patches + self.shift) * self.scale
+        recon_loss = F.mse_loss(pred_pixel_values, masked_patches,weight=weight_mask)
+         
+        return recon_loss*10   # scaled by 10 for better convergence, higher gradient flow
     
     def forward(self, img):
         #print(len(img), img[0].shape ,img[1].shape,   "$$$$$$$$$$$$$$$$############$$$$$$$$$$$$$$$")
