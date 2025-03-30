@@ -48,7 +48,8 @@ class MAETrainLoop(pl.LightningModule):
 
         elif schdlr_config['scheduler_name'] == 'cosine_decay_lr_scheduler':
             lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optim, **scheduler_params)
-
+        elif schdlr_config['scheduler_name']=='reduce_lr_on_plateau_scheduler':
+            lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optim , **scheduler_params)
         return [optim], [{'scheduler': lr_scheduler, 'interval': 'epoch', 'monitor': 'train_MSE_loss',
                         'name': schdlr_config['scheduler_name']}]
 
@@ -119,7 +120,7 @@ class ViT_Classifier_TrainLoop(pl.LightningModule):
    
     base_params = [p for n, p in self.model.named_parameters() if "mlp_head" not in n]
     layer_lr = [
-                 {'params': base_params, 'lr': tr_config['lr']/10},
+                 {'params': base_params, 'lr': tr_config['lr']/50},
                  {'params': self.model.mlp_head.parameters() }
                ]
 

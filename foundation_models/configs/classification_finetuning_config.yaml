@@ -16,15 +16,15 @@ train_config:
   model_name: 'Task-4A_ViT' 
   dataset_objective : "finetuned_classification"
   BATCH_SIZE: 64
-  weight_decay : 0.000001
-  lr : 5.0e-5
+  weight_decay : 5.0e-7
+  lr : 2.0e-4
   ckpt_file_name : '{epoch} | {val_ce_loss:.3f}'
   dir : "results/MAE"
   accumulate_grad_batches : 3
   accelerator : 'gpu'
   MAX_EPOCHS : 200
   num_workers: 8
-  pretrained_mae_ckpt_path: 'results/MAE/MAE_ViT_pretraining/ckpts/epoch=45 | val_MSE_loss=0.064.ckpt'
+  pretrained_mae_ckpt_path: 'results/MAE/MAE_ViT_pretraining /ckpts/epoch=63 | val_MSE_loss=0.064.ckpt'
   find_unused_parameters : False
 
 data_config:

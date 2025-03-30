@@ -44,7 +44,7 @@ data_config:
   objective : ${train_config.dataset_objective}
 
 scheduler_params:
-  scheduler_name: 'cosine_decay_lr_scheduler'
+  scheduler_name: 'reduce_lr_on_plateau_scheduler'
 
   cosine_decay_lr_scheduler_params:
     T_max: 150
@@ -52,6 +52,14 @@ scheduler_params:
 
   exponential_decay_lr_scheduler_params:
     gamma: 0.99
+  
+  reduce_lr_on_plateau_scheduler_params:
+    factor : 0.85
+    patience : 10
+    threshold : 1.0e-3
+    cooldown : 4
+    min_lr  : 1.0e-6   
+
 
 callbacks_config:
   ModelCheckpoint:
