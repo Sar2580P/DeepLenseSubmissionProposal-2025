@@ -20,6 +20,8 @@
 
 **Slurm scripts** for managing batch processes are in the ```scripts/``` directory 📂. Utilizing my institute's GPU clusters 🚀, I explored distributed training by running Python scripts (.py) via SSH. **While I apologize 🙏 for not providing Jupyter Notebooks directly**, please be assured that I've conducted thorough **quantitative and qualitative analyses** 📊🔍 for each task. The **dataset split logic** (90:10 ratio) is implemented **[here](data_processing.py)** ⚙️.
 
+### 💾 The model checkpoints and other evaluations are pushed to hugging face, access from [here](https://huggingface.co/sarvagyaP/deeplense-2025-results) 🚀 🤗
+
 ---
 
 ## 📊 1. Common Multi-class Classification:
