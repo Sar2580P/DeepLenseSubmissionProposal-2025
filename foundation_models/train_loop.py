@@ -118,11 +118,14 @@ class ViT_Classifier_TrainLoop(pl.LightningModule):
     tr_config = self.config['train_config']
     lr_scheduler_config = self.config['scheduler_params']
    
-    base_params = [p for n, p in self.model.named_parameters() if "mlp_head" not in n]
+    base_params = [p for n, p in self.model.named_parameters() if "mlp_head" not in n and "class_token" not in n]
+    mlp_class_token_params = [p for n, p in self.model.named_parameters() if "mlp_head" in n or "class_token" in n]
+
     layer_lr = [
-                 {'params': base_params, 'lr': tr_config['lr']/50},
-                 {'params': self.model.mlp_head.parameters() }
-               ]
+                  {'params': base_params, 'lr': tr_config['lr'] /20},
+                  {'params': mlp_class_token_params}
+              ]
+    self.check_gradients_enabled()
 
     optim =  torch.optim.Adam(layer_lr, lr = tr_config['lr'], weight_decay =tr_config['weight_decay'])   # https://pytorch.org/docs/stable/optim.html
     scheduler_params = lr_scheduler_config[f"{lr_scheduler_config['scheduler_name']}_params"]
@@ -137,6 +140,17 @@ class ViT_Classifier_TrainLoop(pl.LightningModule):
         raise ValueError(f"Unknown scheduler name: {lr_scheduler_config['scheduler_name']}, please choose from ['exponential_decay_lr_scheduler', 'cosine_decay_lr_scheduler']")
 
     return [optim], [{'scheduler': lr_scheduler, 'interval': 'epoch', 'monitor': 'train_ce_loss', 'name':lr_scheduler_config['scheduler_name']}]
+
+  def check_gradients_enabled(self):
+      all_have_grad = True
+      for name, param in self.model.named_parameters():
+        if not param.requires_grad:
+            print(f"Gradient disabled for: {name}")
+            all_have_grad = False
+      if all_have_grad:
+        print("All model parameters have gradients enabled.")
+      else:
+        print("Some parameters have gradients disabled.")
 
 
 

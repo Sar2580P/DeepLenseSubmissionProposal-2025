@@ -213,7 +213,7 @@ class ViT(nn.Module):
 
         # Apply the classification head to the pooled output
         classification_result = self.mlp_head(pooled_output)
-
+        #print(cls_token.shape , feature_map.shape , classification_result.shape, img.shape, "$$$$$$$$$$$$$$$$$$$")
         # Return a dictionary with the required components
         return {
             'cls_token': cls_token,  # Class token
