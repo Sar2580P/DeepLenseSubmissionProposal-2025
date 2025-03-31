@@ -27,7 +27,7 @@ train_config:
   model_name: "MAE_ViT"
   dataset_objective : "pretraining"
   BATCH_SIZE: 64
-  weight_decay : 0.0001
+  weight_decay : 0.000002
   lr : 5.0e-5
   ckpt_file_name : '{epoch} | {val_MSE_loss:.3f}'
   dir : "results/MAE"
@@ -57,7 +57,7 @@ scheduler_params:
   
   reduce_lr_on_plateau_scheduler_params:
     factor : 0.85
-    patience : 10
+    patience : 7
     threshold : 1.0e-3
     cooldown : 4
     min_lr  : 1.0e-6   

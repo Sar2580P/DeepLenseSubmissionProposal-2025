@@ -110,7 +110,7 @@ class MAE(nn.Module):
     def compute_loss(self, pred_pixel_values, masked_patches):
         # Compute the reconstruction loss (mean squared error)
         weight_mask = (masked_patches + self.shift) * self.scale
-        recon_loss = F.mse_loss(pred_pixel_values, masked_patches,weight=weight_mask)
+        recon_loss = ((pred_pixel_values - masked_patches) ** 2 * weight_mask).mean()
          
         return recon_loss*10   # scaled by 10 for better convergence, higher gradient flow
     

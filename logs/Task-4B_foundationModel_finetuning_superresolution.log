@@ -17,133 +17,105 @@ All distributed processes registered. Starting with 2 processes
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
 wandb: Currently logged in as: sporwal1818 (shri_krishna) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: Tracking run with wandb version 0.19.8
-wandb: Run data is saved locally in ./wandb/run-20250329_181706-gsaytesu
+wandb: Run data is saved locally in ./wandb/run-20250331_002057-ibqziwud
 wandb: Run `wandb offline` to turn off syncing.
 wandb: Syncing run Task-4B_SuperRes_finetuned_super_res
 wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis
-wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis/runs/gsaytesu
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis/runs/ibqziwud
 /home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:652: Checkpoint directory results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts exists and is not empty.
-LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
 LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
 76 4 76 4
 Successfully loaded the encoder weights for Super Resolution
-┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
-┃    ┃ Name                             ┃ Type                        ┃ Params ┃
-┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━┩
-│ 0  │ model                            │ SuperResolutionAE           │  8.8 M │
-│ 1  │ model.encoder                    │ ViT                         │  8.0 M │
-│ 2  │ model.encoder.to_patch_embedding │ Sequential                  │  4.9 K │
-│ 3  │ model.encoder.transformer        │ Transformer                 │  7.9 M │
-│ 4  │ model.encoder.to_latent          │ Identity                    │      0 │
-│ 5  │ model.encoder.mlp_head           │ Linear                      │    771 │
-│ 6  │ model.encoder.dropout            │ Dropout                     │      0 │
-│ 7  │ model.patch_to_emb               │ Sequential                  │  4.9 K │
-│ 8  │ model.enc_to_dec                 │ Linear                      │ 32.9 K │
-│ 9  │ model.decoder                    │ Transformer                 │  692 K │
-│ 10 │ model.decoder.norm               │ LayerNorm                   │    256 │
-│ 11 │ model.decoder.layers             │ ModuleList                  │  692 K │
-│ 12 │ model.decoder_pos_emb            │ Embedding                   │ 46.3 K │
-│ 13 │ model.to_pixels                  │ Linear                      │  2.1 K │
-│ 14 │ model.restore_image_from_patches │ Rearrange                   │      0 │
-│ 15 │ model.upsample                   │ Sequential                  │  1.2 K │
-│ 16 │ model.upsample.0                 │ Upsample                    │      0 │
-│ 17 │ model.upsample.1                 │ Conv2d                      │    640 │
-│ 18 │ model.upsample.2                 │ PReLU                       │      1 │
-│ 19 │ model.upsample.3                 │ Conv2d                      │    577 │
-│ 20 │ tr_ssim                          │ StructuralSimilarityIndexM… │      0 │
-│ 21 │ val_ssim                         │ StructuralSimilarityIndexM… │      0 │
-│ 22 │ tst_ssim                         │ StructuralSimilarityIndexM… │      0 │
-│ 23 │ mse                              │ MSELoss                     │      0 │
-│ 24 │ tr_psnr                          │ _PeakSignalNoiseRatio       │      0 │
-│ 25 │ val_psnr                         │ _PeakSignalNoiseRatio       │      0 │
-│ 26 │ tst_psnr                         │ _PeakSignalNoiseRatio       │      0 │
-└────┴──────────────────────────────────┴─────────────────────────────┴────────┘
-Trainable params: 8.8 M                                                         
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                                      ┃ Type               ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ model                                     │ SuperResolutionAE  │ 13.2 M │
+│ 1  │ model.encoder                             │ ViT                │  8.0 M │
+│ 2  │ model.encoder.to_patch_embedding          │ Sequential         │  4.9 K │
+│ 3  │ model.encoder.transformer                 │ Transformer        │  7.9 M │
+│ 4  │ model.encoder.to_latent                   │ Identity           │      0 │
+│ 5  │ model.encoder.mlp_head                    │ Linear             │    771 │
+│ 6  │ model.encoder.dropout                     │ Dropout            │      0 │
+│ 7  │ model.patch_to_emb                        │ Sequential         │  4.9 K │
+│ 8  │ model.reshape_patches_to_img              │ Rearrange          │      0 │
+│ 9  │ model.super_res_decoder                   │ SuperResolutionDe… │  5.2 M │
+│ 10 │ model.super_res_decoder.initial           │ Sequential         │  295 K │
+│ 11 │ model.super_res_decoder.residual_blocks   │ ModuleList         │  3.0 M │
+│ 12 │ model.super_res_decoder.global_res_conv   │ Conv2d             │  147 K │
+│ 13 │ model.super_res_decoder.upsampling_layers │ ModuleList         │  1.8 M │
+│ 14 │ model.super_res_decoder.final             │ Conv2d             │  1.2 K │
+│ 15 │ tr_ssim                                   │ StructuralSimilar… │      0 │
+│ 16 │ val_ssim                                  │ StructuralSimilar… │      0 │
+│ 17 │ tst_ssim                                  │ StructuralSimilar… │      0 │
+│ 18 │ mse                                       │ MSELoss            │      0 │
+│ 19 │ tr_psnr                                   │ _PeakSignalNoiseR… │      0 │
+│ 20 │ val_psnr                                  │ _PeakSignalNoiseR… │      0 │
+│ 21 │ tst_psnr                                  │ _PeakSignalNoiseR… │      0 │
+└────┴───────────────────────────────────────────┴────────────────────┴────────┘
+Trainable params: 13.2 M                                                        
 Non-trainable params: 0                                                         
-Total params: 8.8 M                                                             
-Total estimated model params size (MB): 35                                      
+Total params: 13.2 M                                                            
+Total estimated model params size (MB): 52                                      
 SLURM auto-requeueing enabled. Setting signal handlers.
 SLURM auto-requeueing enabled. Setting signal handlers.
 76 4 76 4
 Successfully loaded the encoder weights for Super Resolution
-[rank: 0] Metric val_MSE_loss improved. New best score: 0.035
-[rank: 1] Metric val_MSE_loss improved. New best score: 0.035
-Epoch 0, global step 22: 'val_MSE_loss' reached 0.03526 (best 0.03526), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=0 | val_MSE_loss=0.035.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.013 >= min_delta = 5e-05. New best score: 0.022
-[rank: 1] Metric val_MSE_loss improved by 0.013 >= min_delta = 5e-05. New best score: 0.022
-Epoch 1, global step 44: 'val_MSE_loss' reached 0.02184 (best 0.02184), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=1 | val_MSE_loss=0.022.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.005 >= min_delta = 5e-05. New best score: 0.017
-[rank: 1] Metric val_MSE_loss improved by 0.005 >= min_delta = 5e-05. New best score: 0.017
-Epoch 2, global step 66: 'val_MSE_loss' reached 0.01728 (best 0.01728), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=2 | val_MSE_loss=0.017.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.002 >= min_delta = 5e-05. New best score: 0.015
-[rank: 1] Metric val_MSE_loss improved by 0.002 >= min_delta = 5e-05. New best score: 0.015
-Epoch 3, global step 88: 'val_MSE_loss' reached 0.01541 (best 0.01541), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=3 | val_MSE_loss=0.015.ckpt' as top 1
-[rank: 1] Metric val_MSE_loss improved by 0.001 >= min_delta = 5e-05. New best score: 0.015
-[rank: 0] Metric val_MSE_loss improved by 0.001 >= min_delta = 5e-05. New best score: 0.015
-Epoch 4, global step 110: 'val_MSE_loss' reached 0.01473 (best 0.01473), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=4 | val_MSE_loss=0.015.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.001 >= min_delta = 5e-05. New best score: 0.014
-[rank: 1] Metric val_MSE_loss improved by 0.001 >= min_delta = 5e-05. New best score: 0.014
-Epoch 5, global step 132: 'val_MSE_loss' reached 0.01419 (best 0.01419), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=5 | val_MSE_loss=0.014.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-Epoch 6, global step 154: 'val_MSE_loss' reached 0.01413 (best 0.01413), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=6 | val_MSE_loss=0.014.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-Epoch 7, global step 176: 'val_MSE_loss' reached 0.01387 (best 0.01387), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=7 | val_MSE_loss=0.014.ckpt' as top 1
-Epoch 8, global step 198: 'val_MSE_loss' was not in top 1
-Epoch 9, global step 220: 'val_MSE_loss' reached 0.01387 (best 0.01387), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=9 | val_MSE_loss=0.014.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-Epoch 10, global step 242: 'val_MSE_loss' reached 0.01381 (best 0.01381), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=10 | val_MSE_loss=0.014.ckpt' as top 1
-[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-Epoch 11, global step 264: 'val_MSE_loss' reached 0.01374 (best 0.01374), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=11 | val_MSE_loss=0.014.ckpt' as top 1
-Epoch 12, global step 286: 'val_MSE_loss' reached 0.01372 (best 0.01372), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=12 | val_MSE_loss=0.014.ckpt' as top 1
-Epoch 13, global step 308: 'val_MSE_loss' reached 0.01370 (best 0.01370), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=13 | val_MSE_loss=0.014.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-Epoch 14, global step 330: 'val_MSE_loss' reached 0.01368 (best 0.01368), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=14 | val_MSE_loss=0.014.ckpt' as top 1
-Epoch 15, global step 352: 'val_MSE_loss' reached 0.01367 (best 0.01367), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=15 | val_MSE_loss=0.014.ckpt' as top 1
-Epoch 16, global step 374: 'val_MSE_loss' reached 0.01366 (best 0.01366), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=16 | val_MSE_loss=0.014-v1.ckpt' as top 1
-Epoch 17, global step 396: 'val_MSE_loss' was not in top 1
-Epoch 18, global step 418: 'val_MSE_loss' reached 0.01365 (best 0.01365), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=18 | val_MSE_loss=0.014.ckpt' as top 1
-Epoch 19, global step 440: 'val_MSE_loss' reached 0.01365 (best 0.01365), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=19 | val_MSE_loss=0.014.ckpt' as top 1
-Epoch 20, global step 462: 'val_MSE_loss' was not in top 1
-Epoch 21, global step 484: 'val_MSE_loss' reached 0.01364 (best 0.01364), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=21 | val_MSE_loss=0.014.ckpt' as top 1
-[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.014
-Epoch 22, global step 506: 'val_MSE_loss' reached 0.01363 (best 0.01363), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=22 | val_MSE_loss=0.014.ckpt' as top 1
-Epoch 23, global step 528: 'val_MSE_loss' reached 0.01360 (best 0.01360), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=23 | val_MSE_loss=0.014.ckpt' as top 1
-Epoch 24, global step 550: 'val_MSE_loss' was not in top 1
-Epoch 25, global step 572: 'val_MSE_loss' was not in top 1
-Epoch 26, global step 594: 'val_MSE_loss' was not in top 1
-Epoch 27, global step 616: 'val_MSE_loss' was not in top 1
-Epoch 28, global step 638: 'val_MSE_loss' reached 0.01359 (best 0.01359), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=28 | val_MSE_loss=0.014.ckpt' as top 1
-Epoch 29, global step 660: 'val_MSE_loss' was not in top 1
-[rank: 0] Monitored metric val_MSE_loss did not improve in the last 8 records. Best score: 0.014. Signaling Trainer to stop.
-[rank: 1] Monitored metric val_MSE_loss did not improve in the last 8 records. Best score: 0.014. Signaling Trainer to stop.
-Epoch 30, global step 682: 'val_MSE_loss' was not in top 1
-Epoch 30/199 ━━━━━━━━━━━━━━━━ 64/64 0:00:10 • 0:00:00 6.96it/s v_num: su_6      
+[rank: 0] Metric val_MSE_loss improved. New best score: 0.005
+[rank: 1] Metric val_MSE_loss improved. New best score: 0.005
+Epoch 0, global step 22: 'val_MSE_loss' reached 0.00489 (best 0.00489), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=0 | val_MSE_loss=0.005.ckpt' as top 1
+[rank: 0] Metric val_MSE_loss improved by 0.004 >= min_delta = 5e-05. New best score: 0.001
+[rank: 1] Metric val_MSE_loss improved by 0.004 >= min_delta = 5e-05. New best score: 0.001
+Epoch 1, global step 44: 'val_MSE_loss' reached 0.00063 (best 0.00063), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=1 | val_MSE_loss=0.001.ckpt' as top 1
+[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.000
+[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.000
+Epoch 2, global step 66: 'val_MSE_loss' reached 0.00042 (best 0.00042), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=2 | val_MSE_loss=0.000.ckpt' as top 1
+[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.000
+[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.000
+Epoch 3, global step 88: 'val_MSE_loss' reached 0.00037 (best 0.00037), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=3 | val_MSE_loss=0.000.ckpt' as top 1
+Epoch 4, global step 110: 'val_MSE_loss' was not in top 1
+Epoch 5, global step 132: 'val_MSE_loss' was not in top 1
+[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.000
+[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.000
+Epoch 6, global step 154: 'val_MSE_loss' reached 0.00026 (best 0.00026), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=6 | val_MSE_loss=0.000.ckpt' as top 1
+Epoch 7, global step 176: 'val_MSE_loss' was not in top 1
+Epoch 8, global step 198: 'val_MSE_loss' reached 0.00023 (best 0.00023), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=8 | val_MSE_loss=0.000.ckpt' as top 1
+Epoch 9, global step 220: 'val_MSE_loss' was not in top 1
+Epoch 10, global step 242: 'val_MSE_loss' was not in top 1
+[rank: 0] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.000
+[rank: 1] Metric val_MSE_loss improved by 0.000 >= min_delta = 5e-05. New best score: 0.000
+Epoch 11, global step 264: 'val_MSE_loss' reached 0.00021 (best 0.00021), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=11 | val_MSE_loss=0.000.ckpt' as top 1
+Epoch 12, global step 286: 'val_MSE_loss' reached 0.00018 (best 0.00018), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=12 | val_MSE_loss=0.000.ckpt' as top 1
+Epoch 13, global step 308: 'val_MSE_loss' was not in top 1
+Epoch 14, global step 330: 'val_MSE_loss' was not in top 1
+Epoch 15, global step 352: 'val_MSE_loss' was not in top 1
+Epoch 16, global step 374: 'val_MSE_loss' was not in top 1
+Epoch 17, global step 396: 'val_MSE_loss' reached 0.00017 (best 0.00017), saving model to 'results/MAE/Task-4B_SuperRes_finetuned_super_res/ckpts/epoch=17 | val_MSE_loss=0.000.ckpt' as top 1
+Epoch 18, global step 418: 'val_MSE_loss' was not in top 1
+[rank: 0] Monitored metric val_MSE_loss did not improve in the last 8 records. Best score: 0.000. Signaling Trainer to stop.
+[rank: 1] Monitored metric val_MSE_loss did not improve in the last 8 records. Best score: 0.000. Signaling Trainer to stop.
+Epoch 19, global step 440: 'val_MSE_loss' was not in top 1
+Epoch 19/199 ━━━━━━━━━━━━━━━━ 64/64 0:00:23 • 0:00:00 2.83it/s v_num: ud_7      
                                                                val_MSE_loss:    
-                                                               0.014 val_PSNR:  
-                                                               18.668 val_SSIM: 
-                                                               0.465            
+                                                               0.000 val_PSNR:  
+                                                               37.718 val_SSIM: 
+                                                               0.957            
                                                                train_MSE_loss:  
-                                                               0.014 train_PSNR:
-                                                               18.678           
-                                                               train_SSIM: 0.437
-LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
+                                                               0.000 train_PSNR:
+                                                               38.092           
+                                                               train_SSIM: 0.957
 LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
 SLURM auto-requeueing enabled. Setting signal handlers.
 SLURM auto-requeueing enabled. Setting signal handlers.
 /home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:232: Using `DistributedSampler` with the dataloaders. During `trainer.test()`, it is recommended to use `Trainer(devices=1, num_nodes=1)` to ensure each sample/batch gets evaluated exactly once. Otherwise, multi-device settings use `DistributedSampler` that replicates some samples to make sure all devices have same batch size in case of uneven inputs.
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃        Test metric        ┃       DataLoader 0        ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│       test_MSE_loss       │   0.013567176647484303    │
-│         test_PSNR         │     18.67764663696289     │
-│         test_SSIM         │    0.4681849181652069     │
+│       test_MSE_loss       │  0.00016903816140256822   │
+│         test_PSNR         │     37.7221794128418      │
+│         test_SSIM         │    0.9573417901992798     │
 └───────────────────────────┴───────────────────────────┘
-Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8/8 0:00:00 • 0:00:00 16.83it/s 
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8/8 0:00:01 • 0:00:00 7.03it/s 
 [1;34mwandb[0m: 
-[1;34mwandb[0m: 🚀 View run [33mTask-4B_SuperRes_finetuned_super_res[0m at: [34mhttps://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis/runs/gsaytesu[0m
+[1;34mwandb[0m: 🚀 View run [33mTask-4B_SuperRes_finetuned_super_res[0m at: [34mhttps://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis/runs/ibqziwud[0m

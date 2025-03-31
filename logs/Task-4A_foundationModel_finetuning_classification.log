@@ -13,11 +13,11 @@ All distributed processes registered. Starting with 2 processes
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
 wandb: Currently logged in as: sporwal1818 (shri_krishna) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: Tracking run with wandb version 0.19.8
-wandb: Run data is saved locally in ./wandb/run-20250329_153158-ko33u7tq
+wandb: Run data is saved locally in ./wandb/run-20250331_002058-ishmwe4l
 wandb: Run `wandb offline` to turn off syncing.
 wandb: Syncing run Task-4A_ViT_finetuned_classification
 wandb: ⭐️ View project at https://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis
-wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis/runs/ko33u7tq
+wandb: 🚀 View run at https://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis/runs/ishmwe4l
 /home/s_porwal_me.iitr/miniconda3/envs/deeplense/lib/python3.10/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:652: Checkpoint directory results/MAE/Task-4A_ViT_finetuned_classification/ckpts exists and is not empty.
 LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
 LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
@@ -54,40 +54,31 @@ SLURM auto-requeueing enabled. Setting signal handlers.
 SLURM auto-requeueing enabled. Setting signal handlers.
 76 4 76 4
 Successfully loaded the model weights for classification
-[rank: 0] Metric val_ce_loss improved. New best score: 1.099
-[rank: 1] Metric val_ce_loss improved. New best score: 1.099
-Epoch 0, global step 188: 'val_ce_loss' reached 1.09878 (best 1.09878), saving model to 'results/MAE/Task-4A_ViT_finetuned_classification/ckpts/epoch=0 | val_ce_loss=1.099.ckpt' as top 1
-Epoch 1, global step 376: 'val_ce_loss' reached 1.09875 (best 1.09875), saving model to 'results/MAE/Task-4A_ViT_finetuned_classification/ckpts/epoch=1 | val_ce_loss=1.099.ckpt' as top 1
+[rank: 1] Metric val_ce_loss improved. New best score: 1.098
+[rank: 0] Metric val_ce_loss improved. New best score: 1.098
+Epoch 0, global step 188: 'val_ce_loss' reached 1.09847 (best 1.09847), saving model to 'results/MAE/Task-4A_ViT_finetuned_classification/ckpts/epoch=0 | val_ce_loss=1.098.ckpt' as top 1
+Epoch 1, global step 376: 'val_ce_loss' was not in top 1
 Epoch 2, global step 564: 'val_ce_loss' was not in top 1
 Epoch 3, global step 752: 'val_ce_loss' was not in top 1
 Epoch 4, global step 940: 'val_ce_loss' was not in top 1
 Epoch 5, global step 1128: 'val_ce_loss' was not in top 1
 Epoch 6, global step 1316: 'val_ce_loss' was not in top 1
-[rank: 0] Metric val_ce_loss improved by 0.000 >= min_delta = 5e-05. New best score: 1.098
-[rank: 1] Metric val_ce_loss improved by 0.000 >= min_delta = 5e-05. New best score: 1.098
-Epoch 7, global step 1504: 'val_ce_loss' reached 1.09849 (best 1.09849), saving model to 'results/MAE/Task-4A_ViT_finetuned_classification/ckpts/epoch=7 | val_ce_loss=1.098.ckpt' as top 1
+Epoch 7, global step 1504: 'val_ce_loss' was not in top 1
 Epoch 8, global step 1692: 'val_ce_loss' was not in top 1
 Epoch 9, global step 1880: 'val_ce_loss' was not in top 1
-Epoch 10, global step 2068: 'val_ce_loss' was not in top 1
-Epoch 11, global step 2256: 'val_ce_loss' was not in top 1
-Epoch 12, global step 2444: 'val_ce_loss' was not in top 1
-Epoch 13, global step 2632: 'val_ce_loss' was not in top 1
-Epoch 14, global step 2820: 'val_ce_loss' was not in top 1
-Epoch 15, global step 3008: 'val_ce_loss' was not in top 1
-Epoch 16, global step 3196: 'val_ce_loss' was not in top 1
 [rank: 0] Monitored metric val_ce_loss did not improve in the last 10 records. Best score: 1.098. Signaling Trainer to stop.
 [rank: 1] Monitored metric val_ce_loss did not improve in the last 10 records. Best score: 1.098. Signaling Trainer to stop.
-Epoch 17, global step 3384: 'val_ce_loss' was not in top 1
-Epoch 17/199 ━━━━━━━━━━━━━━━━ 564/564 0:01:48 •       5.12it/s v_num: tq_5      
+Epoch 10, global step 2068: 'val_ce_loss' was not in top 1
+Epoch 10/199 ━━━━━━━━━━━━━━━━ 564/564 0:01:51 •       5.22it/s v_num: 4l_6      
                                       0:00:00                  val_ce_loss:     
                                                                1.099 val_kappa: 
                                                                0.000 val_acc:   
-                                                               0.334            
+                                                               0.336            
                                                                train_ce_loss:   
-                                                               1.100            
+                                                               1.101            
                                                                train_kappa:     
-                                                               -0.000 train_acc:
-                                                               0.335            
+                                                               -0.004 train_acc:
+                                                               0.331            
 LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
 LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
 SLURM auto-requeueing enabled. Setting signal handlers.
@@ -96,10 +87,10 @@ SLURM auto-requeueing enabled. Setting signal handlers.
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃        Test metric        ┃       DataLoader 0        ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│      test_acc_epoch       │    0.3339317739009857     │
-│    test_ce_loss_epoch     │    1.0985914468765259     │
+│      test_acc_epoch       │    0.3355026841163635     │
+│    test_ce_loss_epoch     │    1.0986640453338623     │
 │     test_kappa_epoch      │            0.0            │
 └───────────────────────────┴───────────────────────────┘
-Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 70/70 0:00:09 • 0:00:00 7.03it/s 
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 70/70 0:00:08 • 0:00:00 7.84it/s 
 [1;34mwandb[0m: 
-[1;34mwandb[0m: 🚀 View run [33mTask-4A_ViT_finetuned_classification[0m at: [34mhttps://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis/runs/ko33u7tq[0m
+[1;34mwandb[0m: 🚀 View run [33mTask-4A_ViT_finetuned_classification[0m at: [34mhttps://wandb.ai/shri_krishna/DeepLense_FoundationModels_Analysis/runs/ishmwe4l[0m
