@@ -30,6 +30,43 @@ Performed pretraining of ViT architecture using **Masked-AutoEncoder** on unlabe
     <strong>Figure: Pretraining MSE Loss (train->red , validation-> green, test -> purple)</strong>
 </div>
 
+---
+
+### **Task-4B: Classification** 🏷️
+
+- Utilized a **pretrained ViT encoder** 🧠 with an `mlp_head classifier` ➕ for classifying into:
+    - **axion** ⚛️
+    - **cdm** 🌑
+    - **no_substructure** 🚫
+- **Unexpected Stagnation** 📉: Model accuracy plateaued at ~33% (random guessing baseline).
+- **Visual Inspection** 👀: Images across all classes appeared **visually identical**.
+    - Tried various training settings ⚙️, but stagnation persisted.
+    - Spent the **most time** ⏳ on this task.
+    - **Data visualization** 📊 ultimately suggested a lack of learnable patterns.
+- **Contrasting Performance** 🤔: The **same pretrained ViT** performed well in **super-resolution** 🖼️⬆️ (see Task-4B results).
+- **Conclusion** 💡: The classification dataset likely **lacks distinctive features** for the model to learn effectively, rather than an issue with the encoder itself.
+
+<div align="center">
+    <img src="../pics/Task-4A-Accuracy.png" alt="Axion" width="50%">
+    <br>
+    <strong>Figure: Classification Accuracy (train->red , validation-> green)</strong>
+    
+</div>
+
+<div align="center">
+    <img src="../pics/Task4A_axion.png" alt="Axion" width="50%">
+    <br>
+</div>
+<div align="center">
+    <img src="../pics/Task4A-CDM.png" alt="CDM" width="50%">
+    <br>
+</div>
+<div align="center">
+    <img src="../pics/Task4A-No_substructure.png" alt="No_substructure" width="50%">
+    <br>
+</div>
+
+---
 
 ### **Task-4B : Super Resolution**
 - Used the pretrained ViT encoder from the Masked Autoencdoer. Then, replaced the light decoder of MaksedAutoEncoder with more robust and modern [design decoder](../pics/SuperResDecoder.png) with attention and skip connection for better gradient flow.
