@@ -12,7 +12,7 @@ The images have been normalized using min-max normalization. However, additional
 ## **Solution Approach**
 
 ### **Model Architecture**
-A **ResNet-18** model, pretrained on ImageNet, was utilized for this classification task. Given that the dataset consists of grayscale images, each image was converted into a three-channel format by stacking the grayscale image thrice.
+A **[ResNet-18 model](../Multi_Class_Classification/models.py)**, pretrained on ImageNet, was utilized for this classification task. Given that the dataset consists of grayscale images, each image was converted into a three-channel format by stacking the grayscale image thrice.
 
 ### **Data Augmentation**
 To improve model generalization, the following transformations were applied to the training data:
@@ -28,12 +28,12 @@ To improve model generalization, the following transformations were applied to t
 1. **Layer-wise Learning Rate Adjustment:**
    - The initial layers of ResNet-18, responsible for capturing local features such as edges and textures, were updated with a lower learning rate (**L1**).
    - The deeper layers, which extract global structural features, were trained with a relatively higher learning rate (**L2**).
-   - The relationship between the two learning rates was defined as:
-     
-     **L1 = L2 / 20**
+   - So the **L1** is kept low wrt **L2** so that pretrained knowledge of model for capturing local features can be utilized.
+        - ```L1 = L2 / 40```            ...             where ```L2= 2.0e-4```
 
 2. **Loss Function:**
    - **CrossEntropyLoss** was used as the objective function for training.
+   - Label smoothing was done (```label_smoothing=0.1```) for better training process and generalization.
 
 ### **Configuration and Pipeline**
 The model, dataset, and other components of the training pipeline are detailed in the [configuration file](Multi_Class_Classification/config.yaml)
