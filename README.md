@@ -11,9 +11,9 @@
 
 ## 🔭 Project of Interest:
 
-- My primary focus lies in **Diffusion Models**. I've been deeply engaged with the advancements in this exciting area of generative AI.
+- My interest lies in **Diffusion Models** and **Foundation Models**. I've been deeply engaged with the advancements in this exciting area of generative AI.
 - I possess a strong theoretical and mathematical understanding, and I have implemented key diffusion model architectures such as **DDPM**, **DDIM**, and **Latent Diffusion Models**.
-- As an optional third task, I explored **Foundation Models**. This was a new and enriching experience, providing valuable insights into large-scale pre-training and the adaptation of learned representations for diverse downstream tasks like classification and super-resolution.
+- Regarding **Foundation Models**, I have explored and implemented various Self-Supervised and Supervised representation learning techniques . It was an enriching experience, providing valuable insights into large-scale pre-training and the adaptation of learned representations for diverse downstream tasks like classification and super-resolution.
 
 ---
 
